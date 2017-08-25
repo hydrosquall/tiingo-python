@@ -64,3 +64,6 @@ target/
 # environment variables
 .env
 
+# Remove Project Components from tracking
+travis_pypi_setup.py
+
