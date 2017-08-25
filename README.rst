@@ -28,13 +28,13 @@ Tiingo is a financial data platform that makes high quality financial tools avai
 Usage
 --------
 
-First, install the library from PyPi
+First, install the library from PyPi:
 
 .. code-block:: shell
 
    pip install tiingo
 
-Then, use the TiingoClient to make your API calls easier! (Other parameters are available for each endpoint beyond what has been written below, see docs for full details.)
+Then, use the TiingoClient to make your API calls. (Other parameters are available for each endpoint beyond what has been written below, see docs for full details.)
 
 .. code-block:: python
 
@@ -76,7 +76,7 @@ Features
 Credits
 ---------
 
-* Many thanks to Rishi Singh for creating Tiingo, and spreading the ethos of generosity.
+* Many thanks to Rishi Singh for creating Tiingo.
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 

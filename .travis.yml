@@ -11,7 +11,7 @@ deploy:
 
 install: 
   - python setup.py develop
-  - pip install -U pytest
+  - pip install -U pytest-cov codecov
   # - pip install -U tox-travis pytest
 
 language: python
@@ -25,7 +25,10 @@ python:
 
 script: 
   - export TIINGO_API_KEY=$TIINGO_API_KEY
-  - pytest
+  - py.test --cov=./
 
 matrix:
   fast_finish: true
+
+after_success: 
+- codecov
