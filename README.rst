@@ -7,7 +7,7 @@ Tiingo Python
         :target: https://pypi.python.org/pypi/tiingo
 
 .. image:: https://img.shields.io/travis/hydrosquall/tiingo.svg
-        :target: https://travis-ci.org/hydrosquall/tiingo
+        :target: https://travis-ci.org/hydrosquall/tiingo-python
 
 .. image:: https://readthedocs.org/projects/tiingo/badge/?version=latest
         :target: https://tiingo.readthedocs.io/en/latest/?badge=latest
@@ -18,11 +18,15 @@ Tiingo Python
      :alt: Updates
 
 
-REST Client for Tiingo Data Platform API
+Tiingo is a financial data platform that makes high quality financial data more accessible to institutions and users alike. 
+
+The official Tiingo API docs are located here_.
+
+.. _here : https://api.tiingo.com
 
 
 * Free software: MIT license
-.. * Documentation: https://tiingo.readthedocs.io.
+* Documentation (Under Construction): https://tiingo.readthedocs.io.
 
 
 Features
@@ -37,4 +41,3 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-

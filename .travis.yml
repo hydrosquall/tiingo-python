@@ -1,29 +1,22 @@
-# Config file for automatic testing at travis-ci.org
-# This file will be regenerated if you run travis_pypi_setup.py
-
+deploy:
+  on:
+    python: 2.7
+    repo: hydrosquall/tiingo-python
+    tags: true
+  distributions: sdist bdist_wheel
+  password:
+    secure: VH1rgFV5XD0k3cMZxJwetBnETrFolBaM0U4K9CKQts38LF7f4xA8muY2FFFyeqR7VF2MQhYgGMcaAQQx/gRY+7AdSnqMYvxZ7p3P81aF7ruE3KjXgV6oPkTX4LkUlZf+co1rGs59TJ4UDJQM73+9EiYD3MJ/G0KeyMnAak73HkRHWdypOGLrINLPyUuuUAxQ8k4UJWskEMXjMgKIlGdCcdbCWqso/lZqvQ+/bFfv5M+yhQK57JMlXfXsM3YMxUGY7IhYRhxHL3nCpxXacut2FBU6H1GCU8MuR2bJ/aNNdl8elNzCEZcRq8+s94yrI095HQvVW/tLWaNJ4ojZSsGhmzvC/xAB+VbCp7ZvI0vHPGEOQgR/bIkDa9uhuwCWtfM81VCPpBrXgwupgznxtsjFcmBSUOpTFLTW5dKoPDWOe5K4wHKd9IKbWwk+mAY+aczV4T0uMX/eKhEOWJS03cjIPN4qwdCy6zSnBWpJBoLR7QyYZKNL1MiyQ0toUsJO0ln6vaPTXOo0K7EJIxKVOYf3xR8kNsgWWe0Z4orSt56O8+v5OIYbDcSeY1hwklcMvQdGHlLyMx01D2v346mL532MHA24nRmXfDUz0ixx5rn7g4Tykvy2LBLYfrfhV4G6kvimTk5Y6I7Rif4y68+r+NHmBlZwUju0AsK0a+s5/XAg5Nc=
+  provider: pypi
+  user: hydrosquall
+install: pip install -U tox-travis
 language: python
 python:
-  - 3.5
-  - 3.4
-  - 3.3
-  - 2.7
-  - 2.6
-
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -U tox-travis
-
-# command to run tests, e.g. python setup.py test
+- 3.5
+- 3.4
+- 3.3
+- 2.7
+- 2.6
 script: tox
-
-# After you create the Github repo and add it to Travis, run the
-# travis_pypi_setup.py script to finish PyPI deployment setup
-deploy:
-  provider: pypi
-  distributions: sdist bdist_wheel
-  user: hydrosquall
-  password:
-    secure: PLEASE_REPLACE_ME
-  on:
-    tags: true
-    repo: hydrosquall/tiingo
-    python: 2.7
+env:
+  matrix:
+    secure: lMYgMDLnnVSBL18U0cqWdn/mWfgayxsw1nQWfzZCyk4HlSCWuD8YJYfFq8XI51K41YPmwdg1rRQ0oUXhaealu/dZ3spTmMY8ZVSK7rsdNDJabgHORQMPr6uzlFLFIIYTpWPFeyDOgZMWdseajJNcXPp/KEObs8YeN0mXCpIyLeVgVDOoyuBwhhKdGn8nAc1iM9NXgrC+3RjglYOQifBcosjLot5RebYyrCEdz7l+mKXNQp6t/6sQjV1Gvc3FiA5kZCgNf223VlwmfMMCKEu7+Siv7rLwI0exmw9sxWDLwY8G4rTVXYFKRu4KJ1+2CsMC7SlbFaI9bgvLru1DfQM8R4nTO7KLAhRKoKw9yGZK/pmvGDZjbZf+SytvbcLy/gubnkCS0L0d7SWLD2d5cJn9e0s6lkOJ7skRTekNjuLrd1im9UhPgV5J9UMwr1kSFXeRMSWNSzI+Ox6LsF8jaMTar3KcOEk9HI/4IbjgyrjZv0iA1wSq9SjggXlWCUQnPRquMWBMCqhIEj36D5AsWmIBIPOP4VlwlPVNjfiolQMoDJUCt0olkCGWkFR8FRJYpYMhZyvhWGjVV3K48wUr1UslBzPORtOA7heIlw3IUnT0Tmvw1ZA7X0/++/X4Ap7MPqVg/qUpUQPObBl7JVCFMjhwUTl4FUVTlpLNlU8HVL/PLCQ=
