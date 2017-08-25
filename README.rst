@@ -63,8 +63,11 @@ Then, use the TiingoClient to make your API calls. (Other parameters are availab
    # Get news articles about given tickers or search terms from given domains
    # Coming soon!
 
+Further Docs
+--------
+
 * Official Tiingo Documentation: https://api.tiingo.com
-* Tiingo-Pyhon Documentation (Under Construction): https://tiingo-python.readthedocs.io.
+* Tiingo-Python Documentation (Under Construction): https://tiingo-python.readthedocs.io.
 
 Features
 --------
