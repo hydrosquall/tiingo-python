@@ -28,7 +28,7 @@ test_requirements = [
 
 setup(
     name='tiingo',
-    version='0.1.0',
+    version='0.1.1',
     description="REST Client for Tiingo Data Platform API",
     long_description=readme + '\n\n' + history,
     author="Cameron Yick",
