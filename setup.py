@@ -18,7 +18,7 @@ requirements = [
 
 setup_requirements = [
     'pytest-runner',
-    # TODO(hydrosquall): put setup requirements (distutils extensions, etc.) here
+    # TODO: put setup requirements (distutils extensions, etc.) here
 ]
 
 test_requirements = [

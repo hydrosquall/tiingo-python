@@ -1,11 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """Tests for `tiingo` package."""
+
 import pytest
 from tiingo import TiingoClient
 
+# TODO
+# Add tests for
+# Invalid API key
+# Invalid ticker, etc
+# Use unittest asserts rather than regular asserts
+# Wrap server errors with client side descriptive errors
+# Coerce startDate/endDate to string if they are passed in as datetime
+# Use VCR.py to enable offline testing
 
+
+# Refactor fixtures into separate file
 @pytest.fixture
 def ticker_price_response():
     """Test /tiingo/<ticker>/prices endpoint"""

@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-
-"""Top-level package for Tiingo Python."""
+from tiingo.api import TiingoClient
 
 __author__ = """Cameron Yick"""
 __email__ = 'cameron.yick@enigma.com'
-__version__ = '0.1.0'
-
-from tiingo.api import TiingoClient
+__version__ = '0.1.1'
