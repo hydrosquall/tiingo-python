@@ -31,7 +31,7 @@ class TiingoClient(RestClient):
     def __repr__(self):
         return '<TiingoClient(url="{}")>'.format(self._base_url)
 
-    # Define routes
+    # PRICE ENDPOINTS
     def get_ticker_metadata(self, ticker):
         """Return metadata for 1 ticker.
         """
@@ -39,9 +39,35 @@ class TiingoClient(RestClient):
         response = self._request('GET', url)
         return response.json()
 
+    def get_ticker_price(self, ticker, startDate=None, endDate=None,
+                         fmt='json',
+                         frequency='daily'):
+        """
+            By default, return latest EOD Composite Price for a stock ticker.
 
-    def get_latest_price(self, ticker):
-        raise NotImplementedError
+            Each feed on average contains 3 data sources.
 
-    def get_historical_price(self, ticker, startDate, endDate):
-        raise NotImplementedError
+            Supported tickers + Available Day Ranges are here:
+                https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip
+
+            Args:
+                startDate (string): Start of ticker range in YYYY-MM-DD format
+                endDate (string): End of ticker range in YYYY-MM-DD format
+                fmt (string): 'csv' or 'json'
+                frequency (string): Resample frequency
+        """
+
+        url = "tiingo/daily/{}/prices".format(ticker)
+
+        params = {
+            'format': fmt,
+            'frequency': frequency
+        }
+
+        if startDate:
+            params['startDate'] = startDate
+        if endDate:
+            params['endDate'] = endDate
+
+        response = self._request('GET', url, params=params)
+        return response.json()
