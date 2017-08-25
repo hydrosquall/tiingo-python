@@ -74,6 +74,7 @@ Features
 
 * Easy programmatic access to Tiingo API
 * Coming soon: client-side validation of tickers, to save your API calls!
+* Data validation of returned responses / case insensitivity
 * Free software: MIT license
 
 Credits

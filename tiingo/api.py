@@ -19,7 +19,6 @@ class TiingoClient(RestClient):
             api_key = self._config['api_key']
         except KeyError:
             api_key = os.environ.get('TIINGO_API_KEY')
-
         assert(api_key)
 
         self._headers = {
@@ -33,7 +32,7 @@ class TiingoClient(RestClient):
 
     # TICKER PRICE ENDPOINTS
     # https://api.tiingo.com/docs/tiingo/daily
-    def get_price_metadata(self, ticker):
+    def get_ticker_metadata(self, ticker):
         """Return metadata for 1 ticker.
         """
         url = "tiingo/daily/{}".format(ticker)
@@ -56,7 +55,6 @@ class TiingoClient(RestClient):
                 fmt (string): 'csv' or 'json'
                 frequency (string): Resample frequency
         """
-
         url = "tiingo/daily/{}/prices".format(ticker)
 
         params = {
