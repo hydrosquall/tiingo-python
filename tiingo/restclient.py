@@ -8,16 +8,16 @@ class RestClientError(Exception):
     pass
 
 
-class RestClient:
+class RestClient(object):
 
-    def __init__(self, base_url, config):
+    def __init__(self, config={}):
         """Base class for interacting with RESTful APIs
 
+           Child class MUST have a ._base_url property!
+
             Args:
-                base (string): base URL of REST API
                 config (dict): Arbitrary configuration options
         """
-        self._base_url = base_url
         self._config = config
 
         if config.get('session'):
