@@ -31,8 +31,9 @@ class TiingoClient(RestClient):
     def __repr__(self):
         return '<TiingoClient(url="{}")>'.format(self._base_url)
 
-    # PRICE ENDPOINTS
-    def get_ticker_metadata(self, ticker):
+    # TICKER PRICE ENDPOINTS
+    # https://api.tiingo.com/docs/tiingo/daily
+    def get_price_metadata(self, ticker):
         """Return metadata for 1 ticker.
         """
         url = "tiingo/daily/{}".format(ticker)
@@ -44,7 +45,6 @@ class TiingoClient(RestClient):
                          frequency='daily'):
         """
             By default, return latest EOD Composite Price for a stock ticker.
-
             Each feed on average contains 3 data sources.
 
             Supported tickers + Available Day Ranges are here:
@@ -71,3 +71,33 @@ class TiingoClient(RestClient):
 
         response = self._request('GET', url, params=params)
         return response.json()
+
+    # FUND DATA (From over 26,000 mutual funds)
+    # https://api.tiingo.com/docs/tiingo/funds
+    # TODO: Validate the models returned by the fund
+    def get_fund_metadata(self, fund):
+        """Return metadata for 1 mutual fund / ETF
+        """
+        url = "tiingo/funds/{}".format(fund)
+        response = self._request('GET', url)
+        return response.json()
+
+    def get_fund_metrics(self, fund, startDate=None, endDate=None):
+        """Return metrics about a fund. By default, return latest metrics.
+            Args:
+                startDate (string): Start of fund range in YYYY-MM-DD format
+                endDate (string): End of fund range in YYYY-MM-DD format
+                fmt (string): 'csv' or 'json'
+                frequency (string): Resample frequency
+        """
+        url = "tiingo/funds/{}/metrics".format(fund)
+        params = {}
+        if startDate:
+            params['startDate'] = startDate
+        if endDate:
+            params['endDate'] = endDate
+
+        response = self._request('GET', url, params=params)
+        return response.json()
+
+    # NEWS FEEDS
