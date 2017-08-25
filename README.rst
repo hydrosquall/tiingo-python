@@ -17,8 +17,13 @@ Tiingo Python
      :target: https://pyup.io/repos/github/hydrosquall/tiingo-python/
      :alt: Updates
 
+.. image:: https://codecov.io/gh/hydrosquall/tiingo-python/branch/master/graph/badge.svg
+     :target: https://codecov.io/gh/hydrosquall/tiingo-python
+     :alt: Coverage
 
-Tiingo is a financial data platform that makes high quality financial tools available to all. It has a RESTful and Real-Time API. Presently, the API includes support for the following endpoints:
+
+
+Tiingo is a financial data platform that makes high quality financial tools available to all. They have a RESTful and Real-Time Data API. Presently, the API includes support for the following endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
 * Mutual Funds Metadata + Metrics updated daily. Supports over 26,500 Mutual Funds and ETFs.
@@ -34,7 +39,7 @@ First, install the library from PyPi:
 
    pip install tiingo
 
-Then, use the TiingoClient to make your API calls. (Other parameters are available for each endpoint beyond what has been written below, see docs for full details.)
+Now you can use the TiingoClient to make your API calls. (Other parameters are available for each endpoint beyond what has been written below, see docs for full details.)
 
 .. code-block:: python
 
@@ -54,9 +59,10 @@ Then, use the TiingoClient to make your API calls. (Other parameters are availab
    # Get latest prices, based on 3+ sources, as CSV or JSON, sampled weekly
    ticker_price = client.get_ticker_price("GOOGL", frequency="weekly")
 
+   # WARNING: These will only work if your account has access to the 
+   # Mutual Funds portion of the API.
    # Get mutual fund metadata
    fund_metadata = client.get_fund_metadata("VFINX")
-
    # Get mutual fund Expenses and Shareholder Fee Data for June 2017
    fund_metrics = client.get_fund_metrics("VFINX", "2017-06-01", "2017-06-30")
 
@@ -73,9 +79,11 @@ Features
 --------
 
 * Easy programmatic access to Tiingo API
-* Coming soon: client-side validation of tickers, to save your API calls!
-* Data validation of returned responses / case insensitivity
-* Free software: MIT license
+* Coming soon: 
+    * Client-side validation of tickers, to save your API calls!
+    * Data validation of returned responses 
+    * Case insensitivity
+
 
 Credits
 ---------
