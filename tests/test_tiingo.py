@@ -5,8 +5,7 @@
 
 import pytest
 
-
-from tiingo import tiingo
+from tiingo import TiingoClient
 
 
 @pytest.fixture
@@ -15,7 +14,8 @@ def response():
 
     See more at: http://doc.pytest.org/en/latest/fixture.html
     """
-    # import requests
+    t = TiingoClient()
+    return t.get_ticker_price("GOOGL")
     # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
 
 
@@ -23,3 +23,4 @@ def test_content(response):
     """Sample pytest test function with the pytest fixture as an argument."""
     # from bs4 import BeautifulSoup
     # assert 'GitHub' in BeautifulSoup(response.content).title.string
+    assert len(response) > 0
