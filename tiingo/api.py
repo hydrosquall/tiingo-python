@@ -101,3 +101,32 @@ class TiingoClient(RestClient):
         return response.json()
 
     # NEWS FEEDS
+    def get_news(self, tickers=[], tags=[], sources=[], startDate=None,
+                 endDate=None, limit=100, offset=0, sortBy="publishedDate"):
+        """Return metrics about a fund. By default, return latest metrics.
+            Args:
+                startDate (string): Start of fund range in YYYY-MM-DD format
+                endDate (string): End of fund range in YYYY-MM-DD format
+                fmt (string): 'csv' or 'json'
+                frequency (string): Resample frequency
+        """
+        # Stub:
+        # https://api.tiingo.com/docs/tiingo/news
+        # "Finish later"
+        raise NotImplementedError
+
+    def get_bulk_news(self, file_id=None):
+        """Only available to institutional clients.
+            If no ID is provided, return array of available ids.
+            If ID is provided, provides URL which you can use to download your
+            file, as well as some metadata about that file.
+        """
+        # Stub:
+        # https://api.tiingo.com/docs/tiingo/news
+        # "Finish later"
+        if file_id:
+            url = "tiingo/news/bulk_download"
+        else:
+            url = "tiingo/news/bulk_download{}".format(file_id)
+        response = self._request('GET', url)
+        return response.json()
