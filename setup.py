@@ -1,19 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""The setup script."""
-
+"""The setup script. Based on Jeff Knupp's Demo + Cookiecutter"""
+import io
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
+def read(*filenames, **kwargs):
+    encoding = kwargs.get('encoding', 'utf-8')
+    sep = kwargs.get('sep', '\n')
+    buf = []
+    for filename in filenames:
+        with io.open(filename, encoding=encoding) as f:
+            buf.append(f.read())
+    return sep.join(buf)
+
+
+long_description = read('README.rst', 'HISTORY.rst')
 
 requirements = [
-    # TODO: put package requirements here
-    'requests'
+    'requests',
 ]
 
 setup_requirements = [
@@ -23,23 +29,22 @@ setup_requirements = [
 
 test_requirements = [
     'pytest',
-    # TODO: put package test requirements here
 ]
 
 setup(
     name='tiingo',
-    version='0.1.2',
+    version="0.1.2",
     description="REST Client for Tiingo Data Platform API",
-    long_description=readme + '\n\n' + history,
+    long_description=long_description,
     author="Cameron Yick",
     author_email='cameron.yick@enigma.com',
-    url='https://github.com/hydrosquall/tiingo',
+    url='https://github.com/hydrosquall/tiingo-python',
     packages=find_packages(include=['tiingo']),
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",
     zip_safe=False,
-    keywords='tiingo',
+    keywords=['tiingo', 'finance', 'stocks'],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
