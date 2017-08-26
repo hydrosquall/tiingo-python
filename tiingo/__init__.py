@@ -3,4 +3,4 @@ from tiingo.api import TiingoClient
 
 __author__ = """Cameron Yick"""
 __email__ = 'cameron.yick@enigma.com'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
