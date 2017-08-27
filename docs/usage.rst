@@ -6,7 +6,9 @@ To use Tiingo Python in a project::
 
     import tiingo
 
-Now you can use the ``TiingoClient`` to make your API calls. (Other parameters are available for each endpoint beyond what has been written below, see docs for full details.)
+
+Next, initialize your client object. It is recommended to use an environment
+variable to initialize your client object for convenience.
 
 .. code-block:: python
 
@@ -14,11 +16,26 @@ Now you can use the ``TiingoClient`` to make your API calls. (Other parameters a
    # Set TIINGO_API_KEY in your environment variables in your .bash_profile, OR
    # pass a dictionary with 'api_key' as a key into the TiingoClient.
 
-   # With environment variable
    client = TiingoClient()
-   # With hardcoded dictionary key
-   client = TiingoClient({'api_key': "MY_SECRET_API_KEY"})
 
+Alternately, you may use a dictionary to customize/authorize your client.
+
+.. code-block:: python
+   config = {}
+
+   # To reuse the same HTTP Session across API calls (and have better)
+   # performance, include a session key.
+   config['session'] = True
+   # If you don't have your API key as an environment variable,
+   # pass it in via a configuration dictionary.
+   config['api_key'] = "MY_SECRET_API_KEY"
+
+   # Initialize
+   client = TiingoClient(config)
+
+Now you can use ``TiingoClient`` to make your API calls. (Other parameters are available for each endpoint beyond what has been written below, see the Tiingo website for full details).
+
+.. code-block:: python
    # Get Ticker
    # See official docs for list of all supported tickers + date ranges
    ticker_metadata = client.get_ticker_metadata("GOOGL")
