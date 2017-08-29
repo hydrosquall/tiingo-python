@@ -6,6 +6,7 @@ import csv
 import pytest
 from unittest import TestCase
 from tiingo import TiingoClient
+from tiingo.restclient import RestClientError
 
 
 # TODO
@@ -87,15 +88,25 @@ class TestTickerPrices(TestCase):
 # FUND ENDPOINTS
 # tiingo/funds
 # Try to get a working API key from Tiingo development for testing purposes
-@pytest.mark.skip(reason="My API key doesn't have access to mutual funds API")
+
 class TestMutualFunds(TestCase):
 
+    def setUp(self):
+        self._client = TiingoClient()
+        self._metadata_response = self._client.get_fund_metrics('VFINX')
+        self._metrics_response = \
+            self._client.get_fund_metrics('VFINX',
+                                          startDate="2012-1-1",
+                                          endDate="2016-1-1")
+
+    @pytest.mark.skip(reason="My API key doesn't have access to mutual funds API")
     def test_fund_metadata(self, fund_metadata_response):
         """Refactor this with python data schemavalidation"""
         assert fund_metadata_response.get('ticker') == "vfinx"
         assert fund_metadata_response.get("shareClass", startDate="2012-1-1",
                                           endDate="2016-1-1")
 
+    @pytest.mark.skip(reason="My API key doesn't have access to mutual funds API")
     def test_fund_metrics(self, fund_metrics_response):
         """Test Fund Level Metrics"""
         assert len(fund_metrics_response) > 0
@@ -112,6 +123,11 @@ class TestNews(TestCase):
     def test_get_news_articles(self):
         """Rewrite when method is implemented
         """
-        with self.assertRaises(NotImplementedError) as context:
-            self.get_news()
-            print(context)
+        with self.assertRaises(NotImplementedError):
+            self._client.get_news()
+
+    def test_get_news_bulk(self):
+        """Will fail because this API key lacks institutional license"""
+        with self.assertRaises(RestClientError):
+            value = self._client.get_bulk_news(file_id="1")
+            assert value
