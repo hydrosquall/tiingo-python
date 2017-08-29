@@ -13,6 +13,7 @@ from tiingo import TiingoClient
 # Wrap server errors with client side descriptive errors
 # Coerce startDate/endDate to string if they are passed in as datetime
 # Use VCR.py to enable offline testing
+# Expand test coverage
 
 
 # Refactor fixtures into separate file
