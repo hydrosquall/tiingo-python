@@ -85,7 +85,7 @@ class TiingoClient(RestClient):
         if fmt == "json":
             return response.json()
         else:
-            return response.content
+            return response.content.decode("utf-8")
 
     # FUND DATA (From over 26,000 mutual funds)
     # https://api.tiingo.com/docs/tiingo/funds
