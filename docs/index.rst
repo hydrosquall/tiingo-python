@@ -15,7 +15,7 @@ Welcome to Tiingo Python's documentation!
     :target: https://pyup.io/repos/github/hydrosquall/tiingo-python/
     :alt: Updates
 
-.. image:: https://codecov.io/gh/hydrosquall/tiingo-python/branch/master/graph/badge.svg
+.. image:: https://img.shields.io/codecov/c/github/hydrosquall/tiingo-python.svg?maxAge=600
     :target: https://codecov.io/gh/hydrosquall/tiingo-python
     :alt: Coverage
 
