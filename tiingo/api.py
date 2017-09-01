@@ -87,38 +87,6 @@ class TiingoClient(RestClient):
         else:
             return response.content.decode("utf-8")
 
-    # FUND DATA (From over 26,000 mutual funds)
-    # https://api.tiingo.com/docs/tiingo/funds
-    # TODO: Validate the models returned by the fund
-    def get_fund_metadata(self, fund):
-        """Return metadata for 1 mutual fund / ETF
-
-            Args:
-                fund (string): Unique identifier for fund/ETF
-        """
-        url = "tiingo/funds/{}".format(fund)
-        response = self._request('GET', url)
-        return response.json()
-
-    def get_fund_metrics(self, fund, startDate=None, endDate=None):
-        """Return metrics about a fund. If no date provided,
-           return latest metrics.
-            Args:
-                fund (string): Unique identifier for fund/ETF
-                startDate (string): Start of fund range in YYYY-MM-DD format
-                endDate (string): End of fund range in YYYY-MM-DD format
-        """
-        url = "tiingo/funds/{}/metrics".format(fund)
-        params = {}
-
-        if startDate:
-            params['startDate'] = startDate
-        if endDate:
-            params['endDate'] = endDate
-
-        response = self._request('GET', url, params=params)
-        return response.json()
-
     # NEWS FEEDS
     # tiingo/news
     def get_news(self, tickers=[], tags=[], sources=[], startDate=None,

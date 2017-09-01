@@ -20,20 +20,6 @@ from tiingo.restclient import RestClientError
 # Expand test coverage
 
 
-@pytest.fixture
-def fund_metadata_response():
-    """Test /tiingo/<ticker> endpoint"""
-    t = TiingoClient()
-    return t.get_fund_metadata("vfinx")
-
-
-@pytest.fixture
-def fund_metrics_response():
-    """Test /tiingo/<ticker> endpoint"""
-    t = TiingoClient()
-    return t.get_fund_metrics("VFINX")
-
-
 def test_client_repr():
     """Test representation of client when logged to console"""
     client = TiingoClient()
@@ -83,35 +69,6 @@ class TestTickerPrices(TestCase):
         with self.assertRaises(NotImplementedError):
             response = self._client.list_tickers()
             assert not response
-
-
-# FUND ENDPOINTS
-# tiingo/funds
-# Try to get a working API key from Tiingo development for testing purposes
-
-class TestMutualFunds(TestCase):
-
-    def setUp(self):
-        self._client = TiingoClient()
-        self._metadata_response = self._client.get_fund_metrics('VFINX')
-        self._metrics_response = \
-            self._client.get_fund_metrics('VFINX',
-                                          startDate="2012-1-1",
-                                          endDate="2016-1-1")
-
-    @pytest.mark.skip(reason="My API key doesn't have access to mutual funds API")
-    def test_fund_metadata(self, fund_metadata_response):
-        """Refactor this with python data schemavalidation"""
-        assert fund_metadata_response.get('ticker') == "vfinx"
-        assert fund_metadata_response.get("shareClass", startDate="2012-1-1",
-                                          endDate="2016-1-1")
-
-    @pytest.mark.skip(reason="My API key doesn't have access to mutual funds API")
-    def test_fund_metrics(self, fund_metrics_response):
-        """Test Fund Level Metrics"""
-        assert len(fund_metrics_response) > 0
-        assert fund_metrics_response[0].get('managementFee')
-
 
 # News Feed
 # tiingo/news

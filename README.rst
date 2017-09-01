@@ -26,7 +26,6 @@ Tiingo Python
 Tiingo is a financial data platform that makes high quality financial tools available to all. They have a RESTful and Real-Time Data API. Presently, the API includes support for the following endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
-* Mutual Funds Metadata + Metrics updated daily. Supports over 26,500 Mutual Funds and ETFs.
 * (Coming Soon): Curated news from top financial news sources + curated blogs. Stories are tagged by Tiingo's algorithms.
 
 
@@ -77,13 +76,6 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
   # Get latest prices, based on 3+ sources, as CSV or JSON, sampled weekly
   ticker_price = client.get_ticker_price("GOOGL", frequency="weekly")
 
-  # WARNING: These will only work if your account has access to the 
-  # Mutual Funds portion of the API.
-  # Get mutual fund metadata
-  fund_metadata = client.get_fund_metadata("VFINX")
-  # Get mutual fund Expenses and Shareholder Fee Data for June 2017
-  fund_metrics = client.get_fund_metrics("VFINX", "2017-06-01", "2017-06-30")
-
   # Get news articles about given tickers or search terms from given domains
   # Coming soon!
 
@@ -98,6 +90,7 @@ Features
 --------
 
 * Easy programmatic access to Tiingo API
+# Ability to reuse session across API calls for better performance
 * Coming soon: 
     * Client-side validation of tickers, to save your API calls!
     * Data validation of returned responses 

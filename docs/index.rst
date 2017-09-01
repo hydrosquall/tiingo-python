@@ -37,7 +37,6 @@ Contents:
 Tiingo is a financial data platform that makes high quality financial tools available to all. They have a RESTful and Real-Time Data API. Presently, the API includes support for the following endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
-* Mutual Funds Metadata + Metrics updated daily. Supports over 26,500 Mutual Funds and ETFs.
 * (Coming Soon): Curated news from top financial news sources + curated blogs. Stories are tagged by Tiingo's algorithms.
 
 

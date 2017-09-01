@@ -43,13 +43,6 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
    # Get latest prices, based on 3+ sources, as CSV or JSON, sampled weekly
    ticker_price = client.get_ticker_price("GOOGL", frequency="weekly")
 
-   # WARNING: These will only work if your account has access to the 
-   # Mutual Funds portion of the API.
-   # Get mutual fund metadata
-   fund_metadata = client.get_fund_metadata("VFINX")
-   # Get mutual fund Expenses and Shareholder Fee Data for June 2017
-   fund_metrics = client.get_fund_metrics("VFINX", "2017-06-01", "2017-06-30")
-
    # Get news articles about given tickers or search terms from given domains
    # Coming soon!
 
