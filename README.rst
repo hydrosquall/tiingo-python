@@ -6,6 +6,10 @@ Tiingo Python
 .. image:: https://img.shields.io/pypi/v/tiingo.svg
         :target: https://pypi.python.org/pypi/tiingo
 
+.. image:: https://img.shields.io/codecov/c/github/hydrosquall/tiingo-python.svg?maxAge=600
+     :target: https://codecov.io/gh/hydrosquall/tiingo-python
+     :alt: Coverage
+
 .. image:: https://img.shields.io/travis/hydrosquall/tiingo-python.svg
         :target: https://travis-ci.org/hydrosquall/tiingo-python
 
@@ -17,13 +21,8 @@ Tiingo Python
      :target: https://pyup.io/repos/github/hydrosquall/tiingo-python/
      :alt: Updates
 
-.. image:: https://codecov.io/gh/hydrosquall/tiingo-python/branch/master/graph/badge.svg
-     :target: https://codecov.io/gh/hydrosquall/tiingo-python
-     :alt: Coverage
 
-
-
-Tiingo is a financial data platform that makes high quality financial tools available to all. They have a RESTful and Real-Time Data API. Presently, the API includes support for the following endpoints:
+Tiingo is a financial data platform that makes high quality financial tools available to all. Tiingo has a REST and Real-Time Data API, which this library helps you to access. Presently, the API includes support for the following endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
 * (Coming Soon): Curated news from top financial news sources + curated blogs. Stories are tagged by Tiingo's algorithms.
@@ -90,11 +89,11 @@ Features
 --------
 
 * Easy programmatic access to Tiingo API
-# Ability to reuse session across API calls for better performance
+* Reuse requests session across API calls for better performance
 * Coming soon: 
     * Client-side validation of tickers, to save your API calls!
     * Data validation of returned responses 
-    * Case insensitivity
+    * Case insensitivity for ticker names
 
 
 Credits
