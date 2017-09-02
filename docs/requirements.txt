@@ -1,1 +1,1 @@
-tiingo
+tiingo==0.1.3
