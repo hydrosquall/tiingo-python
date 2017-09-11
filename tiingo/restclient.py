@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+import logging
 import requests
 from requests.exceptions import HTTPError
 
@@ -50,6 +52,7 @@ class RestClient(object):
         try:
             resp.raise_for_status()
         except HTTPError as e:
+            logging.error(resp.content)
             raise RestClientError(e)
 
         return resp
