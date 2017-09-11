@@ -92,8 +92,9 @@ class TiingoClient(RestClient):
     def get_news(self, tickers=[], tags=[], sources=[], startDate=None,
                  endDate=None, limit=100, offset=0, sortBy="publishedDate"):
         """Return list of news articles matching given search terms
-
             https://api.tiingo.com/docs/tiingo/news
+
+            # If no tickers provided, just searches general tickers
 
             Args:
                 tickers [string] : List of unique Stock Tickers to search
@@ -104,9 +105,27 @@ class TiingoClient(RestClient):
                 offset (int): Search results offset, used for paginating
                 sortBy (string): "publishedDate" OR (#TODO: UPDATE THIS)
         """
-        # params = {}
+        # url = "tiingo/news"
+        # params = {
+        #     'limit': limit,
+        #     'offset': offset,
+        #     'sortBy': sortBy
+        # }
+        # # TBD: whether these commas are necessary if just pass list instead
         # if tickers:
-        #     tickers = ",".join(tickers)
+        #     params['tickers'] = ",".join(tickers)
+        # if tags:
+        #     params['tags'] = ",".join(tags)
+        # if sources:
+        #     params['sources'] = ",".join(sources)
+
+        # if startDate:
+        #     params['startDate'] = startDate
+        # if endDate:
+        #     params['endDate'] = endDate
+
+        # response = self._request('GET', url, params=params)
+        # return response.json()
         raise NotImplementedError
 
     def get_bulk_news(self, file_id=None):
