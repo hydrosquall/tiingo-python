@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import pkg_resources
 import csv
-from io import StringIO
 from zipfile import ZipFile
 
 
@@ -11,6 +11,27 @@ from tiingo.restclient import RestClient
 import requests
 
 VERSION = pkg_resources.get_distribution("tiingo").version
+
+
+# These methods enable python 2 + 3 compatibility.
+def get_zipfile_from_response(response):
+    if sys.version_info < (3, 0):  # python 2
+        from StringIO import StringIO as Buffer
+    else:  # python 3
+        from io import BytesIO as Buffer
+    buffered = Buffer(response.content)
+    return ZipFile(buffered)
+
+
+def get_buffer_from_zipfile(zipfile, filename):
+    if sys.version_info < (3, 0):  # python 2
+        from StringIO import StringIO
+        return StringIO(zipfile.read(filename))
+    else:  # python 3
+        # Source:
+        # https://stackoverflow.com/questions/5627954/py3k-how-do-you-read-a-file-inside-a-zip-file-as-text-not-bytes
+        from io import (TextIOWrapper, BytesIO)
+        return TextIOWrapper(BytesIO(zipfile.read(filename)))
 
 
 class TiingoClient(RestClient):
@@ -51,8 +72,8 @@ class TiingoClient(RestClient):
            """
         listing_file_url = "https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip"
         response = requests.get(listing_file_url)
-        zipdata = ZipFile(StringIO(response.content))
-        raw_csv = StringIO(zipdata.read('supported_tickers.csv'))
+        zipdata = get_zipfile_from_response(response)
+        raw_csv = get_buffer_from_zipfile(zipdata, 'supported_tickers.csv')
         reader = csv.DictReader(raw_csv)
 
         return [row for row in reader
