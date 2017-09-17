@@ -3,7 +3,7 @@
 """Tests for `tiingo` package."""
 
 import csv
-import pytest
+
 from unittest import TestCase
 from tiingo import TiingoClient
 from tiingo.restclient import RestClientError
@@ -12,7 +12,7 @@ from tiingo.restclient import RestClientError
 # TODO
 # Add tests for
 # Invalid API key
-# Invalid ticker, etc
+# Invalid ticker
 # Use unittest asserts rather than regular asserts
 # Wrap server errors with client side descriptive errors
 # Coerce startDate/endDate to string if they are passed in as datetime
@@ -70,21 +70,42 @@ class TestTickerPrices(TestCase):
             response = self._client.list_tickers()
             assert not response
 
-# News Feed
+
 # tiingo/news
 class TestNews(TestCase):
 
     def setUp(self):
         self._client = TiingoClient()
+        self.article_keys = [  # Properties every article should have.
+            'description',
+            'title',
+            'url',
+            'publishedDate',
+            'tags',
+            'source',
+            'tickers',
+            'crawlDate',
+            'id'
+        ]
 
     def test_get_news_articles(self):
-        """Rewrite when method is implemented
-        """
-        with self.assertRaises(NotImplementedError):
-            self._client.get_news()
+        """Confirm that news article work"""
+        search_params = {
+            "tickers": ["aapl", "googl"],
+            "tags": ["Technology", "Bitcoin"],
+            "startDate": "2016-01-01",
+            "endDate": "2017-08-31",
+            "sources": ['washingtonpost.com', 'altcointoday.com'],
+            "limit": 10
+        }
+
+        articles = self._client.get_news(**search_params)
+        for article in articles:
+            assert all(key in article for key in self.article_keys)
 
     def test_get_news_bulk(self):
-        """Will fail because this API key lacks institutional license"""
+        """Fails because this API key lacks institutional license"""
+
         with self.assertRaises(RestClientError):
             value = self._client.get_bulk_news(file_id="1")
             assert value

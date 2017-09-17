@@ -94,7 +94,7 @@ class TiingoClient(RestClient):
         """Return list of news articles matching given search terms
             https://api.tiingo.com/docs/tiingo/news
 
-            # If no tickers provided, just searches general tickers
+            # Dates are in YYYY-MM-DD Format.
 
             Args:
                 tickers [string] : List of unique Stock Tickers to search
@@ -105,28 +105,28 @@ class TiingoClient(RestClient):
                 offset (int): Search results offset, used for paginating
                 sortBy (string): "publishedDate" OR (#TODO: UPDATE THIS)
         """
-        # url = "tiingo/news"
-        # params = {
-        #     'limit': limit,
-        #     'offset': offset,
-        #     'sortBy': sortBy
-        # }
-        # # TBD: whether these commas are necessary if just pass list instead
-        # if tickers:
-        #     params['tickers'] = ",".join(tickers)
-        # if tags:
-        #     params['tags'] = ",".join(tags)
-        # if sources:
-        #     params['sources'] = ",".join(sources)
+        url = "tiingo/news"
+        params = {
+            'limit': limit,
+            'offset': offset,
+            'sortBy': sortBy
+        }
 
-        # if startDate:
-        #     params['startDate'] = startDate
-        # if endDate:
-        #     params['endDate'] = endDate
+        # TBD: whether these commas are necessary if just pass list instead
+        if tickers:
+            params['tickers'] = ",".join(tickers)
+        if tags:
+            params['tags'] = ",".join(tags)
+        if sources:
+            params['sources'] = ",".join(sources)
 
-        # response = self._request('GET', url, params=params)
-        # return response.json()
-        raise NotImplementedError
+        if startDate:
+            params['startDate'] = startDate
+        if endDate:
+            params['endDate'] = endDate
+
+        response = self._request('GET', url, params=params)
+        return response.json()
 
     def get_bulk_news(self, file_id=None):
         """Only available to institutional clients.
@@ -135,9 +135,9 @@ class TiingoClient(RestClient):
             file, as well as some metadata about that file.
         """
         if file_id:
-            url = "tiingo/news/bulk_download"
+            url = "tiingo/news/bulk_download/{}".format(file_id)
         else:
-            url = "tiingo/news/bulk_download{}".format(file_id)
+            url = "tiingo/news/bulk_download"
 
         response = self._request('GET', url)
         return response.json()
