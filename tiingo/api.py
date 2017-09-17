@@ -109,22 +109,13 @@ class TiingoClient(RestClient):
         params = {
             'limit': limit,
             'offset': offset,
-            'sortBy': sortBy
+            'sortBy': sortBy,
+            'tickers': tickers,
+            'sources': sources,
+            'tags': tags,
+            'startDate': startDate,
+            'endDate': endDate
         }
-
-        # TBD: whether these commas are necessary if just pass list instead
-        if tickers:
-            params['tickers'] = ",".join(tickers)
-        if tags:
-            params['tags'] = ",".join(tags)
-        if sources:
-            params['sources'] = ",".join(sources)
-
-        if startDate:
-            params['startDate'] = startDate
-        if endDate:
-            params['endDate'] = endDate
-
         response = self._request('GET', url, params=params)
         return response.json()
 

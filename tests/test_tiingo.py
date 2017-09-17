@@ -90,16 +90,19 @@ class TestNews(TestCase):
 
     def test_get_news_articles(self):
         """Confirm that news article work"""
+        NUM_ARTICLES = 10
+
         search_params = {
             "tickers": ["aapl", "googl"],
             "tags": ["Technology", "Bitcoin"],
             "startDate": "2016-01-01",
             "endDate": "2017-08-31",
             "sources": ['washingtonpost.com', 'altcointoday.com'],
-            "limit": 10
+            "limit": NUM_ARTICLES
         }
 
         articles = self._client.get_news(**search_params)
+        assert len(articles) == NUM_ARTICLES
         for article in articles:
             assert all(key in article for key in self.article_keys)
 
