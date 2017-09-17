@@ -112,3 +112,10 @@ class TestNews(TestCase):
         with self.assertRaises(RestClientError):
             value = self._client.get_bulk_news(file_id="1")
             assert value
+
+    def test_get_news_bulk_ids(self):
+        """Fails because this API key lacks institutional license"""
+
+        with self.assertRaises(RestClientError):
+            value = self._client.get_bulk_news()
+            assert value
