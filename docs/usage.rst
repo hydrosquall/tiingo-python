@@ -43,8 +43,12 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
    # Get latest prices, based on 3+ sources, as CSV or JSON, sampled weekly
    ticker_price = client.get_ticker_price("GOOGL", frequency="weekly")
 
-   # Get news articles about given tickers or search terms from given domains
-   # Coming soon!
+   # Get news articles about given tickers. Requires Pro account.
+   articles = client.get_news(tickers=['GOOGL', 'APPL'], 
+                              tags=['Bitcoin'], 
+                              sources=['washingtonpost.com'],
+                              startDate='2017-01-01',
+                              endDate='2017-08-31')
 
 Further Docs
 --------

@@ -25,7 +25,7 @@ Tiingo Python
 Tiingo is a financial data platform that makes high quality financial tools available to all. Tiingo has a REST and Real-Time Data API, which this library helps you to access. Presently, the API includes support for the following endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
-* (Coming Soon): Curated news from top financial news sources + curated blogs. Stories are tagged by Tiingo's algorithms.
+* Curated news from top financial news sources + blogs. Stories are tagged with topic tags and relevant stock tickers by Tiingo's algorithms. 
 
 
 Usage
@@ -64,7 +64,7 @@ Alternately, you may use a dictionary to customize/authorize your client.
   # Initialize
   client = TiingoClient(config)
 
-Now you can use ``TiingoClient`` to make your API calls. (Other parameters are available for each endpoint beyond what has been written below, see the Tiingo website for full details).
+Now you can use ``TiingoClient`` to make your API calls. (Other parameters are available for each endpoint beyond what is used in the below examples, inspect the docstring for each function for details.).
 
 .. code-block:: python
   
@@ -76,7 +76,11 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
   ticker_price = client.get_ticker_price("GOOGL", frequency="weekly")
 
   # Get news articles about given tickers or search terms from given domains
-  # Coming soon!
+  articles = client.get_news(tickers=['GOOGL', 'APPL'], 
+                              tags=['Laptops'], 
+                              sources=['washingtonpost.com'],
+                              startDate='2017-01-01',
+                              endDate='2017-08-31')
 
 
 Further Docs
@@ -91,7 +95,7 @@ Features
 * Easy programmatic access to Tiingo API
 * Reuse requests session across API calls for better performance
 * Coming soon: 
-    * Client-side validation of tickers, to save your API calls!
+    * Client-side validation of tickers
     * Data validation of returned responses 
     * Case insensitivity for ticker names
 
