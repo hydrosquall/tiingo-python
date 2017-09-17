@@ -3,6 +3,7 @@
 
 """The setup script. Based on Jeff Knupp's Demo + Cookiecutter"""
 import io
+import os
 from setuptools import setup, find_packages
 
 
@@ -31,15 +32,23 @@ test_requirements = [
     'pytest',
 ]
 
+# Load the package's __version__.py module as a dictionary.
+# Via https://github.com/kennethreitz/setup.py/blob/master/setup.py
+NAME = 'tiingo'
+here = os.path.abspath(os.path.dirname(__file__))
+about = {}
+with open(os.path.join(here, NAME, '__version__.py')) as f:
+    exec(f.read(), about)
+
 setup(
-    name='tiingo',
-    version='0.3.0',
+    name=NAME,
+    version=about['__version__'],
     description="REST Client for Tiingo Data Platform API",
     long_description=long_description,
     author="Cameron Yick",
     author_email='cameron.yick@enigma.com',
     url='https://github.com/hydrosquall/tiingo-python',
-    packages=find_packages(include=['tiingo']),
+    packages=find_packages(include=[NAME]),
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",

@@ -54,6 +54,7 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
                               startDate='2017-01-01',
                               endDate='2017-08-31')
 
+
 Further Docs
 --------
 
