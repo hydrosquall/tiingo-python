@@ -3,7 +3,7 @@
 import os
 import pkg_resources
 import csv
-from StringIO import StringIO
+from io import StringIO
 from zipfile import ZipFile
 
 
