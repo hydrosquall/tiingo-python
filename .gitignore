@@ -67,3 +67,6 @@ target/
 # Remove Project Components from tracking
 travis_pypi_setup.py
 
+# Mac
+.DS_Store
+

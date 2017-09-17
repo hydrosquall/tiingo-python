@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import io
 import os
+import csv
 import pkg_resources
 from tiingo.restclient import RestClient
 
@@ -35,11 +37,24 @@ class TiingoClient(RestClient):
 
     # TICKER PRICE ENDPOINTS
     # https://api.tiingo.com/docs/tiingo/daily
-    def list_tickers(self):
-        """Return a list of all supported tickers.
+    def list_stock_tickers(self):
+        """Return a list of dicts of metadata tickers for all supported Stocks
+            as well as metadata about each ticker.
+           Tickers for unrelated products are omitted.
            https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip
            """
-        raise NotImplementedError
+        resource_package = __name__
+        listing_path = "/".join(('data', 'supported_tickers.csv'))
+        listing_file = pkg_resources.resource_stream(resource_package,
+                                                     listing_path)
+        tickers = []
+        reader = csv.DictReader(listing_file)
+        for row in reader:
+            tickers = [row for row in reader
+                       if row.get('assetType') == 'Stock']
+
+        return [ticker for
+                ticker in tickers if ticker.get('assetType') == 'Stock']
 
     def get_ticker_metadata(self, ticker):
         """Return metadata for 1 ticker

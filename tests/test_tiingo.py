@@ -64,11 +64,11 @@ class TestTickerPrices(TestCase):
         assert self._ticker_metadata_response.get('ticker') == "GOOGL"
         assert self._ticker_metadata_response.get("name")
 
-    def test_list_tickers(self):
+    def test_list_stock_tickers(self):
         """Update this test when the method is added."""
-        with self.assertRaises(NotImplementedError):
-            response = self._client.list_tickers()
-            assert not response
+        tickers = self._client.list_stock_tickers()
+        assert len(tickers) > 1
+        assert all(ticker['assetType'] == 'Stock' for ticker in tickers)
 
 
 # tiingo/news
