@@ -69,11 +69,14 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
 .. code-block:: python
   
   # Get Ticker
-  # See official docs for list of all supported tickers + date ranges
   ticker_metadata = client.get_ticker_metadata("GOOGL")
 
   # Get latest prices, based on 3+ sources, as CSV or JSON, sampled weekly
   ticker_price = client.get_ticker_price("GOOGL", frequency="weekly")
+
+  # Check what tickers are available, as well as metadata about each ticker
+  # including supported currency, exchange, and available start/end dates.
+  tickers = client.get_stock_tickers()
 
   # Get news articles about given tickers or search terms from given domains
   articles = client.get_news(tickers=['GOOGL', 'APPL'], 
@@ -81,6 +84,8 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
                               sources=['washingtonpost.com'],
                               startDate='2017-01-01',
                               endDate='2017-08-31')
+
+  # Get ai
 
 
 Further Docs

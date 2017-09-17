@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import io
 import os
-import csv
 import pkg_resources
+import csv
+from StringIO import StringIO
+from zipfile import ZipFile
+
+
 from tiingo.restclient import RestClient
+import requests
 
 VERSION = pkg_resources.get_distribution("tiingo").version
 
@@ -39,22 +43,20 @@ class TiingoClient(RestClient):
     # https://api.tiingo.com/docs/tiingo/daily
     def list_stock_tickers(self):
         """Return a list of dicts of metadata tickers for all supported Stocks
-            as well as metadata about each ticker.
+            as well as metadata about each ticker. This includes supported
+            date range, the exchange the ticker is traded on, and the currency
+            the stock is traded on.
            Tickers for unrelated products are omitted.
            https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip
            """
-        resource_package = __name__
-        listing_path = "/".join(('data', 'supported_tickers.csv'))
-        listing_file = pkg_resources.resource_stream(resource_package,
-                                                     listing_path)
-        tickers = []
-        reader = csv.DictReader(listing_file)
-        for row in reader:
-            tickers = [row for row in reader
-                       if row.get('assetType') == 'Stock']
+        listing_file_url = "https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip"
+        response = requests.get(listing_file_url)
+        zipdata = ZipFile(StringIO(response.content))
+        raw_csv = StringIO(zipdata.read('supported_tickers.csv'))
+        reader = csv.DictReader(raw_csv)
 
-        return [ticker for
-                ticker in tickers if ticker.get('assetType') == 'Stock']
+        return [row for row in reader
+                if row.get('assetType') == 'Stock']
 
     def get_ticker_metadata(self, ticker):
         """Return metadata for 1 ticker
