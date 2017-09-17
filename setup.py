@@ -17,7 +17,12 @@ def read(*filenames, **kwargs):
     return sep.join(buf)
 
 
-long_description = read('README.rst', 'HISTORY.rst')
+NAME = 'tiingo'
+AUTHOR = "Cameron Yick"
+EMAIL = 'cameron.yick@enigma.com'
+URL = 'https://github.com/hydrosquall/tiingo-python'
+DESCRIPTION = "REST Client for Tiingo Data Platform API"
+LONG_DESCRIPTION = read('README.rst', 'HISTORY.rst')
 
 requirements = [
     'requests',
@@ -25,29 +30,29 @@ requirements = [
 
 setup_requirements = [
     'pytest-runner',
-    # TODO: put setup requirements (distutils extensions, etc.) here
 ]
 
 test_requirements = [
     'pytest',
 ]
 
+# Metadata about the module
 # Load the package's __version__.py module as a dictionary.
 # Via https://github.com/kennethreitz/setup.py/blob/master/setup.py
-NAME = 'tiingo'
 here = os.path.abspath(os.path.dirname(__file__))
 about = {}
 with open(os.path.join(here, NAME, '__version__.py')) as f:
     exec(f.read(), about)
 
+
 setup(
     name=NAME,
     version=about['__version__'],
-    description="REST Client for Tiingo Data Platform API",
-    long_description=long_description,
-    author="Cameron Yick",
-    author_email='cameron.yick@enigma.com',
-    url='https://github.com/hydrosquall/tiingo-python',
+    description=DESCRIPTION,
+    long_description=LONG_DESCRIPTION,
+    author=AUTHOR,
+    author_email=EMAIL,
+    url=URL,
     packages=find_packages(include=[NAME]),
     include_package_data=True,
     install_requires=requirements,
