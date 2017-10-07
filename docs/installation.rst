@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/hydrosquall/tiingo
+    $ git clone git://github.com/hydrosquall/tiingo-python
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/hydrosquall/tiingo/tarball/master
+    $ curl  -OL https://github.com/hydrosquall-python/tiingo/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/hydrosquall/tiingo
-.. _tarball: https://github.com/hydrosquall/tiingo/tarball/master
+.. _Github repo: https://github.com/hydrosquall/tiingo-python
+.. _tarball: https://github.com/hydrosquall/tiingo-python/tarball/master
