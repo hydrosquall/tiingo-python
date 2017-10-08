@@ -1,0 +1,35 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.3.2]
+    method: GET
+    uri: https://api.tiingo.com/tiingo/news?limit=1&offset=0&sortBy=publishedDate&tickers=aapl&tickers=googl&sources=washingtonpost.com&sources=altcointoday.com&tags=Technology&tags=Bitcoin&startDate=2016-01-01&endDate=2017-08-31
+  response:
+    body: {string: '[{
+    "publishedDate": "2016-01-11T23:13:00Z",
+    "title": "Tech giants may be stronger than you think",
+    "url": "http://www.cnbc.com/2016/01/11/tech-giants-may-be-stronger-than-you-think.html",
+    "description": "Technology companies could soon rebound from the dip that China’s markets caused them as earnings season approaches, according to experts.",
+    "source": "cnbc.com",
+    "sourceDate": "2016-01-12T21:07:28.073309+00:00",
+    "tickers": ["googl", "aapl", "amzn", "msft", "nflx", "fb"],
+    "tags": ["Internet", "Investing", "Business", "Economic Reports", "Finance", "Economics", "Computing", "Asia", "Gdp", "Wireless", "China", "Technology", "Places", "Tiingo Top", "Information Technology", "Consumer Discretionary"],
+    "crawlDate": "2016-01-12T21:07:28.073309+00:00",
+    "id": 0
+}]'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['62']
+      Content-Type: [application/json]
+      Date: ['Sun, 08 Oct 2017 10:17:17 GMT']
+      Server: [nginx/1.10.1]
+      Vary: ['Accept, Cookie']
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

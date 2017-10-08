@@ -9,9 +9,9 @@ deploy:
   provider: pypi
   user: hydrosquall
 
-install: 
+install:
   - python setup.py develop
-  - pip install -U pytest-cov codecov
+  - pip install -U pytest-cov codecov vcrpy
   # - pip install -U tox-travis pytest
 
 language: python
@@ -23,12 +23,12 @@ python:
   - 2.7
   # - 2.6
 
-script: 
-  - export TIINGO_API_KEY=$TIINGO_API_KEY
+script:
+  - export TIINGO_API_KEY=0000000000000000000000000000000000000000
   - py.test --cov=./tiingo
 
 matrix:
   fast_finish: true
 
-after_success: 
+after_success:
 - codecov

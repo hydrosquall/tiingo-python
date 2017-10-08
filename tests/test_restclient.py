@@ -3,6 +3,9 @@
 
 
 from unittest import TestCase
+
+import vcr
+
 from tiingo.restclient import (RestClient, RestClientError)
 
 # Tests of basic REST API functionality
@@ -25,12 +28,14 @@ class TestRestClient(TestCase):
 
     # Test valid page
     def test_valid_url(self):
-        response = self._client._request('GET', "")
+        with vcr.use_cassette('tests/fixtures/valid_url.yaml'):
+            response = self._client._request('GET', "")
         self.assertEqual(response.status_code, 200)
 
     # Test 404 error
     def test_invalid_url(self):
-        with self.assertRaisesRegexp(RestClientError, "404"):
+        with self.assertRaisesRegexp(RestClientError, "404"),\
+                vcr.use_cassette('tests/fixtures/invalid_url.yaml'):
             # Should return 404 error
             self._client._request('GET', "bing_is_great")
 
@@ -55,11 +60,13 @@ class TestRestClientWithSession(TestCase):
 
     # Test valid page
     def test_valid_url(self):
-        response = self._client._request('GET', "")
+        with vcr.use_cassette('tests/fixtures/valid_url.yaml'):
+            response = self._client._request('GET', "")
         self.assertEqual(response.status_code, 200)
 
     # Test 404 error
     def test_invalid_url(self):
-        with self.assertRaisesRegexp(RestClientError, "404"):
+        with self.assertRaisesRegexp(RestClientError, "404"),\
+                vcr.use_cassette('tests/fixtures/invalid_url.yaml'):
             # Should return 404 error
             self._client._request('GET', "bing_is_great")
