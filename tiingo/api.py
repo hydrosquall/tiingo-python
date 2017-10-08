@@ -4,6 +4,8 @@ import os
 import sys
 import pkg_resources
 import csv
+import json
+from collections import namedtuple
 from zipfile import ZipFile
 
 
@@ -79,7 +81,7 @@ class TiingoClient(RestClient):
         return [row for row in reader
                 if row.get('assetType') == 'Stock']
 
-    def get_ticker_metadata(self, ticker):
+    def get_ticker_metadata(self, ticker,fmt='json'):
         """Return metadata for 1 ticker
            Use TiingoClient.list_tickers() to get available options
 
@@ -88,7 +90,11 @@ class TiingoClient(RestClient):
         """
         url = "tiingo/daily/{}".format(ticker)
         response = self._request('GET', url)
-        return response.json()
+        if fmt=='json':
+            return response.json()
+        elif fmt=='object':
+            # inspired by https://stackoverflow.com/a/15882054
+            return json.loads(json.dumps(response.json()), object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
 
     def get_ticker_price(self, ticker,
                          startDate=None, endDate=None,
@@ -128,7 +134,7 @@ class TiingoClient(RestClient):
     # NEWS FEEDS
     # tiingo/news
     def get_news(self, tickers=[], tags=[], sources=[], startDate=None,
-                 endDate=None, limit=100, offset=0, sortBy="publishedDate"):
+                 endDate=None, limit=100, offset=0, sortBy="publishedDate",fmt='json'):
         """Return list of news articles matching given search terms
             https://api.tiingo.com/docs/tiingo/news
 
@@ -155,9 +161,12 @@ class TiingoClient(RestClient):
             'endDate': endDate
         }
         response = self._request('GET', url, params=params)
-        return response.json()
+        if fmt=='json':
+            return response.json()
+        elif fmt=='object':
+            return json.loads(json.dumps(response.json()), object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
 
-    def get_bulk_news(self, file_id=None):
+    def get_bulk_news(self, file_id=None,fmt='json'):
         """Only available to institutional clients.
             If ID is NOT provided, return array of available file_ids.
             If ID is provided, provides URL which you can use to download your
@@ -169,4 +178,7 @@ class TiingoClient(RestClient):
             url = "tiingo/news/bulk_download"
 
         response = self._request('GET', url)
-        return response.json()
+        if fmt=='json':
+            return response.json()
+        elif fmt=='object':
+            return json.loads(json.dumps(response.json()), object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
