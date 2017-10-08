@@ -112,3 +112,8 @@ To run a subset of tests::
 
 $ py.test tests.test_tiingo
 
+
+To regenerate fixture remove it from tests/fixtures and run tests again::
+
+    $ rm tests/fixtures/NAME.yaml
+    $ py.test
