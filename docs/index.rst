@@ -1,17 +1,17 @@
 Welcome to Tiingo Python's documentation!
 ======================================
 
-.. image:: https://img.shields.io/pypi/v/tiingo.svg
+.. image:: https://img.shields.io/pypi/v/tiingo.svg?maxAge=600
        :target: https://pypi.python.org/pypi/tiingo
 
-.. image:: https://img.shields.io/travis/hydrosquall/tiingo-python.svg
+.. image:: https://img.shields.io/travis/hydrosquall/tiingo-python.svg?maxAge=600
        :target: https://travis-ci.org/hydrosquall/tiingo-python
 
-.. image:: https://readthedocs.org/projects/tiingo-python/badge/?version=latest
+.. image:: https://readthedocs.org/projects/tiingo-python/badge/?version=latest&maxAge=600
        :target: https://tiingo-python.readthedocs.io/en/latest/?badge=latest
        :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/hydrosquall/tiingo-python/shield.svg
+.. image:: https://pyup.io/repos/github/hydrosquall/tiingo-python/shield.svg?maxAge=600
     :target: https://pyup.io/repos/github/hydrosquall/tiingo-python/
     :alt: Updates
 
