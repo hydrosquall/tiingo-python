@@ -34,6 +34,7 @@ setup_requirements = [
 
 test_requirements = [
     'pytest',
+    'vcrpy',
 ]
 
 # Metadata about the module

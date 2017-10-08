@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.3.2]
+    method: GET
+    uri: https://api.tiingo.com/tiingo/news/bulk_download/1
+  response:
+    body: {string: '{"detail":"You do not have permission to access the News API"}'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['62']
+      Content-Type: [application/json]
+      Date: ['Sun, 08 Oct 2017 10:21:32 GMT']
+      Server: [nginx/1.10.1]
+      Vary: [Cookie]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 403, message: Forbidden}
+version: 1

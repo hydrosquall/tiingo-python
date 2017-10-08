@@ -1,0 +1,36 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.3.2]
+    method: GET
+    uri: https://api.tiingo.com/tiingo/daily/GOOGL
+  response:
+    body: {string: '{"endDate":"2017-10-06","startDate":"2004-08-19","exchangeCode":"NASDAQ","name":"Alphabet
+        Inc.(\"Google\") - Class A","description":"Google Inc. (Google) is a global
+        technology company. The Company''s business is primarily focused around key
+        areas, such as search, advertising, operating systems and platforms, enterprise
+        and hardware products. The Company generates revenue primarily by delivering
+        online advertising. The Company also generates revenues from Motorola by selling
+        hardware products. The Company provides its products and services in more
+        than 100 languages and in more than 50 countries, regions, and territories.
+        Effective May 16, 2014, Google Inc acquired Quest Visual Inc. Effective May
+        20, 2014, Google Inc acquired Enterproid Inc, doing business as Divide. In
+        June 2014, Google Inc acquired mDialog Corp. Effective June 25, 2014, Google
+        Inc acquired Appurify Inc, a San Francisco-based developer of mobile bugging
+        application software.","ticker":"GOOGL"}'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['974']
+      Content-Type: [application/json]
+      Date: ['Sun, 08 Oct 2017 10:17:19 GMT']
+      Server: [nginx/1.10.1]
+      Vary: ['Accept, Cookie']
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,30 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.3.2]
+    method: GET
+    uri: https://api.tiingo.com/tiingo/daily/GOOGL/prices?format=csv&frequency=daily&startDate=2015-01-01&endDate=2015-01-05
+  response:
+    body: {string: 'date,close,high,low,open,volume,adjClose,adjHigh,adjLow,adjOpen,adjVolume,divCash,splitFactor
+
+        2015-01-02,529.55,535.8,527.88,532.6,1327870,529.55,535.8,527.88,532.6,1327870,0.0,1.0
+
+        2015-01-05,519.46,527.9899,517.75,527.15,2059119,519.46,527.9899,517.75,527.15,2059119,0.0,1.0
+
+'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['276']
+      Content-Type: [text/csv]
+      Date: ['Sun, 08 Oct 2017 10:17:24 GMT']
+      Server: [nginx/1.10.1]
+      Vary: ['Accept, Cookie']
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
