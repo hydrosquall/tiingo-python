@@ -94,9 +94,13 @@ class TiingoClient(RestClient):
         if fmt == 'json':
             return data
         elif fmt == 'object':
-            # inspired by https://stackoverflow.com/a/15882054
-            return json.loads(json.dumps(data),
-                              object_hook=lambda d: namedtuple('Ticker', d.keys())(*d.values()))
+            obj_arr = []
+            for el in data:
+                # inspired by https://stackoverflow.com/a/15882054
+                arr_el = json.loads(json.dumps(data),
+                                    object_hook=lambda d: namedtuple('Ticker', d.keys())(*d.values()))
+                obj_arr.append(arr_el)
+            return obj_arr
 
     def get_ticker_price(self, ticker,
                          startDate=None, endDate=None,
@@ -168,8 +172,13 @@ class TiingoClient(RestClient):
         if fmt == 'json':
             return data
         elif fmt == 'object':
-            return json.loads(json.dumps(data),
-                              object_hook=lambda d: namedtuple('NewsArticle', d.keys())(*d.values()))
+            obj_arr = []
+            for el in data:
+                # inspired by https://stackoverflow.com/a/15882054
+                arr_el = json.loads(json.dumps(data),
+                                    object_hook=lambda d: namedtuple('NewsArticle', d.keys())(*d.values()))
+                obj_arr.append(arr_el)
+            return obj_arr
 
     def get_bulk_news(self, file_id=None, fmt='json'):
         """Only available to institutional clients.

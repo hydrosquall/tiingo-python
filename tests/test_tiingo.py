@@ -81,7 +81,7 @@ class TestTickerPrices(TestCase):
 
     def test_ticker_metadata_for_object(self):
         data = self._client.get_ticker_metadata("GOOGL", fmt='object')
-        assert len(data.name) > 1
+        assert len(data[0].name) > 1
 
 
 # tiingo/news
