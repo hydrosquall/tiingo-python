@@ -135,3 +135,14 @@ class TestNews(TestCase):
                 vcr.use_cassette('tests/fixtures/news_bulk_file_ids.yaml'):
             value = self._client.get_bulk_news()
             assert value
+
+    def test_get_news_as_objects(self):
+        """Fails because this API key lacks institutional license"""
+        with self.assertRaises(RestClientError):
+            value = self._client.get_news(fmt="object")
+            assert value
+
+    def test_news_bulk_as_objects(self):
+        """Fails because this API key lacks institutional license"""
+        with self.assertRaises(RestClientError):
+            assert self._client.get_bulk_news(fmt="object")
