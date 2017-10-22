@@ -97,11 +97,17 @@ Features
 
 * Easy programmatic access to Tiingo API
 * Reuse requests session across API calls for better performance
-* Coming soon: 
-    * Client-side validation of tickers
-    * Data validation of returned responses 
-    * Case insensitivity for ticker names
+* On most methods, pass in `fmt="object"` as a keyword to have your responses come back as `NamedTuples`, which should have a lower memory impact than regular Python dictionaries.
 
+Roadmap:
+--------
+
+* Client-side validation of tickers
+* Data validation of returned responses 
+* Case insensitivity for ticker names
+* More documentation / code examples
+
+Feel free to file a PR that implements any of the above items.
 
 Credits
 ---------

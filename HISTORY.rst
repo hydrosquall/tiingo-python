@@ -2,6 +2,12 @@
 History
 =======
 
+0.4.0 (2017-10-22)
+------------------
+
+* Make tests run in 1/10th the time with ``vcr.py`` (@condemil #32)
+* Add support for returning python objects instead of dictionaries (@BharatKalluri #33)
+
 
 0.3.0 (2017-09-17)
 ------------------
