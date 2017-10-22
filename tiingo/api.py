@@ -123,7 +123,7 @@ class TiingoClient(RestClient):
         """
         url = "tiingo/daily/{}/prices".format(ticker)
         params = {
-            'format': fmt,
+            'format': fmt if fmt != "object" else 'json',  # conversion local
             'frequency': frequency
         }
 
@@ -137,6 +137,9 @@ class TiingoClient(RestClient):
         response = self._request('GET', url, params=params)
         if fmt == "json":
             return response.json()
+        elif fmt == "object":
+            data = response.json()
+            return [dict_to_object(item, "TickerPrice") for item in data]
         else:
             return response.content.decode("utf-8")
 
@@ -175,12 +178,7 @@ class TiingoClient(RestClient):
         if fmt == 'json':
             return data
         elif fmt == 'object':
-            obj_arr = []
-            for el in data:
-                # inspired by https://stackoverflow.com/a/15882054
-                arr_el = dict_to_object(el, "NewsArticle")
-                obj_arr.append(arr_el)
-            return obj_arr
+            return [dict_to_object(item, "NewsArticle") for item in data]
 
     def get_bulk_news(self, file_id=None, fmt='json'):
         """Only available to institutional clients.
