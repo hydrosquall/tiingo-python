@@ -94,13 +94,10 @@ class TiingoClient(RestClient):
         if fmt == 'json':
             return data
         elif fmt == 'object':
-            obj_arr = []
-            for el in data:
-                # inspired by https://stackoverflow.com/a/15882054
-                arr_el = json.loads(json.dumps(data),
-                                    object_hook=lambda d: namedtuple('Ticker', d.keys())(*d.values()))
-                obj_arr.append(arr_el)
-            return obj_arr
+            return json.loads(json.dumps(data),
+                              object_hook=lambda d:
+                              namedtuple('Ticker', d.keys())(*d.values()))
+
 
     def get_ticker_price(self, ticker,
                          startDate=None, endDate=None,
@@ -175,8 +172,9 @@ class TiingoClient(RestClient):
             obj_arr = []
             for el in data:
                 # inspired by https://stackoverflow.com/a/15882054
-                arr_el = json.loads(json.dumps(data),
-                                    object_hook=lambda d: namedtuple('NewsArticle', d.keys())(*d.values()))
+                arr_el = json.loads(json.dumps(el),
+                                    object_hook=lambda d: 
+                                    namedtuple('NewsArticle', d.keys())(*d.values()))
                 obj_arr.append(arr_el)
             return obj_arr
 
