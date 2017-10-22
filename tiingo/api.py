@@ -36,6 +36,15 @@ def get_buffer_from_zipfile(zipfile, filename):
         return TextIOWrapper(BytesIO(zipfile.read(filename)))
 
 
+def dict_to_object(item, object_name):
+    """Converts a python dict to a namedtuple, saving memory."""
+    fields = item.keys()
+    values = item.values()
+    return json.loads(json.dumps(item),
+                      object_hook=lambda d:
+                      namedtuple(object_name, fields)(*values))
+
+
 class TiingoClient(RestClient):
     """Class for managing interactions with the Tiingo REST API
 
@@ -94,10 +103,7 @@ class TiingoClient(RestClient):
         if fmt == 'json':
             return data
         elif fmt == 'object':
-            return json.loads(json.dumps(data),
-                              object_hook=lambda d:
-                              namedtuple('Ticker', d.keys())(*d.values()))
-
+            return dict_to_object(data, "Ticker")
 
     def get_ticker_price(self, ticker,
                          startDate=None, endDate=None,
@@ -172,9 +178,7 @@ class TiingoClient(RestClient):
             obj_arr = []
             for el in data:
                 # inspired by https://stackoverflow.com/a/15882054
-                arr_el = json.loads(json.dumps(el),
-                                    object_hook=lambda d: 
-                                    namedtuple('NewsArticle', d.keys())(*d.values()))
+                arr_el = dict_to_object(el, "NewsArticle")
                 obj_arr.append(arr_el)
             return obj_arr
 
@@ -194,5 +198,4 @@ class TiingoClient(RestClient):
         if fmt == 'json':
             return data
         elif fmt == 'object':
-            return json.loads(json.dumps(data),
-                              object_hook=lambda d: namedtuple('BulkDownload', d.keys())(*d.values()))
+            return dict_to_object(data, "BulkNews")
