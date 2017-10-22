@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """Tests for `tiingo` package."""
 
 import csv
@@ -12,13 +11,11 @@ from tiingo.restclient import RestClientError
 
 # TODO
 # Add tests for
-# Invalid API key
-# Invalid ticker
-# Use unittest asserts rather than regular asserts
+# - Invalid API key
+# - Invalid ticker
+# Use unittest asserts rather than regular asserts if applicable
 # Wrap server errors with client side descriptive errors
 # Coerce startDate/endDate to string if they are passed in as datetime
-# Use VCR.py to enable offline testing
-# Expand test coverage
 
 
 def test_client_repr():
@@ -136,12 +133,20 @@ class TestNews(TestCase):
             value = self._client.get_bulk_news()
             assert value
 
+    # Tests "object" formatting option
     @vcr.use_cassette('tests/fixtures/news.yaml')
     def test_get_news_as_objects(self):
         articles = self._client.get_news(fmt="object", **self.search_params)
         assert len(articles) == self.num_articles
         for article in articles:  # check if attribute access works
             assert all(hasattr(article, key) for key in self.article_keys)
+
+    @vcr.use_cassette('tests/fixtures/news_bulk_file_ids.yaml')
+    def test_get_news_bulk_ids_as_objects(self):
+        """Fails because this API key lacks institutional license"""
+        with self.assertRaises(RestClientError):
+            value = self._client.get_bulk_news(fmt="object")
+            assert value
 
     @vcr.use_cassette('tests/fixtures/news_bulk.yaml')
     def test_news_bulk_as_objects(self):
