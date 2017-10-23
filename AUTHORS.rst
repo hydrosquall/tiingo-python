@@ -11,3 +11,4 @@ Contributors
 ------------
 
 * Dmitry Budaev <condemil@gmail.com>
+* Bharat Kalluri

@@ -4,6 +4,8 @@ import os
 import sys
 import pkg_resources
 import csv
+import json
+from collections import namedtuple
 from zipfile import ZipFile
 
 
@@ -32,6 +34,15 @@ def get_buffer_from_zipfile(zipfile, filename):
         # https://stackoverflow.com/questions/5627954/py3k-how-do-you-read-a-file-inside-a-zip-file-as-text-not-bytes
         from io import (TextIOWrapper, BytesIO)
         return TextIOWrapper(BytesIO(zipfile.read(filename)))
+
+
+def dict_to_object(item, object_name):
+    """Converts a python dict to a namedtuple, saving memory."""
+    fields = item.keys()
+    values = item.values()
+    return json.loads(json.dumps(item),
+                      object_hook=lambda d:
+                      namedtuple(object_name, fields)(*values))
 
 
 class TiingoClient(RestClient):
@@ -79,7 +90,7 @@ class TiingoClient(RestClient):
         return [row for row in reader
                 if row.get('assetType') == 'Stock']
 
-    def get_ticker_metadata(self, ticker):
+    def get_ticker_metadata(self, ticker, fmt='json'):
         """Return metadata for 1 ticker
            Use TiingoClient.list_tickers() to get available options
 
@@ -88,7 +99,11 @@ class TiingoClient(RestClient):
         """
         url = "tiingo/daily/{}".format(ticker)
         response = self._request('GET', url)
-        return response.json()
+        data = response.json()
+        if fmt == 'json':
+            return data
+        elif fmt == 'object':
+            return dict_to_object(data, "Ticker")
 
     def get_ticker_price(self, ticker,
                          startDate=None, endDate=None,
@@ -108,7 +123,7 @@ class TiingoClient(RestClient):
         """
         url = "tiingo/daily/{}/prices".format(ticker)
         params = {
-            'format': fmt,
+            'format': fmt if fmt != "object" else 'json',  # conversion local
             'frequency': frequency
         }
 
@@ -122,13 +137,17 @@ class TiingoClient(RestClient):
         response = self._request('GET', url, params=params)
         if fmt == "json":
             return response.json()
+        elif fmt == "object":
+            data = response.json()
+            return [dict_to_object(item, "TickerPrice") for item in data]
         else:
             return response.content.decode("utf-8")
 
     # NEWS FEEDS
     # tiingo/news
     def get_news(self, tickers=[], tags=[], sources=[], startDate=None,
-                 endDate=None, limit=100, offset=0, sortBy="publishedDate"):
+                 endDate=None, limit=100, offset=0, sortBy="publishedDate",
+                 fmt='json'):
         """Return list of news articles matching given search terms
             https://api.tiingo.com/docs/tiingo/news
 
@@ -155,9 +174,13 @@ class TiingoClient(RestClient):
             'endDate': endDate
         }
         response = self._request('GET', url, params=params)
-        return response.json()
+        data = response.json()
+        if fmt == 'json':
+            return data
+        elif fmt == 'object':
+            return [dict_to_object(item, "NewsArticle") for item in data]
 
-    def get_bulk_news(self, file_id=None):
+    def get_bulk_news(self, file_id=None, fmt='json'):
         """Only available to institutional clients.
             If ID is NOT provided, return array of available file_ids.
             If ID is provided, provides URL which you can use to download your
@@ -169,4 +192,8 @@ class TiingoClient(RestClient):
             url = "tiingo/news/bulk_download"
 
         response = self._request('GET', url)
-        return response.json()
+        data = response.json()
+        if fmt == 'json':
+            return data
+        elif fmt == 'object':
+            return dict_to_object(data, "BulkNews")
