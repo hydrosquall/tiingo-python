@@ -25,6 +25,17 @@ def test_client_repr():
     assert repr(client) == "<TiingoClient(url=\"{}\")>".format(base_url)
 
 
+class TestClient(TestCase):
+
+    def test_api_key_missing_error(self):
+        config = {
+            'api_key': ""
+        }
+        with self.assertRaises(RuntimeError):
+            client = TiingoClient(config=config)
+            assert client
+
+
 # PRICES ENDPOINTS
 class TestTickerPrices(TestCase):
 
