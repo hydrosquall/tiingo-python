@@ -37,8 +37,8 @@ First, install the library from PyPi:
 
    pip install tiingo
 
-Next, initialize your client object. It is recommended to use an environment
-variable to initialize your client object for convenience.
+Next, initialize your client. It is recommended to use an environment
+variable to initialize your client for convenience.
 
 .. code-block:: python
 
@@ -76,7 +76,7 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
 
   # Check what tickers are available, as well as metadata about each ticker
   # including supported currency, exchange, and available start/end dates.
-  tickers = client.get_stock_tickers()
+  tickers = client.list_stock_tickers()
 
   # Get news articles about given tickers or search terms from given domains
   articles = client.get_news(tickers=['GOOGL', 'APPL'], 
