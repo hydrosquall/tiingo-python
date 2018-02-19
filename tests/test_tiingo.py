@@ -95,6 +95,17 @@ class TestTickerPrices(TestCase):
         assert len(tickers) > 1
         assert all(ticker['assetType'] == 'Stock' for ticker in tickers)
 
+    @vcr.use_cassette('tests/fixtures/list_fund_tickers.yaml')
+    def test_list_fund_tickers(self):
+        tickers = self._client.list_fund_tickers()
+        assert len(tickers) > 1
+        assert all(ticker['assetType'] == 'Mutual Fund' for ticker in tickers)
+
+    @vcr.use_cassette('tests/fixtures/list_etf_tickers.yaml')
+    def test_list_etf_tickers(self):
+        tickers = self._client.list_etf_tickers()
+        assert len(tickers) > 1
+        assert all(ticker['assetType'] == 'ETF' for ticker in tickers)
 
 # tiingo/news
 class TestNews(TestCase):

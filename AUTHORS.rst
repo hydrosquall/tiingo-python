@@ -12,3 +12,4 @@ Contributors
 
 * Dmitry Budaev <condemil@gmail.com>
 * Bharat Kalluri
+* Stephen Clark <steveclarkcode@gmail.com>
