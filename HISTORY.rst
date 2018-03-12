@@ -2,6 +2,15 @@
 History
 =======
 
+0.5.0 (2018-03-11)
+------------------
+
+* Updated examples in docs for getting historical prices
+* Add interfaces to obtain mutual fund and ETF tickers (@savagesmc #62)
+* Raise explicit error when API key is missing (#44)
+* Update development dependencies
+
+
 0.4.0 (2017-10-22)
 ------------------
 
