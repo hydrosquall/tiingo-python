@@ -63,6 +63,14 @@ class TestTickerPrices(TestCase):
         assert len(prices) == 1
         assert prices[0].get('adjClose')
 
+    @vcr.use_cassette('tests/fixtures/ticker_price_weekly.yaml')
+    def test_ticker_price(self):
+        """Test that EOD Prices Endpoint works"""
+        prices = self._client.get_ticker_price("GOOGL", startDate='2018-01-05',
+                    endDate='2018-01-19', frequency='weekly')
+        assert len(prices) == 3
+        assert prices[0].get('adjClose')
+
     @vcr.use_cassette('tests/fixtures/ticker_price.yaml')
     def test_ticker_price_as_object(self):
         """Test that EOD Prices Endpoint works"""
