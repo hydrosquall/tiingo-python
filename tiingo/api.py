@@ -136,7 +136,7 @@ class TiingoClient(RestClient):
         url = "tiingo/daily/{}/prices".format(ticker)
         params = {
             'format': fmt if fmt != "object" else 'json',  # conversion local
-            'frequency': frequency
+            'resampleFreq': frequency
         }
 
         if startDate:
