@@ -117,3 +117,12 @@ To regenerate fixture remove it from tests/fixtures and run tests again::
 
     $ rm tests/fixtures/NAME.yaml
     $ py.test
+
+In order for py.test to have run, you will have had to create an environment variable containing a valid tiingo API key so that the test runner can make a valid api call.  One way to do that is to::
+
+    $ export TIINGO_API_KEY='...insert api key here...'
+
+However, now this api key will become embedded in the test fixture file that is created per the prior procedure.  In order to remove this api key from the new test fixtures, run the following from the top level directory::
+
+    $ python tools/api_key_tool.py
+
