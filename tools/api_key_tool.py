@@ -9,10 +9,6 @@ zeroapiregex = r'(\[Token )0{40}(\])'
 anyapiregex = r'(\[Token ).{40}(\])'
 zeroapistring = '[Token '+40*'0'+']'
 
-parser = argparse.ArgumentParser()
-parser.add_argument("path", help="path to test fixtures",
-                    nargs='?', default=fixturesDirectory)
-args = parser.parse_args()
 
 def api_key_detector(file):
     '''
@@ -55,4 +51,8 @@ def main(path):
     print("Changed {} files.".format(nFilesChanged))
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", help="path to test fixtures",
+                        nargs='?', default=fixturesDirectory)
+    args = parser.parse_args()
     main(args.path)
