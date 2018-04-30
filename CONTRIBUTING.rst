@@ -124,5 +124,5 @@ In order for py.test to run, you will have had to create an environment variable
 
 However, now this api key will become embedded in the test fixture file that is created per the prior procedure.  In order to remove this api key from the new test fixtures, run the following from the top level directory::
 
-    $ python tools/api_key_tool.py
+    $ ./tools/api_key_tool.py
 
