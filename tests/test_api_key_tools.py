@@ -5,7 +5,7 @@
 import shutil, tempfile
 from os import path
 from unittest import TestCase
-from tools.api_key_tool import api_key_remover, api_key_detector
+from tools.api_key_tool import remove_api_key, has_api_key
 
 
 class TestAPIKeyTools(TestCase):
@@ -44,8 +44,8 @@ class TestAPIKeyTools(TestCase):
         shutil.rmtree(self.test_dir)
 
     def test_key_detector(self):
-        assert api_key_detector(path.join(self.test_dir, 'test.yaml')) is True
+        assert has_api_key(path.join(self.test_dir, 'test.yaml')) is True
 
     def test_key_remover(self):
-        api_key_remover(path.join(self.test_dir, 'test.yaml'))
-        assert api_key_detector(path.join(self.test_dir, 'test.yaml')) is False
+        remove_api_key(path.join(self.test_dir, 'test.yaml'))
+        assert has_api_key(path.join(self.test_dir, 'test.yaml')) is False
