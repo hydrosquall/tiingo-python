@@ -2,6 +2,13 @@
 History
 =======
 
+0.6.0 (2018-04-30)
+------------------
+
+* Fix bug in resample argument name (@dcwtx #82)
+* Add tool for removing API Keys from test fixtures (@dcwtx #107)
+* Remove official support for Python 3.3
+
 0.5.0 (2018-03-11)
 ------------------
 
