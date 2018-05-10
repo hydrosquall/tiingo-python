@@ -57,6 +57,7 @@ setup(
     packages=find_packages(include=[NAME]),
     include_package_data=True,
     install_requires=requirements,
+    extras_require={'pandas': ['pandas>=0.18']},
     license="MIT license",
     zip_safe=False,
     keywords=['tiingo', 'finance', 'stocks'],
