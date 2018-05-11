@@ -4,7 +4,7 @@
 import vcr
 from unittest import TestCase
 from tiingo import TiingoClient
-from tiingo.api import APIColumnNameError
+from tiingo.api import APIColumnNameError, InstallPandasException
 try:
     import pandas as pd
     pandas_is_installed = True
@@ -55,3 +55,17 @@ class TestTiingoWithPython(TestCase):
         prices = self._client.get_dataframe("GOOGL")
         assert len(prices) == 1
         assert len(prices.index) == 1
+
+
+class TestTiingoWithoutPython(TestCase):
+
+    def setUp(self):
+        if pandas_is_installed:
+            self.skipTest("test_tiingo_without_pandas: Pandas not installed.")
+        else:
+            self._client = TiingoClient()
+
+    @vcr.use_cassette('tests/fixtures/ticker_price_pandas_single.yaml')
+    def test_get_dataframe_without_pandas(self):
+        with self.assertRaises(InstallPandasException):
+            self._client.get_dataframe("GOOGL")
