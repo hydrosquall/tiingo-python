@@ -6,8 +6,8 @@ deploy:
   distributions: sdist bdist_wheel
   password:
     secure: VH1rgFV5XD0k3cMZxJwetBnETrFolBaM0U4K9CKQts38LF7f4xA8muY2FFFyeqR7VF2MQhYgGMcaAQQx/gRY+7AdSnqMYvxZ7p3P81aF7ruE3KjXgV6oPkTX4LkUlZf+co1rGs59TJ4UDJQM73+9EiYD3MJ/G0KeyMnAak73HkRHWdypOGLrINLPyUuuUAxQ8k4UJWskEMXjMgKIlGdCcdbCWqso/lZqvQ+/bFfv5M+yhQK57JMlXfXsM3YMxUGY7IhYRhxHL3nCpxXacut2FBU6H1GCU8MuR2bJ/aNNdl8elNzCEZcRq8+s94yrI095HQvVW/tLWaNJ4ojZSsGhmzvC/xAB+VbCp7ZvI0vHPGEOQgR/bIkDa9uhuwCWtfM81VCPpBrXgwupgznxtsjFcmBSUOpTFLTW5dKoPDWOe5K4wHKd9IKbWwk+mAY+aczV4T0uMX/eKhEOWJS03cjIPN4qwdCy6zSnBWpJBoLR7QyYZKNL1MiyQ0toUsJO0ln6vaPTXOo0K7EJIxKVOYf3xR8kNsgWWe0Z4orSt56O8+v5OIYbDcSeY1hwklcMvQdGHlLyMx01D2v346mL532MHA24nRmXfDUz0ixx5rn7g4Tykvy2LBLYfrfhV4G6kvimTk5Y6I7Rif4y68+r+NHmBlZwUju0AsK0a+s5/XAg5Nc=
-#  provider: pypi
-#  user: hydrosquall
+  provider: pypi
+  user: hydrosquall
 
 install:
   - tools/install_pandas.sh
