@@ -61,7 +61,7 @@ class TestTiingoWithoutPython(TestCase):
 
     def setUp(self):
         if pandas_is_installed:
-            self.skipTest("test_tiingo_without_pandas: Pandas not installed.")
+            self.skipTest("test_tiingo_without_pandas: Pandas is installed.")
         else:
             self._client = TiingoClient()
 
