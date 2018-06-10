@@ -177,7 +177,7 @@ class TiingoClient(RestClient):
         return url
 
     def get_dataframe(self, tickers,
-                      startDate=None, endDate=None, metric_name='adjClose', frequency='daily'):
+                      startDate=None, endDate=None, metric_name=None, frequency='daily'):
 
         """ Return a pandas.DataFrame of historical prices for one or more ticker symbols.
 
@@ -200,24 +200,41 @@ class TiingoClient(RestClient):
 
         valid_columns = ['open', 'high', 'low', 'close', 'volume', 'adjOpen', 'adjHigh', 'adjLow',
                          'adjClose', 'adjVolume', 'divCash', 'splitFactor']
+
+        if metric_name is not None and metric_name not in valid_columns:
+            raise APIColumnNameError('Valid data items are: ' + str(valid_columns))
+
+        params = {
+            'format': 'json',
+            'resampleFreq': frequency
+        }
+        if startDate:
+            params['startDate'] = startDate
+        if endDate:
+            params['endDate'] = endDate
+
         if pandas_is_installed:
-            prices = pd.DataFrame()
             if type(tickers) is str:
                 stock = tickers
-                url = self._build_url(stock, startDate, endDate, frequency)
-                prices = pd.read_json(url)
-                prices.index = prices['date']
-                del(prices['date'])
+                url = "tiingo/daily/{}/prices".format(stock)
+                response = self._request('GET', url, params=params)
+                df = pd.DataFrame(response.json())
+                if metric_name is not None:
+                    prices = df[metric_name]
+                else:
+                    prices = df
+                    prices.index = df['date']
+                    del (prices['date'])
             else:
-                if metric_name not in valid_columns:
-                    raise APIColumnNameError('Valid data items are: '+str(valid_columns))
+                prices = pd.DataFrame()
                 for stock in tickers:
-                    url = self._build_url(stock, startDate, endDate, frequency)
-                    df = pd.read_json(url)
+                    url = "tiingo/daily/{}/prices".format(stock)
+                    response = self._request('GET', url, params=params)
+                    df = pd.DataFrame(response.json())
                     df.index = df['date']
                     df.rename(index=str, columns={metric_name: stock}, inplace=True)
                     prices = pd.concat([prices, df[stock]], axis=1)
-                prices.index = pd.to_datetime(prices.index)
+            prices.index = pd.to_datetime(prices.index)
             return prices
         else:
             error_message = ("Pandas is not installed, but .get_ticker_price() was "

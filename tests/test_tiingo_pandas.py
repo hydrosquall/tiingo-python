@@ -26,6 +26,7 @@ class TestTiingoWithPython(TestCase):
         prices = self._client.get_dataframe("GOOGL", startDate='2018-01-05',
                                             endDate='2018-01-19', frequency='weekly')
         self.assertTrue(isinstance(prices, pd.DataFrame))
+        assert len(prices.index) == 3
 
     @vcr.use_cassette('tests/fixtures/ticker_price_pandas_weekly_multiple_tickers.yaml')
     def test_return_pandas_format_multiple(self):
@@ -34,8 +35,8 @@ class TestTiingoWithPython(TestCase):
         prices = self._client.get_dataframe(tickers, startDate='2018-01-05',
                                             endDate='2018-01-19', metric_name='adjClose', frequency='weekly')
         self.assertTrue(isinstance(prices, pd.DataFrame))
-        assert prices['GOOGL'].loc['2018-01-05'] == 1110.29
-        self.assertAlmostEqual(prices['AAPL'].loc['2018-01-19'], 178.54, 2)
+        assert len(prices.columns) == 2
+        assert len(prices.index) == 3
 
     @vcr.use_cassette('tests/fixtures/ticker_price_pandas_daily.yaml')
     def test_return_pandas_daily(self):
@@ -43,7 +44,16 @@ class TestTiingoWithPython(TestCase):
         prices = self._client.get_dataframe("GOOGL", startDate='2018-01-05',
                                             endDate='2018-01-19', frequency='daily')
         self.assertTrue(isinstance(prices, pd.DataFrame))
-        assert prices['adjClose'].loc['2018-01-05'] == 1110.29
+        assert len(prices.columns) == 12
+
+    @vcr.use_cassette('tests/fixtures/ticker_price_pandas_daily_metric_name.yaml')
+    def test_return_pandas_daily(self):
+        """Test that one column is returned when a metric name is specified"""
+
+        prices = self._client.get_dataframe("GOOGL", startDate='2018-01-05', metric_name='adjClose',
+                                            endDate='2018-01-19', frequency='daily')
+        self.assertTrue(isinstance(prices, pd.Series))
+        assert len(prices.index) == 10
 
     def test_column_error(self):
         with self.assertRaises(APIColumnNameError):

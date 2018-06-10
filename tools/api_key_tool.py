@@ -12,11 +12,6 @@ zero_api_regex = r'(\[Token )0{40}(\])'
 real_api_regex = r'(\[Token ).{40}(\])'
 zero_token_string = '[Token ' + 40 * '0' + ']'
 
-# pandas json api call configuration
-pd_real_api_regex = r'&token=.{40}'
-pd_zero_api_regex = r'&token=0{40}'
-pd_zero_token_string = '&token=' + 40 * '0'
-
 
 def has_api_key(file_name):
     """
@@ -30,9 +25,6 @@ def has_api_key(file_name):
     if re.search(real_api_regex, text) is not None and  \
             re.search(zero_api_regex, text) is None:
         return True
-    elif re.search(pd_real_api_regex, text) is not None and \
-            re.search(pd_zero_api_regex, text) is None:
-        return True
     return False
 
 
@@ -44,7 +36,6 @@ def remove_api_key(file_name):
     with open(file_name, 'r') as fp:
         text = fp.read()
     text = re.sub(real_api_regex, zero_token_string, text)
-    text = re.sub(pd_real_api_regex, pd_zero_token_string, text)
     with open(file_name, 'w') as fp:
         fp.write(text)
     return
