@@ -55,10 +55,11 @@ class TestTiingoWithPython(TestCase):
         self.assertTrue(isinstance(prices, pd.Series))
         assert len(prices.index) == 10
 
-    def test_column_error(self):
+    def test_metric_name_column_error(self):
         with self.assertRaises(APIColumnNameError):
             self._client.get_dataframe(['GOOGL', 'AAPL'], startDate='2018-01-05',
                                                 endDate='2018-01-19', metric_name='xopen', frequency='weekly')
+
     @vcr.use_cassette('tests/fixtures/ticker_price_pandas_single.yaml')
     def test_pandas_edge_case(self):
         """Test single price/date being returned as a frame"""

@@ -166,16 +166,6 @@ class TiingoClient(RestClient):
         else:
             return response.content.decode("utf-8")
 
-    def _build_url(self, stock, startDate, endDate, frequency):
-        url = "https://api.tiingo.com/tiingo/"
-        url += "daily/{}/prices?".format(stock)
-        if startDate is not None and endDate is None:
-            url += "&startDate={}".format(startDate)
-        if startDate is not None and endDate is not None:
-            url += "&startDate={}&endDate={}".format(startDate, endDate)
-        url += "&format=json&resampleFreq={}&token={}".format(frequency, self._api_key)
-        return url
-
     def get_dataframe(self, tickers,
                       startDate=None, endDate=None, metric_name=None, frequency='daily'):
 
@@ -186,6 +176,7 @@ class TiingoClient(RestClient):
 
             Supported tickers + Available Day Ranges are here:
             https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip
+            or from the TiingoClient.list_tickers() method.
 
             Args:
                 tickers (string/list): One or more unique identifiers for a stock ticker.
@@ -221,6 +212,7 @@ class TiingoClient(RestClient):
                 df = pd.DataFrame(response.json())
                 if metric_name is not None:
                     prices = df[metric_name]
+                    prices.index = df['date']
                 else:
                     prices = df
                     prices.index = df['date']
