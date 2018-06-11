@@ -106,14 +106,18 @@ To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
   #Get a pd.DataFrame of the price history of a single symbol (default is daily):
   ticker_history = client.get_dataframe("GOOGL")
 
-  #The method returns all of the available information on a symbol, such as open, high, low, close, adjusted close, etc.  This page in the tiingo api documentation lists the available information on each symbol: https://api.tiingo.com/docs/tiingo/daily#priceData.
+  #The method returns all of the available information on a symbol, such as open, high, low, close,
+  #adjusted close, etc.  This page in the tiingo api documentation lists the available information on each
+  #symbol: https://api.tiingo.com/docs/tiingo/daily#priceData.
 
   #Frequencies and start and end dates can be specified similarly to the json method above.
 
-  #Get a pd.Series of only one column of the available response data by specifying one of the valid the 'metric_name' parameters:
+  #Get a pd.Series of only one column of the available response data by specifying one of the valid the
+  #'metric_name' parameters:
   ticker_history = client.get_dataframe("GOOGL", metric_name='adjClose')
 
-  #Get a pd.DataFrame for a list of symbols for a specified metric_name (default is adjClose if no metric_name is specified):
+  #Get a pd.DataFrame for a list of symbols for a specified metric_name (default is adjClose if no
+  #metric_name is specified):
   ticker_history = client.get_dataframe(['GOOGL', 'AAPL'],
                                         frequency='weekly',
                                         metric_name='volume',
