@@ -25,7 +25,7 @@ Tiingo Python
 Tiingo is a financial data platform that makes high quality financial tools available to all. Tiingo has a REST and Real-Time Data API, which this library helps you to access. Presently, the API includes support for the following endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
-* Curated news from top financial news sources + blogs. Stories are tagged with topic tags and relevant stock tickers by Tiingo's algorithms. 
+* Curated news from top financial news sources + blogs. Stories are tagged with topic tags and relevant stock tickers by Tiingo's algorithms.
 
 
 Usage
@@ -36,6 +36,12 @@ First, install the library from PyPi:
 .. code-block:: shell
 
    pip install tiingo
+
+If you prefer to receive your results in ``pandas DataFrame`` or ``Series`` format, and you do not already have pandas installed, install it as an optional dependency:
+
+.. code-block:: shell
+
+   pip install tiingo[pandas]
 
 Next, initialize your client. It is recommended to use an environment
 variable to initialize your client for convenience.
@@ -67,7 +73,7 @@ Alternately, you may use a dictionary to customize/authorize your client.
 Now you can use ``TiingoClient`` to make your API calls. (Other parameters are available for each endpoint beyond what is used in the below examples, inspect the docstring for each function for details.).
 
 .. code-block:: python
-  
+
   # Get Ticker
   ticker_metadata = client.get_ticker_metadata("GOOGL")
 
@@ -86,11 +92,33 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
   tickers = client.list_stock_tickers()
 
   # Get news articles about given tickers or search terms from given domains
-  articles = client.get_news(tickers=['GOOGL', 'APPL'], 
-                              tags=['Laptops'], 
+  articles = client.get_news(tickers=['GOOGL', 'AAPL'],
+                              tags=['Laptops'],
                               sources=['washingtonpost.com'],
                               startDate='2017-01-01',
                               endDate='2017-08-31')
+
+
+To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
+
+.. code-block:: python
+
+  #Get a pd.DataFrame of the price history of a single symbol (default is daily):
+  ticker_history = client.get_dataframe("GOOGL")
+
+  #The method returns all of the available information on a symbol, such as open, high, low, close, adjusted close, etc.  This page in the tiingo api documentation lists the available information on each symbol: https://api.tiingo.com/docs/tiingo/daily#priceData.
+
+  #Frequencies and start and end dates can be specified similarly to the json method above.
+
+  #Get a pd.Series of only one column of the available response data by specifying one of the valid the 'metric_name' parameters:
+  ticker_history = client.get_dataframe("GOOGL", metric_name='adjClose')
+
+  #Get a pd.DataFrame for a list of symbols for a specified metric_name (default is adjClose if no metric_name is specified):
+  ticker_history = client.get_dataframe(['GOOGL', 'AAPL'],
+                                        frequency='weekly',
+                                        metric_name='volume',
+                                        startDate='2017-01-01',
+                                        endDate='2018-05-31')
 
 
 Further Docs
@@ -110,7 +138,7 @@ Roadmap:
 --------
 
 * Client-side validation of tickers
-* Data validation of returned responses 
+* Data validation of returned responses
 * Case insensitivity for ticker names
 * More documentation / code examples
 
