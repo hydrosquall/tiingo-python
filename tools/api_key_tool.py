@@ -6,19 +6,21 @@ import re
 import argparse
 
 fixtures_directory = 'tests/fixtures/'
+
+# restclient api header configuration
 zero_api_regex = r'(\[Token )0{40}(\])'
 real_api_regex = r'(\[Token ).{40}(\])'
 zero_token_string = '[Token ' + 40 * '0' + ']'
 
 
-def has_api_key(file):
+def has_api_key(file_name):
     """
     Detect whether the file contains an api key in the Token object that is not 40*'0'.
     See issue #86.
     :param file: path-to-file to check
     :return: boolean
     """
-    f = open(file, 'r')
+    f = open(file_name, 'r')
     text = f.read()
     if re.search(real_api_regex, text) is not None and  \
             re.search(zero_api_regex, text) is None:
@@ -26,15 +28,15 @@ def has_api_key(file):
     return False
 
 
-def remove_api_key(file):
+def remove_api_key(file_name):
     """
     Change the api key in the Token object to 40*'0'.  See issue #86.
     :param file: path-to-file to change
     """
-    with open(file, 'r') as fp:
+    with open(file_name, 'r') as fp:
         text = fp.read()
     text = re.sub(real_api_regex, zero_token_string, text)
-    with open(file, 'w') as fp:
+    with open(file_name, 'w') as fp:
         fp.write(text)
     return
 

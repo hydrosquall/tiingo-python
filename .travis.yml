@@ -12,6 +12,7 @@ deploy:
 install:
   - python setup.py develop
   - pip install -U pytest-cov codecov vcrpy
+  - tools/install_pandas.sh
   # - pip install -U tox-travis pytest
 
 language: python
@@ -21,6 +22,10 @@ python:
   - 3.4
   - 2.7
   # - 2.6
+
+env:
+  - WITH_PANDAS=false
+  - WITH_PANDAS=true
 
 script:
   - export TIINGO_API_KEY=0000000000000000000000000000000000000000

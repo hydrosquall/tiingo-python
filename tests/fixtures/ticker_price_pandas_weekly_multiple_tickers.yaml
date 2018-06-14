@@ -1,0 +1,46 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.6.0]
+    method: GET
+    uri: https://api.tiingo.com/tiingo/daily/GOOGL/prices?format=json&resampleFreq=weekly&startDate=2018-01-05&endDate=2018-01-19
+  response:
+    body: {string: '[{"date":"2018-01-05T00:00:00.000Z","close":1110.29,"high":1113.58,"low":1053.02,"open":1053.02,"volume":5889084,"adjClose":1110.29,"adjHigh":1113.58,"adjLow":1053.02,"adjOpen":1053.02,"adjVolume":5889084,"divCash":0.0,"splitFactor":1.0},{"date":"2018-01-12T00:00:00.000Z","close":1130.65,"high":1131.3,"low":1103.98,"open":1111.0,"volume":6529655,"adjClose":1130.65,"adjHigh":1131.3,"adjLow":1103.98,"adjOpen":1111.0,"adjVolume":6529655,"divCash":0.0,"splitFactor":1.0},{"date":"2018-01-19T00:00:00.000Z","close":1135.97,"high":1148.88,"low":1123.49,"open":1140.31,"volume":4470611,"adjClose":1135.97,"adjHigh":1148.88,"adjLow":1123.49,"adjOpen":1140.31,"adjVolume":4470611,"divCash":0.0,"splitFactor":1.0}]'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['708']
+      Content-Type: [application/json]
+      Date: ['Sun, 10 Jun 2018 18:33:00 GMT']
+      Server: [nginx/1.10.1]
+      Vary: ['Accept, Cookie']
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.6.0]
+    method: GET
+    uri: https://api.tiingo.com/tiingo/daily/AAPL/prices?format=json&resampleFreq=weekly&startDate=2018-01-05&endDate=2018-01-19
+  response:
+    body: {string: '[{"date":"2018-01-05T00:00:00.000Z","close":175.0,"high":175.37,"low":169.26,"open":170.16,"volume":99095223,"adjClose":173.6258731716,"adjHigh":173.9929678748,"adjLow":167.9309445315,"adjOpen":168.8238775936,"adjVolume":99095223,"divCash":0.0,"splitFactor":1.0},{"date":"2018-01-12T00:00:00.000Z","close":177.09,"high":177.36,"low":173.0,"open":174.35,"volume":107548622,"adjClose":175.6994621711,"adjHigh":175.9673420898,"adjLow":171.6415774782,"adjOpen":172.9809770712,"adjVolume":107548622,"divCash":0.0,"splitFactor":1.0},{"date":"2018-01-19T00:00:00.000Z","close":179.26,"high":180.1,"low":175.07,"open":177.9,"volume":92146251,"adjClose":177.8524229985,"adjHigh":178.6858271897,"adjLow":173.6953235208,"adjOpen":176.503101927,"adjVolume":92146251,"divCash":0.0,"splitFactor":1.0}]'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['787']
+      Content-Type: [application/json]
+      Date: ['Sun, 10 Jun 2018 18:33:01 GMT']
+      Server: [nginx/1.10.1]
+      Vary: ['Accept, Cookie']
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

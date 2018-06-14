@@ -7,10 +7,13 @@ import csv
 import json
 from collections import namedtuple
 from zipfile import ZipFile
-
-
 from tiingo.restclient import RestClient
 import requests
+try:
+    import pandas as pd
+    pandas_is_installed = True
+except ImportError:
+    pandas_is_installed = False
 
 VERSION = pkg_resources.get_distribution("tiingo").version
 
@@ -44,6 +47,13 @@ def dict_to_object(item, object_name):
                       object_hook=lambda d:
                       namedtuple(object_name, fields)(*values))
 
+class InstallPandasException(Exception):
+    pass
+
+
+class APIColumnNameError(Exception):
+    pass
+
 
 class TiingoClient(RestClient):
     """Class for managing interactions with the Tiingo REST API
@@ -60,6 +70,7 @@ class TiingoClient(RestClient):
             api_key = self._config['api_key']
         except KeyError:
             api_key = os.environ.get('TIINGO_API_KEY')
+        self._api_key = api_key
 
         if not(api_key):
             raise RuntimeError("Tiingo API Key not provided. Please provide"
@@ -154,6 +165,76 @@ class TiingoClient(RestClient):
             return [dict_to_object(item, "TickerPrice") for item in data]
         else:
             return response.content.decode("utf-8")
+
+    def get_dataframe(self, tickers,
+                      startDate=None, endDate=None, metric_name=None, frequency='daily'):
+
+        """ Return a pandas.DataFrame of historical prices for one or more ticker symbols.
+
+            By default, return latest EOD Composite Price for a list of stock tickers.
+            On average, each feed contains 3 data sources.
+
+            Supported tickers + Available Day Ranges are here:
+            https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip
+            or from the TiingoClient.list_tickers() method.
+
+            Args:
+                tickers (string/list): One or more unique identifiers for a stock ticker.
+                startDate (string): Start of ticker range in YYYY-MM-DD format.
+                endDate (string): End of ticker range in YYYY-MM-DD format.
+                metric_name (string): Optional parameter specifying metric to be returned for each
+                    ticker.  In the event of a single ticker, this is optional and if not specified
+                    all of the available data will be returned.  In the event of a list of tickers,
+                    this parameter is required.
+                frequency (string): Resample frequency (defaults to daily).
+        """
+
+        valid_columns = ['open', 'high', 'low', 'close', 'volume', 'adjOpen', 'adjHigh', 'adjLow',
+                         'adjClose', 'adjVolume', 'divCash', 'splitFactor']
+
+        if metric_name is not None and metric_name not in valid_columns:
+            raise APIColumnNameError('Valid data items are: ' + str(valid_columns))
+
+        params = {
+            'format': 'json',
+            'resampleFreq': frequency
+        }
+        if startDate:
+            params['startDate'] = startDate
+        if endDate:
+            params['endDate'] = endDate
+
+        if pandas_is_installed:
+            if type(tickers) is str:
+                stock = tickers
+                url = "tiingo/daily/{}/prices".format(stock)
+                response = self._request('GET', url, params=params)
+                df = pd.DataFrame(response.json())
+                if metric_name is not None:
+                    prices = df[metric_name]
+                    prices.index = df['date']
+                else:
+                    prices = df
+                    prices.index = df['date']
+                    del (prices['date'])
+            else:
+                prices = pd.DataFrame()
+                for stock in tickers:
+                    url = "tiingo/daily/{}/prices".format(stock)
+                    response = self._request('GET', url, params=params)
+                    df = pd.DataFrame(response.json())
+                    df.index = df['date']
+                    df.rename(index=str, columns={metric_name: stock}, inplace=True)
+                    prices = pd.concat([prices, df[stock]], axis=1)
+            prices.index = pd.to_datetime(prices.index)
+            return prices
+        else:
+            error_message = ("Pandas is not installed, but .get_ticker_price() was "
+                             "called with fmt=pandas.  In order to install tiingo with "
+                             "pandas, reinstall with pandas as an optional dependency. \n"
+                             "Install tiingo with pandas dependency: \'pip install tiingo[pandas]\'\n"
+                             "Alternatively, just install pandas: pip install pandas.")
+            raise InstallPandasException(error_message)
 
     # NEWS FEEDS
     # tiingo/news
