@@ -2,6 +2,11 @@
 History
 =======
 
+0.7.0 (2018-06-14)
+------------------
+* Major: Provide functions for returning data as pandas Dataframes or Series (@dcwtx #112)
+* Minor documentation edits
+
 0.6.0 (2018-04-30)
 ------------------
 
