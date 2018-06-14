@@ -129,7 +129,7 @@ Further Docs
 --------
 
 * Official Tiingo Documentation: https://api.tiingo.com
-* Tiingo-Python Documentation (Under Construction): https://tiingo-python.readthedocs.io.
+* `tiingo-python` Documentation: https://tiingo-python.readthedocs.io.
 
 Features
 --------
@@ -147,6 +147,12 @@ Roadmap:
 * More documentation / code examples
 
 Feel free to file a PR that implements any of the above items.
+
+Related Projects:
+--------
+* Riingo_ : Client for Tiingo in the R Programming Language
+
+.. _Riingo: https://github.com/business-science/riingo
 
 Credits
 ---------
