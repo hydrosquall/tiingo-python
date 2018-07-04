@@ -55,6 +55,15 @@ class TestTiingoWithPython(TestCase):
         self.assertTrue(isinstance(prices, pd.Series))
         assert len(prices.index) == 10
 
+    @vcr.use_cassette('tests/fixtures/intraday_price.yaml')
+    def test_intraday_ticker_price(self):
+        """Test the EOD Prices Endpoint with data param"""
+        prices = self._client.get_dataframe("GOOGL",
+                                            startDate="2018-01-02",
+                                            endDate="2018-01-02",
+                                            frequency="30Min")
+        self.assertGreater(len(prices), 1)
+
     def test_metric_name_column_error(self):
         with self.assertRaises(APIColumnNameError):
             self._client.get_dataframe(['GOOGL', 'AAPL'], startDate='2018-01-05',

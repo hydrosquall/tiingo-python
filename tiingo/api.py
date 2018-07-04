@@ -55,6 +55,10 @@ class APIColumnNameError(Exception):
     pass
 
 
+class InvalidFrequencyError(Exception):
+    pass
+
+
 class TiingoClient(RestClient):
     """Class for managing interactions with the Tiingo REST API
 
@@ -128,6 +132,40 @@ class TiingoClient(RestClient):
         elif fmt == 'object':
             return dict_to_object(data, "Ticker")
 
+    def _invalid_frequency(self, frequency):
+        """
+        Check to see that frequency was specified correctly
+        :param frequency (string): frequency string
+        :return (boolean):
+        """
+        daily_freqs = ['daily', 'weekly', 'monthly', 'annually']
+        intraday_freqs = ['min', 'hour']
+
+        if frequency.lower() in daily_freqs:
+            return False
+        elif intraday_freqs[0] in frequency.lower() or \
+                intraday_freqs[1] in frequency.lower():
+            return False
+        else:
+            return True
+
+    def _get_url(self, frequency):
+        """
+        Return url based on frequency.  Daily, weekly, or yearly use Tiingo
+        EOD api; anything less than daily uses the iex intraday api.
+        :param frequency (string): valid frequency per Tiingo api
+        :return (string): url
+        """
+        if self._invalid_frequency(frequency):
+            etext = ("Error: {} is an invalid frequency.  Check Tiingo API documentation "
+                     "for valid EOD or intraday frequency format.")
+            raise self.InvalidFrequencyError(etext.format(frequency))
+        else:
+            if frequency.lower() in ['daily', 'weekly', 'monthly', 'annually']:
+                return "tiingo/daily/{}/prices"
+            else:
+                return "iex/{}/prices"
+
     def get_ticker_price(self, ticker,
                          startDate=None, endDate=None,
                          fmt='json', frequency='daily'):
@@ -144,7 +182,7 @@ class TiingoClient(RestClient):
                 fmt (string): 'csv' or 'json'
                 frequency (string): Resample frequency
         """
-        url = "tiingo/daily/{}/prices".format(ticker)
+        url = self._get_url(frequency).format(ticker)
         params = {
             'format': fmt if fmt != "object" else 'json',  # conversion local
             'resampleFreq': frequency
@@ -207,7 +245,7 @@ class TiingoClient(RestClient):
         if pandas_is_installed:
             if type(tickers) is str:
                 stock = tickers
-                url = "tiingo/daily/{}/prices".format(stock)
+                url = self._get_url(frequency).format(stock)
                 response = self._request('GET', url, params=params)
                 df = pd.DataFrame(response.json())
                 if metric_name is not None:
@@ -220,7 +258,7 @@ class TiingoClient(RestClient):
             else:
                 prices = pd.DataFrame()
                 for stock in tickers:
-                    url = "tiingo/daily/{}/prices".format(stock)
+                    url = self._get_url(frequency).format(stock)
                     response = self._request('GET', url, params=params)
                     df = pd.DataFrame(response.json())
                     df.index = df['date']

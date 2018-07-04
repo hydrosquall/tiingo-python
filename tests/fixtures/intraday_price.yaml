@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.6.0]
+    method: GET
+    uri: https://api.tiingo.com/iex/GOOGL/prices?format=json&resampleFreq=30Min&startDate=2018-01-02&endDate=2018-01-02
+  response:
+    body: {string: '[{"date":"2018-01-02T14:30:00.000Z","open":1057.47,"high":1061.91,"low":1054.17,"close":1061.91},{"date":"2018-01-02T15:00:00.000Z","open":1061.91,"high":1067.345,"low":1061.91,"close":1066.945},{"date":"2018-01-02T15:30:00.000Z","open":1067.29,"high":1070.47,"low":1065.71,"close":1070.26},{"date":"2018-01-02T16:00:00.000Z","open":1071.355,"high":1073.775,"low":1070.235,"close":1073.26},{"date":"2018-01-02T16:30:00.000Z","open":1073.26,"high":1074.33,"low":1073.1,"close":1073.905},{"date":"2018-01-02T17:00:00.000Z","open":1073.905,"high":1073.905,"low":1072.68,"close":1073.08},{"date":"2018-01-02T17:30:00.000Z","open":1073.54,"high":1073.605,"low":1072.16,"close":1072.335},{"date":"2018-01-02T18:00:00.000Z","open":1073.0,"high":1073.86,"low":1071.89,"close":1073.86},{"date":"2018-01-02T18:30:00.000Z","open":1073.73,"high":1074.37,"low":1072.54,"close":1072.97},{"date":"2018-01-02T19:00:00.000Z","open":1073.15,"high":1074.93,"low":1072.705,"close":1072.705},{"date":"2018-01-02T19:30:00.000Z","open":1072.06,"high":1074.07,"low":1071.655,"close":1074.07},{"date":"2018-01-02T20:00:00.000Z","open":1074.55,"high":1075.08,"low":1072.78,"close":1073.83},{"date":"2018-01-02T20:30:00.000Z","open":1073.83,"high":1075.87,"low":1073.23,"close":1073.315}]'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['1261']
+      Content-Type: [application/json]
+      Date: ['Wed, 04 Jul 2018 02:53:33 GMT']
+      Server: [nginx/1.10.1]
+      Vary: ['Accept, Cookie']
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
