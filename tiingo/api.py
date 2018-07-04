@@ -9,6 +9,8 @@ from collections import namedtuple
 from zipfile import ZipFile
 from tiingo.restclient import RestClient
 import requests
+import re
+
 try:
     import pandas as pd
     pandas_is_installed = True
@@ -86,6 +88,8 @@ class TiingoClient(RestClient):
             'User-Agent': 'tiingo-python-client {}'.format(VERSION)
         }
 
+        self._frequency_pattern = re.compile('^[0-9]+(min)$|(hour)$', re.IGNORECASE)
+
     def __repr__(self):
         return '<TiingoClient(url="{}")>'.format(self._base_url)
 
@@ -139,12 +143,8 @@ class TiingoClient(RestClient):
         :return (boolean):
         """
         daily_freqs = ['daily', 'weekly', 'monthly', 'annually']
-        intraday_freqs = ['min', 'hour']
 
-        if frequency.lower() in daily_freqs:
-            return False
-        elif intraday_freqs[0] in frequency.lower() or \
-                intraday_freqs[1] in frequency.lower():
+        if frequency.lower() in daily_freqs or re.match(self._frequency_pattern, frequency):
             return False
         else:
             return True
@@ -159,7 +159,7 @@ class TiingoClient(RestClient):
         if self._invalid_frequency(frequency):
             etext = ("Error: {} is an invalid frequency.  Check Tiingo API documentation "
                      "for valid EOD or intraday frequency format.")
-            raise self.InvalidFrequencyError(etext.format(frequency))
+            raise InvalidFrequencyError(etext.format(frequency))
         else:
             if frequency.lower() in ['daily', 'weekly', 'monthly', 'annually']:
                 return "tiingo/daily/{}/prices"
