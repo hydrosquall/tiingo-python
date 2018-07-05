@@ -23,6 +23,8 @@ python:
   - 2.7
   # - 2.6
 
+cache: pip
+
 env:
   - WITH_PANDAS=false
   - WITH_PANDAS=true
