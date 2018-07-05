@@ -6,6 +6,7 @@ from unittest import TestCase
 import vcr
 
 from tiingo import TiingoClient
+from tiingo.api import InvalidFrequencyError
 from tiingo.restclient import RestClientError
 
 
@@ -97,6 +98,15 @@ class TestTickerPrices(TestCase):
         rows = list(reader)
         assert len(rows) > 2  # more than 1 day of data
 
+    @vcr.use_cassette('tests/fixtures/intraday_price.yaml')
+    def test_intraday_ticker_price(self):
+        """Test the EOD Prices Endpoint with data param"""
+        prices = self._client.get_ticker_price("GOOGL",
+                                               startDate="2018-01-02",
+                                               endDate="2018-01-02",
+                                               frequency="30Min")
+        self.assertGreater(len(prices), 1)
+
     @vcr.use_cassette('tests/fixtures/list_stock_tickers.yaml')
     def test_list_stock_tickers(self):
         tickers = self._client.list_stock_tickers()
@@ -114,6 +124,13 @@ class TestTickerPrices(TestCase):
         tickers = self._client.list_etf_tickers()
         assert len(tickers) > 1
         assert all(ticker['assetType'] == 'ETF' for ticker in tickers)
+
+    def test_invalid_frequency_error(self):
+        with self.assertRaises(InvalidFrequencyError):
+            prices = self._client.get_ticker_price("GOOGL",
+                                                   startDate="2018-01-02",
+                                                   endDate="2018-01-02",
+                                                   frequency="1.5mins")
 
 # tiingo/news
 class TestNews(TestCase):
