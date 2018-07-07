@@ -2,6 +2,17 @@
 History
 =======
 
+0.8.x (2018-XX-XX)
+------------------
+* New changes go here!
+
+
+0.8.0 (2018-07-06)
+------------------
+* Major: Add IEX Endpoint to retrieve data with intraday frequencies (@dcwtx #125)
+* Minor: update documentation for contributing/releasing new versions
+* Speed up Travis build process with pip cache
+
 0.7.0 (2018-06-14)
 ------------------
 * Major: Provide functions for returning data as pandas Dataframes or Series (@dcwtx #112)
