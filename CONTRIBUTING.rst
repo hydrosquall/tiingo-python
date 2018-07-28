@@ -105,6 +105,12 @@ Before you submit a pull request, check that it meets these guidelines:
    https://travis-ci.org/hydrosquall/tiingo-python/pull_requests
    and make sure that the tests pass for all supported Python versions.
 
+
+Release Procedure
+-----------------------
+
+See RELEASE.rst .
+
 Tips
 ----
 
@@ -125,4 +131,3 @@ In order for py.test to run, you will have had to create an environment variable
 However, now this api key will become embedded in the test fixture file that is created per the prior procedure.  In order to remove this api key from the new test fixtures, run the following from the top level directory::
 
     $ ./tools/api_key_tool.py
-
