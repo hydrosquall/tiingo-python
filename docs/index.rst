@@ -19,6 +19,8 @@ Welcome to Tiingo Python's documentation!
     :target: https://codecov.io/gh/hydrosquall/tiingo-python
     :alt: Coverage
 
+.. image:: https://mybinder.org/badge_logo.svg :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/
+
 
 Contents:
 
@@ -37,7 +39,12 @@ Contents:
 Tiingo is a financial data platform that makes high quality financial tools available to all. They have a RESTful and Real-Time Data API. Presently, the API includes support for the following endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
-* (Coming Soon): Curated news from top financial news sources + curated blogs. Stories are tagged by Tiingo's algorithms.
+* Curated news from top financial news sources + curated blogs. Stories are tagged by Tiingo's algorithms.
+
+If you'd like to try this library without installing anything, click the button below. Otherwise, continue reading.
+
+.. image:: https://mybinder.org/badge_logo.svg :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples%2Fbasic-usage-with-pandas.ipynb
+
 
 
 Indices and tables
