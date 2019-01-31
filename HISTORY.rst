@@ -2,10 +2,16 @@
 History
 =======
 
-0.8.x (2018-XX-XX)
+
+0.9.x (2019-XX-XX)
 ------------------
 * New changes go here!
 
+
+0.9.x (2019-01-30)
+------------------
+* Documentation: Added runnable jupyter notebook sample under "/examples"
+* Minor: bumped various library dependencies
 
 0.8.0 (2018-07-06)
 ------------------

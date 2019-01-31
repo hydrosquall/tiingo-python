@@ -21,6 +21,9 @@ Tiingo Python
      :target: https://pyup.io/repos/github/hydrosquall/tiingo-python/
      :alt: Updates
 
+.. image:: https://mybinder.org/badge_logo.svg :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples%2Fbasic-usage-with-pandas.ipynb
+
+
 
 Tiingo is a financial data platform that makes high quality financial tools available to all. Tiingo has a REST and Real-Time Data API, which this library helps you to access. Presently, the API includes support for the following endpoints:
 
@@ -30,6 +33,11 @@ Tiingo is a financial data platform that makes high quality financial tools avai
 
 Usage
 --------
+
+If you'd like to try this library without installing anything, click the button below. Otherwise, continue reading.
+
+.. image:: https://mybinder.org/badge_logo.svg :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples%2Fbasic-usage-with-pandas.ipynb
+
 
 First, install the library from PyPi:
 
