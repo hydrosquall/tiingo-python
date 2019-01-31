@@ -70,3 +70,6 @@ travis_pypi_setup.py
 # Mac
 .DS_Store
 
+# Jupyter
+examples/.ipynb_checkpoints
+

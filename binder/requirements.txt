@@ -1,0 +1,4 @@
+tiingo
+
+# You technically don't have to use tiingo with pandas
+pandas
