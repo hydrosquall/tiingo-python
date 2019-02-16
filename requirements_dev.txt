@@ -11,4 +11,4 @@ PyYAML==3.12
 pytest==4.0.2
 pytest-runner==4.2
 vcrpy==2.0.1
-twine==1.12.1
+twine==1.13.0
