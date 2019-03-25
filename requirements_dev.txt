@@ -8,7 +8,7 @@ coverage==4.5.1
 Sphinx==1.8.5
 cryptography==2.6.1
 PyYAML==3.12
-pytest==4.0.2
+pytest==4.3.1
 pytest-runner==4.4
 vcrpy==2.0.1
 twine==1.13.0
