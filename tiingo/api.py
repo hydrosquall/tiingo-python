@@ -9,8 +9,14 @@ import sys
 import pkg_resources
 from zipfile import ZipFile
 
+import requests
+
 from tiingo.restclient import RestClient
-from tiingo.exceptions import InstallPandasException, APIColumnNameError, InvalidFrequencyError, MissingRequiredArgumentError
+from tiingo.exceptions import (
+    InstallPandasException,
+    APIColumnNameError,
+    InvalidFrequencyError,
+    MissingRequiredArgumentError)
 
 try:
     import pandas as pd
@@ -223,7 +229,7 @@ class TiingoClient(RestClient):
         if metric_name is not None and metric_name not in valid_columns:
             raise APIColumnNameError('Valid data items are: ' + str(valid_columns))
 
-        if metric_name is None and type(tickers) is not str:
+        if metric_name is None and isinstance(tickers, list):
             raise MissingRequiredArgumentError("""When tickers is provided as a list, metric_name is a required argument.
             Please provide a metric_name, or call this method with one ticker at a time.""")
 
