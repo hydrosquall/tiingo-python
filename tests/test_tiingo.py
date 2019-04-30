@@ -6,7 +6,7 @@ from unittest import TestCase
 import vcr
 
 from tiingo import TiingoClient
-from tiingo.api import InvalidFrequencyError
+from tiingo.exceptions import InvalidFrequencyError
 from tiingo.restclient import RestClientError
 
 
