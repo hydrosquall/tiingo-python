@@ -19,7 +19,7 @@ Welcome to Tiingo Python's documentation!
     :target: https://codecov.io/gh/hydrosquall/tiingo-python
     :alt: Coverage
 
-.. image:: https://mybinder.org/badge_logo.svg 
+.. image:: https://mybinder.org/badge_logo.svg
      :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples%2Fbasic-usage-with-pandas.ipynb
      :alt: Launch Binder
 
@@ -45,7 +45,7 @@ Tiingo is a financial data platform that makes high quality financial tools avai
 
 If you'd like to try this library without installing anything, click the button below. Otherwise, continue reading.
 
-.. image:: https://mybinder.org/badge_logo.svg 
+.. image:: https://mybinder.org/badge_logo.svg
      :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples%2Fbasic-usage-with-pandas.ipynb
      :alt: Launch Binder
 
