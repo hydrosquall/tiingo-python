@@ -19,7 +19,7 @@ def read(*filenames, **kwargs):
 
 NAME = 'tiingo'
 AUTHOR = "Cameron Yick"
-EMAIL = 'cameron.yick@enigma.com'
+EMAIL = 'cameron.yick@gmail.com'
 URL = 'https://github.com/hydrosquall/tiingo-python'
 DESCRIPTION = "REST Client for Tiingo Data Platform API"
 LONG_DESCRIPTION = read('README.rst', 'HISTORY.rst')

@@ -21,7 +21,7 @@ Tiingo Python
      :target: https://pyup.io/repos/github/hydrosquall/tiingo-python/
      :alt: Updates
 
-.. image:: https://mybinder.org/badge_logo.svg 
+.. image:: https://mybinder.org/badge_logo.svg
      :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples%2Fbasic-usage-with-pandas.ipynb
      :alt: Launch Binder
 
@@ -36,10 +36,10 @@ Tiingo is a financial data platform that makes high quality financial tools avai
 Usage
 --------
 
-If you'd like to try this library without installing anything, click the button below. Otherwise, continue reading.
+If you'd like to try this library before installing, click below to open a folder of online runnable examples.
 
-.. image:: https://mybinder.org/badge_logo.svg 
-     :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples%2Fbasic-usage-with-pandas.ipynb
+.. image:: https://mybinder.org/badge_logo.svg
+     :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples
      :alt: Launch Binder
 
 

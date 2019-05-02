@@ -5,7 +5,7 @@ History
 
 0.10.x (2019-XX-XX)
 ------------------
-* New changes go here!
+* Documentation: Added a "Peer Comparison Analysis" Jupyter Notebook under "/examples" (@i3creations #197)
 
 
 0.9.x (2019-01-30)
