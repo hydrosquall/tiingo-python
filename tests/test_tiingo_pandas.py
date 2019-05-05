@@ -4,7 +4,7 @@
 import vcr
 from unittest import TestCase
 from tiingo import TiingoClient
-from tiingo.api import APIColumnNameError, InstallPandasException
+from tiingo.exceptions import APIColumnNameError, InstallPandasException, MissingRequiredArgumentError
 try:
     import pandas as pd
     pandas_is_installed = True
@@ -68,6 +68,10 @@ class TestTiingoWithPython(TestCase):
         with self.assertRaises(APIColumnNameError):
             self._client.get_dataframe(['GOOGL', 'AAPL'], startDate='2018-01-05',
                                                 endDate='2018-01-19', metric_name='xopen', frequency='weekly')
+
+    def test_metric_name_missing_when_multiple_tickers(self):
+        with self.assertRaises(MissingRequiredArgumentError):
+            self._client.get_dataframe(['GOOGL', 'AAPL'], frequency='weekly')
 
     @vcr.use_cassette('tests/fixtures/ticker_price_pandas_single.yaml')
     def test_pandas_edge_case(self):

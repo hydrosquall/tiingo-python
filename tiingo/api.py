@@ -1,15 +1,22 @@
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import pkg_resources
+from collections import namedtuple
 import csv
 import json
-from collections import namedtuple
-from zipfile import ZipFile
-from tiingo.restclient import RestClient
-import requests
+import os
 import re
+import sys
+import pkg_resources
+from zipfile import ZipFile
+
+import requests
+
+from tiingo.restclient import RestClient
+from tiingo.exceptions import (
+    InstallPandasException,
+    APIColumnNameError,
+    InvalidFrequencyError,
+    MissingRequiredArgumentError)
 
 try:
     import pandas as pd
@@ -48,17 +55,6 @@ def dict_to_object(item, object_name):
     return json.loads(json.dumps(item),
                       object_hook=lambda d:
                       namedtuple(object_name, fields)(*values))
-
-class InstallPandasException(Exception):
-    pass
-
-
-class APIColumnNameError(Exception):
-    pass
-
-
-class InvalidFrequencyError(Exception):
-    pass
 
 
 class TiingoClient(RestClient):
@@ -227,11 +223,15 @@ class TiingoClient(RestClient):
                 frequency (string): Resample frequency (defaults to daily).
         """
 
-        valid_columns = ['open', 'high', 'low', 'close', 'volume', 'adjOpen', 'adjHigh', 'adjLow',
-                         'adjClose', 'adjVolume', 'divCash', 'splitFactor']
+        valid_columns = {'open', 'high', 'low', 'close', 'volume', 'adjOpen', 'adjHigh', 'adjLow',
+                         'adjClose', 'adjVolume', 'divCash', 'splitFactor'}
 
         if metric_name is not None and metric_name not in valid_columns:
             raise APIColumnNameError('Valid data items are: ' + str(valid_columns))
+
+        if metric_name is None and isinstance(tickers, list):
+            raise MissingRequiredArgumentError("""When tickers is provided as a list, metric_name is a required argument.
+            Please provide a metric_name, or call this method with one ticker at a time.""")
 
         params = {
             'format': 'json',
