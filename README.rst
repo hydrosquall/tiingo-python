@@ -1,4 +1,3 @@
-=============
 Tiingo Python
 =============
 
@@ -169,7 +168,7 @@ Related Projects:
 .. _Riingo: https://github.com/business-science/riingo
 
 Credits
----------
+--------
 
 * Many thanks to Rishi Singh for creating Tiingo.
 
