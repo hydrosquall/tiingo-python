@@ -3,11 +3,11 @@ History
 =======
 
 0.11.x (2019-XX-XX)
-------------------
+--------------------
 * Update me as new features are added
 
 0.10.x (2019-05-11)
-------------------
+--------------------
 * Documentation: Added a "Peer Comparison Analysis" Jupyter Notebook under "/examples" (@i3creations #197)
 * Minor: Update error message to clarify multiple tickers only work with single metrics
 * Updated development dependencies

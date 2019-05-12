@@ -139,20 +139,20 @@ To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
 You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe`` methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
 
 Further Docs
---------
+-------------
 
 * Official Tiingo Documentation: https://api.tiingo.com
 * `tiingo-python` Documentation: https://tiingo-python.readthedocs.io.
 
 Features
---------
+---------
 
 * Easy programmatic access to Tiingo API
 * Reuse requests session across API calls for better performance
 * On most methods, pass in `fmt="object"` as a keyword to have your responses come back as `NamedTuples`, which should have a lower memory impact than regular Python dictionaries.
 
 Roadmap:
---------
+---------
 
 * Client-side validation of tickers
 * Data validation of returned responses
@@ -162,7 +162,7 @@ Roadmap:
 Feel free to file a PR that implements any of the above items.
 
 Related Projects:
---------
+------------------
 * Riingo_ : Client for Tiingo in the R Programming Language
 
 .. _Riingo: https://github.com/business-science/riingo
