@@ -155,7 +155,7 @@ class TestNews(TestCase):
             "tags": ["Technology", "Bitcoin"],
             "startDate": "2016-01-01",
             "endDate": "2017-08-31",
-            "sources": ['washingtonpost.com', 'altcointoday.com'],
+            "sources": ['cnbc.com', 'altcointoday.com'],
             "limit": self.num_articles
         }
 

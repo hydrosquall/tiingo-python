@@ -299,7 +299,7 @@ class TiingoClient(RestClient):
             'offset': offset,
             'sortBy': sortBy,
             'tickers': tickers,
-            'sources': sources,
+            'source': (",").join(sources),
             'tags': tags,
             'startDate': startDate,
             'endDate': endDate
