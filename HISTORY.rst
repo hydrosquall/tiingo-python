@@ -6,7 +6,7 @@ History
 --------------------
 * Update me with new features!
 
-0.11.x (2019-09-XX)
+0.11.0 (2019-09-01)
 --------------------
 * [/news] Internally rename sources parameter to "source", ensure lists are passed as comma separated values #325. Non-breaking external change.
 * [/news] Add new URL parameter for "onlyWithTickers" #327
