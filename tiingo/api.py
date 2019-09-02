@@ -278,6 +278,7 @@ class TiingoClient(RestClient):
     # tiingo/news
     def get_news(self, tickers=[], tags=[], sources=[], startDate=None,
                  endDate=None, limit=100, offset=0, sortBy="publishedDate",
+                 onlyWithTickers=False,
                  fmt='json'):
         """Return list of news articles matching given search terms
             https://api.tiingo.com/docs/tiingo/news
@@ -291,7 +292,8 @@ class TiingoClient(RestClient):
                 startDate, endDate [date]: Boundaries of news search window
                 limit (int): Max results returned. Default 100, max 1000
                 offset (int): Search results offset, used for paginating
-                sortBy (string): "publishedDate" OR (#TODO: UPDATE THIS)
+                sortBy (string): "publishedDate" OR "crawlDate", descending
+                onlyWithTickers (bool): If true, only links with tagged tickers will return.
         """
         url = "tiingo/news"
         params = {
@@ -302,7 +304,8 @@ class TiingoClient(RestClient):
             'source': (",").join(sources),
             'tags': tags,
             'startDate': startDate,
-            'endDate': endDate
+            'endDate': endDate,
+            'onlyWithTickers': onlyWithTickers
         }
         response = self._request('GET', url, params=params)
         data = response.json()
