@@ -2,9 +2,14 @@
 History
 =======
 
+0.12.x (2019-09-XX)
+--------------------
+* Update me with new features!
+
 0.11.x (2019-09-XX)
 --------------------
-* [/news] Internally rename sources parameter to "source", ensure lists are passed as comma separated values
+* [/news] Internally rename sources parameter to "source", ensure lists are passed as comma separated values #325. Non-breaking external change.
+* [/news] Add new URL parameter for "onlyWithTickers" #327
 
 0.10.x (2019-05-11)
 --------------------
