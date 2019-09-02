@@ -5,6 +5,7 @@ History
 0.11.x (2019-09-XX)
 --------------------
 * [/news] Internally rename sources parameter to "source", ensure lists are passed as comma separated values
+* CI: Remove Travis testing for Python 3.4
 
 0.10.x (2019-05-11)
 --------------------
