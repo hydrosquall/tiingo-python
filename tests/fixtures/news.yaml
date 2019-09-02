@@ -7,7 +7,7 @@ interactions:
       Authorization: [Token 0000000000000000000000000000000000000000]
       Connection: [keep-alive]
       Content-Type: [application/json]
-      User-Agent: [tiingo-python-client 0.3.2]
+      User-Agent: [tiingo-python-client 0.11.0]
     method: GET
     uri: https://api.tiingo.com/tiingo/news?limit=1&offset=0&sortBy=publishedDate&tickers=aapl&tickers=googl&source=cnbc.com,altcointoday.com&tags=Technology&tags=Bitcoin&startDate=2016-01-01&endDate=2017-08-31
   response:

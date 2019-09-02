@@ -2,9 +2,9 @@
 History
 =======
 
-0.11.x (2019-XX-XX)
+0.11.x (2019-09-XX)
 --------------------
-* Update me as new features are added
+* [/news] Internally rename sources parameter to "source", ensure lists are passed as comma separated values
 
 0.10.x (2019-05-11)
 --------------------
