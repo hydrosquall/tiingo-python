@@ -201,7 +201,7 @@ class TiingoClient(RestClient):
             return response.content.decode("utf-8")
 
     def get_dataframe(self, tickers,
-                      startDate=None, endDate=None, metric_name=None, frequency='daily'):
+                      startDate=None, endDate=None, metric_name=None, frequency='daily', afterHours='false'):
 
         """ Return a pandas.DataFrame of historical prices for one or more ticker symbols.
 
@@ -221,6 +221,7 @@ class TiingoClient(RestClient):
                     all of the available data will be returned.  In the event of a list of tickers,
                     this parameter is required.
                 frequency (string): Resample frequency (defaults to daily).
+                afterHours (string): If set to true, includes pre and post market data if available.
         """
 
         valid_columns = {'open', 'high', 'low', 'close', 'volume', 'adjOpen', 'adjHigh', 'adjLow',
@@ -235,7 +236,8 @@ class TiingoClient(RestClient):
 
         params = {
             'format': 'json',
-            'resampleFreq': frequency
+            'resampleFreq': frequency,
+            'afterHours': afterHours
         }
         if startDate:
             params['startDate'] = startDate
