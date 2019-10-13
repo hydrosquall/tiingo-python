@@ -144,7 +144,7 @@ class TiingoClient(RestClient):
         is_valid = self._is_eod_frequency(frequency) or re.match(self._frequency_pattern, frequency)
         return not is_valid
 
-    def _get_price_url(self, ticker, frequency):
+    def _get_url(self, ticker, frequency):
         """
         Return url based on frequency.  Daily, weekly, or yearly use Tiingo
         EOD api; anything less than daily uses the iex intraday api.
@@ -178,7 +178,7 @@ class TiingoClient(RestClient):
                 fmt (string): 'csv' or 'json'
                 frequency (string): Resample frequency
         """
-        url = self._get_price_url(ticker, frequency)
+        url = self._get_url(ticker, frequency)
         params = {
             'format': fmt if fmt != "object" else 'json',  # conversion local
             'resampleFreq': frequency
@@ -245,7 +245,7 @@ class TiingoClient(RestClient):
         if pandas_is_installed:
             if type(tickers) is str:
                 stock = tickers
-                url = self._get_price_url(stock, frequency)
+                url = self._get_url(stock, frequency)
                 response = self._request('GET', url, params=params)
                 df = pd.DataFrame(response.json())
                 if metric_name is not None:
@@ -258,7 +258,7 @@ class TiingoClient(RestClient):
             else:
                 prices = pd.DataFrame()
                 for stock in tickers:
-                    url = self._get_price_url(stock, frequency)
+                    url = self._get_url(stock, frequency)
                     response = self._request('GET', url, params=params)
                     df = pd.DataFrame(response.json())
                     df.index = df['date']
@@ -372,7 +372,7 @@ class TiingoClient(RestClient):
         if consolidateBaseCurrency is True:
             params['consolidateBaseCurrency'] = ','.join(consolidateBaseCurrency)
         if includeRawExchangeData is True:
-            params['includeRawExchangeData'] = ','.join(includeRawExchangeData)
+            params['includeRawExchangeData'] = includeRawExchangeData
         if resampleFreq:
             params['resampleFreq'] = resampleFreq
         if convertCurrency:
@@ -381,7 +381,7 @@ class TiingoClient(RestClient):
         response = self._request('GET', url, params=params)
         return response.json()
 
-    def get_crypto_meta_data(self, tickers=[], fmt='json'):
+    def get_crypto_metadata(self, tickers=[], fmt='json'):
         url = 'https://api.tiingo.com/tiingo/crypto'
 
         params = {
