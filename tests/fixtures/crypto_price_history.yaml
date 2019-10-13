@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.3.2]
+    method: GET
+    uri: https://api.tiingo.com/tiingo/crypto/prices/?tickers=btcusd,fldcbtc&includeRawExchangeData=true&endDate=2019-05-02&startDate=2019-05-01&resampleFreq=1day
+  response:
+    body: {string: '[{"ticker":"btcusd","baseCurrency":"btc","quoteCurrency":"usd","priceData":[{"volume":27749.729226739997,"date":"2019-05-01T00:00:00+00:00","volumeNotional":150406020.75066727,"close":5420.0896708474575,"open":5367.348827845256,"low":5358.100876910302,"tradesDone":214889,"high":5443.811868611532},{"volume":40036.510605330004,"date":"2019-05-02T00:00:00+00:00","volumeNotional":222030376.30221513,"close":5545.697488248552,"open":5441.491804492167,"low":5426.033480300644,"tradesDone":241005,"high":5590.235084334595}],"exchangeData":{"BIBOX":[{"exchangeCode":"BIBOX","volume":null,"date":"2019-05-01T00:00:00+00:00","volumeNotional":null,"close":5391.82,"open":5315.6435,"low":5314.7716,"tradesDone":null,"high":5397.23},{"exchangeCode":"BIBOX","volume":null,"date":"2019-05-02T00:00:00+00:00","volumeNotional":null,"close":5499.37,"open":5383.96,"low":5371.21,"tradesDone":null,"high":5535.73}],"BINANCE":[{"exchangeCode":"BINANCE","volume":17217.473216,"date":"2019-05-01T00:00:00+00:00","volumeNotional":92685101.81637119,"close":5383.2,"open":5321.94,"low":5316.2,"tradesDone":155085,"high":5402},{"exchangeCode":"BINANCE","volume":22795.787835,"date":"2019-05-02T00:00:00+00:00","volumeNotional":125214299.12523644,"close":5492.87,"open":5383.2,"low":5370,"tradesDone":171919,"high":5538}],"BITFINEX":[{"exchangeCode":"BITFINEX","volume":5435.17396422,"date":"2019-05-01T00:00:00+00:00","volumeNotional":30597311.83157649,"close":5629.5,"open":5599.52273017,"low":5577.5,"tradesDone":19550,"high":5655},{"exchangeCode":"BITFINEX","volume":11027.14067892,"date":"2019-05-02T00:00:00+00:00","volumeNotional":63323355.348698094,"close":5742.5,"open":5629.6,"low":5611.1,"tradesDone":28040,"high":5784.3}],"BITTREX":[{"exchangeCode":"BITTREX","volume":256.46137423,"date":"2019-05-01T00:00:00+00:00","volumeNotional":1365938.4123636545,"close":5326.098,"open":5320,"low":5267.502,"tradesDone":1832,"high":5387.45},{"exchangeCode":"BITTREX","volume":485.69222735,"date":"2019-05-02T00:00:00+00:00","volumeNotional":2619338.18209855,"close":5393,"open":5325.815,"low":5310,"tradesDone":2473,"high":5530}],"GDAX":[{"exchangeCode":"GDAX","volume":4840.62067229,"date":"2019-05-01T00:00:00+00:00","volumeNotional":25757668.69035593,"close":5321.15,"open":5270.68,"low":5265.59,"tradesDone":38422,"high":5358.39},{"exchangeCode":"GDAX","volume":5727.88986406,"date":"2019-05-02T00:00:00+00:00","volumeNotional":30873383.64618204,"close":5390.01,"open":5321.15,"low":5302.59,"tradesDone":38573,"high":5429.62}]}},{"ticker":"fldcbtc","baseCurrency":"fldc","quoteCurrency":"btc","priceData":[{"volume":34807.97636632,"date":"2019-05-01T00:00:00+00:00","volumeNotional":0.0066135155096008,"close":1.9e-7,"open":1.8e-7,"low":1.8e-7,"tradesDone":2,"high":1.9e-7},{"volume":283386.06880708,"date":"2019-05-02T00:00:00+00:00","volumeNotional":0.05100949238527439,"close":1.8e-7,"open":1.9e-7,"low":1.8e-7,"tradesDone":20,"high":2e-7}],"exchangeData":{"BITTREX":[{"exchangeCode":"BITTREX","volume":34807.97636632,"date":"2019-05-01T00:00:00+00:00","volumeNotional":0.0066135155096008,"close":1.9e-7,"open":1.8e-7,"low":1.8e-7,"tradesDone":2,"high":1.9e-7},{"exchangeCode":"BITTREX","volume":283386.06880708,"date":"2019-05-02T00:00:00+00:00","volumeNotional":0.05100949238527439,"close":1.8e-7,"open":1.9e-7,"low":1.8e-7,"tradesDone":20,"high":2e-7}]}}]'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['62']
+      Content-Type: [application/json]
+      Date: ['Sun, 08 Oct 2017 10:21:32 GMT']
+      Server: [nginx/1.10.1]
+      Vary: [Cookie]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 403, message: Forbidden}
+version: 1
