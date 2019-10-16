@@ -334,16 +334,13 @@ class TiingoClient(RestClient):
 
     # Crypto
     # tiingo/crypto
-    def get_crypto_top_of_book(self, tickers=[],
-                               endDate=None, exchanges=[],
+    def get_crypto_top_of_book(self, tickers=[], exchanges=[],
                                includeRawExchangeData=False, convertCurrency=None):
         url = 'https://api.tiingo.com/tiingo/crypto/top'
         params = {
             'tickers': ','.join(tickers)
         }
 
-        if endDate:
-            params['endDate'] = endDate
         if len(exchanges):
             params['exchanges'] = ','.join(exchanges)
         if includeRawExchangeData is True:
