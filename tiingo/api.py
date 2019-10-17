@@ -331,3 +331,63 @@ class TiingoClient(RestClient):
             return data
         elif fmt == 'object':
             return dict_to_object(data, "BulkNews")
+
+    # Crypto
+    # tiingo/crypto
+    def get_crypto_top_of_book(self, tickers=[], exchanges=[],
+                               includeRawExchangeData=False, convertCurrency=None):
+        url = 'https://api.tiingo.com/tiingo/crypto/top'
+        params = {
+            'tickers': ','.join(tickers)
+        }
+
+        if len(exchanges):
+            params['exchanges'] = ','.join(exchanges)
+        if includeRawExchangeData is True:
+            params['includeRawExchangeData'] = True
+        if convertCurrency:
+            params['convertCurrency'] = convertCurrency
+
+        response = self._request('GET', url, params=params)
+        return response.json()
+
+    def get_crypto_price_history(self, tickers=[], baseCurrency=None,
+                                 startDate=None, endDate=None, exchanges=[],
+                                 consolidateBaseCurrency=False, includeRawExchangeData=False,
+                                 resampleFreq=None, convertCurrency=None):
+        url = 'https://api.tiingo.com/tiingo/crypto/prices'
+        params = {
+            'tickers': ','.join(tickers)
+        }
+
+        if startDate:
+            params['startDate'] = startDate
+        if endDate:
+            params['endDate'] = endDate
+        if len(exchanges):
+            params['exchanges'] = ','.join(exchanges)
+        if consolidateBaseCurrency is True:
+            params['consolidateBaseCurrency'] = ','.join(consolidateBaseCurrency)
+        if includeRawExchangeData is True:
+            params['includeRawExchangeData'] = includeRawExchangeData
+        if resampleFreq:
+            params['resampleFreq'] = resampleFreq
+        if convertCurrency:
+            params['convertCurrency'] = convertCurrency
+
+        response = self._request('GET', url, params=params)
+        return response.json()
+
+    def get_crypto_metadata(self, tickers=[], fmt='json'):
+        url = 'https://api.tiingo.com/tiingo/crypto'
+
+        params = {
+            'tickers': ','.join(tickers),
+            'format': fmt,
+        }
+
+        response = self._request('GET', url, params=params)
+        if fmt == 'csv':
+            return response.content.decode("utf-8")
+        else:
+            return response.json()

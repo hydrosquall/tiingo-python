@@ -1,0 +1,24 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Token 0000000000000000000000000000000000000000]
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      User-Agent: [tiingo-python-client 0.3.2]
+    method: GET
+    uri: https://api.tiingo.com/tiingo/crypto/top?tickers=btcusd,fldcbtc&includeRawExchangeData=true
+  response:
+    body: {string: '[{"ticker":"btcusd","baseCurrency":"btc","quoteCurrency":"usd","topOfBookData":[{"bidPrice":10160.51,"quoteTimestamp":"2019-10-03T23:00:15.363000+00:00","askExchange":"GEMINI","lastSize":0.001338,"askSize":0.1,"lastExchange":"BINANCE","lastPrice":8220.83,"bidExchange":"BITSTAMP","bidSize":2.88067305,"askPrice":8209.92,"lastSaleTimestamp":"2019-10-13T20:20:03.712000+00:00","lastSizeNotional":10.999470539999999}],"exchangeData":{"GEMINI":[{"bidPrice":8206.45,"exchangeCode":"GEMINI","lastSize":0.1,"quoteTimestampStr":"2019-10-03T23:00:15.363000+00:00","askSize":0.1,"lastPrice":8206.45,"lastSaleTimestampStr":"2019-10-03T23:00:09.652000+00:00","bidSize":0.1,"askPrice":8209.92}],"BITTREX":[{"bidPrice":8225.115,"exchangeCode":"BITTREX","lastSize":0.54573986,"quoteTimestampStr":"2019-10-13T20:20:03.668153+00:00","askSize":1.30618005,"lastPrice":8225.124,"lastSaleTimestampStr":"2019-10-13T20:19:52.790000+00:00","bidSize":10.25824791,"askPrice":8225.116}],"GDAX":[{"bidPrice":8225,"exchangeCode":"GDAX","lastSize":0.026867,"quoteTimestampStr":"2019-10-13T20:20:03.805667+00:00","askSize":0.07619918,"lastPrice":8228.53,"lastSaleTimestampStr":"2019-10-13T20:19:59.821000+00:00","bidSize":0.70558435,"askPrice":8228.55}],"KUCOIN":[{"bidPrice":null,"exchangeCode":"KUCOIN","lastSize":0.03,"quoteTimestampStr":"2019-10-13T20:20:03.367832+00:00","askSize":0.15054194,"lastPrice":8221,"lastSaleTimestampStr":"2019-10-13T20:20:03.568812+00:00","bidSize":null,"askPrice":8221.3}],"BINANCE":[{"bidPrice":8220.83,"exchangeCode":"BINANCE","lastSize":0.001338,"quoteTimestampStr":"2019-10-13T20:20:02.924000+00:00","askSize":0.126467,"lastPrice":8220.83,"lastSaleTimestampStr":"2019-10-13T20:20:03.712000+00:00","bidSize":0.005,"askPrice":8227.88}],"BITSTAMP":[{"bidPrice":10160.51,"exchangeCode":"BITSTAMP","lastSize":0.0097418,"quoteTimestampStr":"2019-08-27T10:02:48+00:00","askSize":0.01,"lastPrice":10162.19,"lastSaleTimestampStr":"2019-08-27T10:02:43+00:00","bidSize":2.88067305,"askPrice":10166.66}],"POLONIEX":[{"bidPrice":8214.74394741,"exchangeCode":"POLONIEX","lastSize":1.2e-7,"quoteTimestampStr":"2019-10-13T20:20:02.655109+00:00","askSize":1,"lastPrice":8224.99999998,"lastSaleTimestampStr":"2019-10-13T20:19:56+00:00","bidSize":0.00815241,"askPrice":8224.99999999}],"BIBOX":[{"bidPrice":8215.5596,"exchangeCode":"BIBOX","lastSize":0.797,"quoteTimestampStr":"2019-10-13T20:20:01.509000+00:00","askSize":0.555,"lastPrice":8225.68,"lastSaleTimestampStr":"2019-10-13T20:20:01.509000+00:00","bidSize":0.049,"askPrice":8225}],"BITFINEX":[{"bidPrice":8240.5,"exchangeCode":"BITFINEX","lastSize":0.005,"quoteTimestampStr":"2019-10-13T20:20:03.757465+00:00","askSize":0.335,"lastPrice":8242.3,"lastSaleTimestampStr":"2019-10-13T20:20:03.496000+00:00","bidSize":1.42055391,"askPrice":8246.9}],"GATECOIN":[{"bidPrice":3195.2,"exchangeCode":"GATECOIN","lastSize":0.00307,"quoteTimestampStr":"2018-12-16T00:16:40.664723+00:00","askSize":null,"lastPrice":3203,"lastSaleTimestampStr":"2018-12-15T09:25:27+00:00","bidSize":0.007,"askPrice":null}],"HITBTC":[{"bidPrice":8204.22,"exchangeCode":"HITBTC","lastSize":0.05,"quoteTimestampStr":"2019-10-13T20:20:03.295656+00:00","askSize":0.125,"lastPrice":8208.7,"lastSaleTimestampStr":"2019-10-13T20:18:09.564000+00:00","bidSize":0.14567,"askPrice":8211.44}]}},{"ticker":"fldcbtc","baseCurrency":"fldc","quoteCurrency":"btc","topOfBookData":[{"bidPrice":4e-8,"quoteTimestamp":"2019-10-13T20:18:23.845035+00:00","askExchange":"BITTREX","lastSize":200000,"askSize":982944.10988522,"lastExchange":"BITTREX","lastPrice":5e-8,"bidExchange":"BITTREX","bidSize":1596297.3588658,"askPrice":8e-8,"lastSaleTimestamp":"2019-10-13T07:45:21.210000+00:00","lastSizeNotional":0.01}],"exchangeData":{"BITTREX":[{"bidPrice":4e-8,"exchangeCode":"BITTREX","lastSize":200000,"quoteTimestampStr":"2019-10-13T20:18:23.845035+00:00","askSize":982944.10988522,"lastPrice":5e-8,"lastSaleTimestampStr":"2019-10-13T07:45:21.210000+00:00","bidSize":1596297.3588658,"askPrice":8e-8}]}}]'}
+    headers:
+      Allow: ['GET, HEAD, OPTIONS']
+      Content-Length: ['62']
+      Content-Type: [application/json]
+      Date: ['Sun, 08 Oct 2017 10:21:32 GMT']
+      Server: [nginx/1.10.1]
+      Vary: [Cookie]
+      X-Frame-Options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1

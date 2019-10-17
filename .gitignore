@@ -73,3 +73,7 @@ travis_pypi_setup.py
 # Jupyter
 examples/.ipynb_checkpoints
 
+# vs code
+.vscode/
+.history/
+
