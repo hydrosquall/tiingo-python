@@ -336,7 +336,7 @@ class TiingoClient(RestClient):
     # tiingo/crypto
     def get_crypto_top_of_book(self, tickers=[], exchanges=[],
                                includeRawExchangeData=False, convertCurrency=None):
-        url = 'https://api.tiingo.com/tiingo/crypto/top'
+        url = 'tiingo/crypto/top'
         params = {
             'tickers': ','.join(tickers)
         }
@@ -355,7 +355,7 @@ class TiingoClient(RestClient):
                                  startDate=None, endDate=None, exchanges=[],
                                  consolidateBaseCurrency=False, includeRawExchangeData=False,
                                  resampleFreq=None, convertCurrency=None):
-        url = 'https://api.tiingo.com/tiingo/crypto/prices'
+        url = 'tiingo/crypto/prices'
         params = {
             'tickers': ','.join(tickers)
         }
@@ -379,7 +379,7 @@ class TiingoClient(RestClient):
         return response.json()
 
     def get_crypto_metadata(self, tickers=[], fmt='json'):
-        url = 'https://api.tiingo.com/tiingo/crypto'
+        url = 'tiingo/crypto'
 
         params = {
             'tickers': ','.join(tickers),
