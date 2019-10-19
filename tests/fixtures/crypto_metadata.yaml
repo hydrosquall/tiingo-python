@@ -9,7 +9,7 @@ interactions:
       Content-Type: [application/json]
       User-Agent: [tiingo-python-client 0.3.2]
     method: GET
-    uri: https://api.tiingo.com/tiingo/crypto?tickers=btcusd,fldcbtc
+    uri: https://api.tiingo.com/tiingo/crypto?tickers=btcusd,fldcbtc&format=json
   response:
     body: {string: '[{"name":"Bitcoin Tether (BTC/USD)","description":"Tether (BTC/USD)","quoteCurrency":"usd","ticker":"btcusd","baseCurrency":"btc"},{"name":"FoldingCoin (FLDC/BTC)","description":"FoldingCoin (FLDC/BTC)","quoteCurrency":"btc","ticker":"fldcbtc","baseCurrency":"fldc"}]'}
     headers:
