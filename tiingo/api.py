@@ -111,8 +111,9 @@ class TiingoClient(RestClient):
         if not len(assetTypes):
             return [row for row in reader]
 
+        t = set(assetTypes)
         return [row for row in reader
-                if row.get('assetType') in assetTypes]
+                if row.get('assetType') in t]
 
     def list_stock_tickers(self):
         return self.list_tickers(['Stock'])
