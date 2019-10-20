@@ -107,23 +107,24 @@ class TestTickerPrices(TestCase):
                                                frequency="30Min")
         self.assertGreater(len(prices), 1)
 
-    @vcr.use_cassette('tests/fixtures/list_stock_tickers.yaml')
-    def test_list_all_stock_tickers(self):
+    @vcr.use_cassette('tests/fixtures/list_all_tickers.yaml')
+    def test_list_all_tickers(self):
         tickers = self._client.list_tickers()
         assert len(tickers) > 1
-        assert any(ticker['assetType' == 'Stock' for ticker in tickers)
-        assert any(ticker['assetType' == 'Mutual Fund' for ticker in tickers)
-        assert any(ticker['assetType' == 'ETF' for ticker in tickers)
+        assert any(ticker['assetType'] == 'Stock' for ticker in tickers)
+        print(tickers)
+        assert any(ticker['assetType'] == 'Mutual Fund' for ticker in tickers)
+        assert any(ticker['assetType'] == 'ETF' for ticker in tickers)
 
-    @vcr.use_cassette('tests/fixtures/list_stock_tickers.yaml')
-    def test_list_multi_stock_tickers(self):
+    @vcr.use_cassette('tests/fixtures/list_all_tickers.yaml')
+    def test_list_multi_tickers(self):
         tickers = self._client.list_tickers(['Stock', 'ETF'])
         assert len(tickers) > 1
-        assert any(ticker['assetType' == 'Stock' for ticker in tickers)
-        assert any(ticker['assetType' == 'ETF' for ticker in tickers)
-        assert all(ticker['assetType' != 'Mutual Fund' for ticker in tickers)
+        assert any(ticker['assetType'] == 'Stock' for ticker in tickers)
+        assert any(ticker['assetType'] == 'ETF' for ticker in tickers)
+        assert all(ticker['assetType'] != 'Mutual Fund' for ticker in tickers)
 
-    @vcr.use_cassette('tests/fixtures/list_stock_tickers.yaml')
+    @vcr.use_cassette('tests/fixtures/list_all_tickers.yaml')
     def test_list_stock_tickers(self):
         tickers = self._client.list_stock_tickers()
         assert len(tickers) > 1
