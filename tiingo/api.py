@@ -94,7 +94,7 @@ class TiingoClient(RestClient):
 
     # TICKER PRICE ENDPOINTS
     # https://api.tiingo.com/docs/tiingo/daily
-    def list_tickers(self, assetType):
+    def list_tickers(self, assetTypes=[]):
         """Return a list of dicts of metadata tickers for all supported tickers
             of the specified asset type, as well as metadata about each ticker.
             This includes supported date range, the exchange the ticker is traded
@@ -108,17 +108,21 @@ class TiingoClient(RestClient):
         raw_csv = get_buffer_from_zipfile(zipdata, 'supported_tickers.csv')
         reader = csv.DictReader(raw_csv)
 
+        if not len(assetTypes):
+            return [row for row in reader]
+
+        assetTypesSet = set(assetTypes)
         return [row for row in reader
-                if row.get('assetType') == assetType]
+                if row.get('assetType') in assetTypesSet]
 
     def list_stock_tickers(self):
-        return self.list_tickers('Stock')
+        return self.list_tickers(['Stock'])
 
     def list_etf_tickers(self):
-        return self.list_tickers('ETF')
+        return self.list_tickers(['ETF'])
 
     def list_fund_tickers(self):
-        return self.list_tickers('Mutual Fund')
+        return self.list_tickers(['Mutual Fund'])
 
     def get_ticker_metadata(self, ticker, fmt='json'):
         """Return metadata for 1 ticker
