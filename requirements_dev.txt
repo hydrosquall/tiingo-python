@@ -10,5 +10,5 @@ cryptography==2.7
 PyYAML==5.1.2
 pytest==5.2.1
 pytest-runner==5.1
-vcrpy==2.1.0
+vcrpy==2.1.1
 twine==2.0.0
