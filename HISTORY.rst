@@ -4,7 +4,7 @@ History
 
 0.13.0 (2019-11-XX - Unreleased)
 --------------------------------
-* Update me with new features!
+* Minor: Address Pandas Future Warning for sorting in pd.concat (#392)
 
 0.12.0 (2019-10-20)
 --------------------

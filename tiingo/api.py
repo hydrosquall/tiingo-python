@@ -267,7 +267,7 @@ class TiingoClient(RestClient):
                     df = pd.DataFrame(response.json())
                     df.index = df['date']
                     df.rename(index=str, columns={metric_name: stock}, inplace=True)
-                    prices = pd.concat([prices, df[stock]], axis=1)
+                    prices = pd.concat([prices, df[stock]], axis=1, sort=True)
             prices.index = pd.to_datetime(prices.index)
             return prices
         else:
