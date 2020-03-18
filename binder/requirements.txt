@@ -3,4 +3,4 @@ tiingo==0.12.0
 
 # You technically don't have to use tiingo with pandas, but
 # we included it since most data analysts will have it installed already.
-pandas==0.25.1
+pandas==1.0.3
