@@ -61,6 +61,23 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
                               startDate='2017-01-01',
                               endDate='2017-08-31')
 
+Websocket support::
+
+.. code-block:: python
+   from tiingo import TiingoWebsocketClient
+ 
+   def cb_fn(msg):
+       print(msg)
+
+   subscribe = {
+           'eventName':'subscribe',
+           'authorization':'API_KEY_GOES_HERE',
+           'eventData': {
+               'thresholdLevel':5
+         }
+   }
+   
+   client=TiingoWebsocketClient(subscribe,endpoint="iex",on_msg_cb=cb_fn)
 
 Further Docs
 --------
