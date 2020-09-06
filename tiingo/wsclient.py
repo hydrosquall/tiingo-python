@@ -1,9 +1,12 @@
 import os
 import websocket
-import thread
+try:
+    import thread
+except ImportError:
+    import _thread as thread
 import time
 import json
-from exceptions import MissingRequiredArgument
+from tiingo.exceptions import MissingRequiredArgumentError
 
 GLOB_config=None
 GLOB_on_msg_cb=None
@@ -93,7 +96,7 @@ class TiingoWebsocketClient:
         
         self.on_msg_cb = on_msg_cb
         if not self.on_msg_cb:
-            raise MissingRequiredArgument("please define on_msg_cb It's a callback that gets called when new messages arrive "
+            raise MissingRequiredArgumentError("please define on_msg_cb It's a callback that gets called when new messages arrive "
                                           "Example:"
                                           "def cb_fn(msg):"
                                           "    print(msg)")
@@ -109,4 +112,3 @@ class TiingoWebsocketClient:
                               on_close = genericWebsocketClient.on_close,
                               on_open = genericWebsocketClient.on_open)
         ws.run_forever()
-
