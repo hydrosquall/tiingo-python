@@ -1,11 +1,9 @@
 import os
 import websocket
-try:
-    import thread
-except ImportError:
-    import _thread as thread
+import thread
 import time
 import json
+from exceptions import MissingRequiredArgument
 
 GLOB_config=None
 GLOB_on_msg_cb=None
@@ -36,16 +34,34 @@ class genericWebsocketClient:
 class TiingoWebsocketClient:
     '''
     from tiingo import TiingoWebsocketClient
+    
     def cb_fn(msg):
+
+        # Example response 
+        # msg = {
+        #   "service":"iex" # An identifier telling you this is IEX data. The value returned by this will always be "iex".
+        #   
+        #   # Will always return "A" meaning new price quotes. There are also H type Heartbeat msgs used to keep the connection alive
+        #   "messageType":"A" # A value telling you what kind of data packet this is from our IEX feed.
+        #  
+        #   # see https://api.tiingo.com/documentation/websockets/iex > Response for more info
+        #   "data":[] # an array containing trade information and a timestamp
+        #   
+        # }
+
         print(msg)
+
     subscribe = {
             'eventName':'subscribe',
             'authorization':'API_KEY_GOES_HERE',
-            'eventData': {
+            #see https://api.tiingo.com/documentation/websockets/iex > Request for more info
+            'eventData': { 
                 'thresholdLevel':5
           }
     }
-    client=TiingoWebsocketClient(subscribe,endpoint="iex",on_msg_cb=cb_fn)
+    # notice how the object isn't needed after using it
+    # any logic should be implemented in the callback function 
+    TiingoWebsocketClient(subscribe,endpoint="iex",on_msg_cb=cb_fn)
     while True:pass
     '''
 
@@ -64,11 +80,11 @@ class TiingoWebsocketClient:
         if not(api_key):
             raise RuntimeError("Tiingo API Key not provided. Please provide"
                                " via environment variable or config argument."
-                               "Notice that this config dict ticks the API Key as authorization ")
+                               "Notice that this config dict takes the API Key as authorization ")
 
         try:
             self.endpoint = endpoint
-            if self.endpoint==None:
+            if not self.endpoint:
                 raise KeyError
             if not (self.endpoint=="iex" or self.endpoint=="fx" or self.endpoint=="crypto"):
                 raise KeyError
@@ -76,8 +92,11 @@ class TiingoWebsocketClient:
             raise AttributeError("Endpoint must be defined as either (iex,fx,crypto) ")
         
         self.on_msg_cb = on_msg_cb
-        if self.on_msg_cb==None:
-            raise AttributeError("please define on_msg_cb ")
+        if not self.on_msg_cb:
+            raise MissingRequiredArgument("please define on_msg_cb It's a callback that gets called when new messages arrive "
+                                          "Example:"
+                                          "def cb_fn(msg):"
+                                          "    print(msg)")
 
         ws_client = genericWebsocketClient(config=self.config,on_msg_cb=self.on_msg_cb)
         

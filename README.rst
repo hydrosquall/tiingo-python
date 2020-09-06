@@ -138,20 +138,37 @@ To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
 Websocket support::
 
 .. code-block:: python
-   from tiingo import TiingoWebsocketClient
- 
-   def cb_fn(msg):
-       print(msg)
+    from tiingo import TiingoWebsocketClient
+    
+    def cb_fn(msg):
 
-   subscribe = {
-           'eventName':'subscribe',
-           'authorization':'API_KEY_GOES_HERE',
-           'eventData': {
-               'thresholdLevel':5
-         }
-   }
-   
-   client=TiingoWebsocketClient(subscribe,endpoint="iex",on_msg_cb=cb_fn)
+        # Example response 
+        # msg = {
+        #   "service":"iex" # An identifier telling you this is IEX data. The value returned by this will always be "iex".
+        #   
+        #   # Will always return "A" meaning new price quotes. There are also H type Heartbeat msgs used to keep the connection alive
+        #   "messageType":"A" # A value telling you what kind of data packet this is from our IEX feed.
+        #  
+        #   # see https://api.tiingo.com/documentation/websockets/iex > Response for more info
+        #   "data":[] # an array containing trade information and a timestamp
+        #   
+        # }
+
+        print(msg)
+
+    subscribe = {
+            'eventName':'subscribe',
+            'authorization':'API_KEY_GOES_HERE',
+            #see https://api.tiingo.com/documentation/websockets/iex > Request for more info
+            'eventData': { 
+                'thresholdLevel':5
+          }
+    }
+    # notice how the object isn't needed after using it
+    # any logic should be implemented in the callback function 
+    TiingoWebsocketClient(subscribe,endpoint="iex",on_msg_cb=cb_fn)
+    while True:pass
+  
 
 You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe`` methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
 
