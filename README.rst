@@ -144,7 +144,8 @@ Websocket support::
 
         # Example response 
         # msg = {
-        #   "service":"iex" # An identifier telling you this is IEX data. The value returned by this will always be "iex".
+        #   "service":"iex" # An identifier telling you this is IEX data. 
+        #   The value returned by this will correspond to the endpoint argument.
         #   
         #   # Will always return "A" meaning new price quotes. There are also H type Heartbeat msgs used to keep the connection alive
         #   "messageType":"A" # A value telling you what kind of data packet this is from our IEX feed.

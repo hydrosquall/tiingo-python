@@ -1,5 +1,6 @@
 import os
 import websocket
+#to import the correct version of thread regardless of python version
 try:
     import thread
 except ImportError:
@@ -42,7 +43,8 @@ class TiingoWebsocketClient:
 
         # Example response 
         # msg = {
-        #   "service":"iex" # An identifier telling you this is IEX data. The value returned by this will always be "iex".
+        #   "service":"iex" # An identifier telling you this is IEX data. 
+        #   The value returned by this will correspond to the endpoint argument.
         #   
         #   # Will always return "A" meaning new price quotes. There are also H type Heartbeat msgs used to keep the connection alive
         #   "messageType":"A" # A value telling you what kind of data packet this is from our IEX feed.
@@ -85,13 +87,8 @@ class TiingoWebsocketClient:
                                " via environment variable or config argument."
                                "Notice that this config dict takes the API Key as authorization ")
 
-        try:
-            self.endpoint = endpoint
-            if not self.endpoint:
-                raise KeyError
-            if not (self.endpoint=="iex" or self.endpoint=="fx" or self.endpoint=="crypto"):
-                raise KeyError
-        except KeyError:
+        self.endpoint = endpoint
+        if not (self.endpoint=="iex" or self.endpoint=="fx" or self.endpoint=="crypto"):
             raise AttributeError("Endpoint must be defined as either (iex,fx,crypto) ")
         
         self.on_msg_cb = on_msg_cb
