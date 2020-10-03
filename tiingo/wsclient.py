@@ -8,32 +8,6 @@ except ImportError:
 import json
 from tiingo.exceptions import MissingRequiredArgumentError
 
-GLOB_config=None
-GLOB_on_msg_cb=None
-
-class genericWebsocketClient:
-    '''
-    the methods passed to websocketClient have to be unbounded if we want WebSocketApp to pass everything correctly
-    see websocket-client/#471
-    '''
-    def on_message(ws, message):
-        GLOB_on_msg_cb(message)
-    def on_error(ws, error):
-        print(error)
-    def on_close(ws):
-        pass
-    def on_open(ws):
-        def run(*args):
-            print(GLOB_config)
-            ws.send(json.dumps(GLOB_config))
-        thread.start_new_thread(run, ())
-    def __init__(self,config,on_msg_cb):
-        global GLOB_config
-        global GLOB_on_msg_cb
-        GLOB_config=config
-        GLOB_on_msg_cb=on_msg_cb
-        return
-
 class TiingoWebsocketClient:
     '''
     from tiingo import TiingoWebsocketClient
@@ -97,14 +71,30 @@ class TiingoWebsocketClient:
                                           "def cb_fn(msg):"
                                           "    print(msg)")
 
-        ws_client = genericWebsocketClient(config=self.config,on_msg_cb=self.on_msg_cb)
-        
-
-        websocket.enableTrace(True)
+        websocket.enableTrace(False)
         
         ws = websocket.WebSocketApp("{0}/{1}".format(self._base_url,self.endpoint),
-                              on_message = genericWebsocketClient.on_message,
-                              on_error = genericWebsocketClient.on_error,
-                              on_close = genericWebsocketClient.on_close,
-                              on_open = genericWebsocketClient.on_open)
+                              on_message = self.get_on_msg_cb(),
+                              on_error = self.on_error,
+                              on_close = self.on_close,
+                              on_open = self.get_on_open(self.config))
         ws.run_forever()
+    
+    def get_on_open(self,config):
+        # the methods passed to websocketClient have to be unbounded if we want WebSocketApp to pass everything correctly 
+        # see websocket-client/#471
+        def on_open(ws):
+            ws.send(json.dumps(config))
+        return on_open
+
+    def get_on_msg_cb(self):
+        def on_msg_cb_local(ws,msg):
+            self.on_msg_cb(msg)
+            return 
+        return on_msg_cb_local
+
+    def on_error(ws, error):
+        print(error)
+
+    def on_close(ws):
+        pass
