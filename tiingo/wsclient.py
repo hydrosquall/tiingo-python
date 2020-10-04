@@ -1,10 +1,5 @@
 import os
 import websocket
-#to import the correct version of thread regardless of python version
-try:
-    import thread
-except ImportError:
-    import _thread as thread
 import json
 from tiingo.exceptions import MissingRequiredArgumentError
 
