@@ -38,7 +38,7 @@ class TiingoWebsocketClient:
     while True:pass
     '''
 
-    def __init__(self,config={},endpoint=None,on_msg_cb=None):
+    def __init__(self,config,endpoint=None,on_msg_cb=None):
         
         self._base_url = "wss://api.tiingo.com"
         self.config=config
@@ -88,6 +88,7 @@ class TiingoWebsocketClient:
             return 
         return on_msg_cb_local
 
+    # since methods need to be unbound in order for websocketClient these methods don't have a self as their first parameter
     def on_error(ws, error):
         print(error)
 
