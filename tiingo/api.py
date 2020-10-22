@@ -166,6 +166,47 @@ class TiingoClient(RestClient):
             else:
                 return "iex/{}/prices".format(ticker)
 
+    def _request_pandas(self, ticker, metric_name, params):
+        """
+        Return data for ticker as a pandas.DataFrame if metric_name is not
+        specified or as a pandas.Series if metric_name is specified.
+
+        :param ticker (string): ticker to be requested
+        :param params (dict): a dictionary containing valid resampleFreq
+            and format strings per the Tiingo api
+        :param metric_name (string): Optional parameter specifying metric to be returned for each
+            ticker.  In the event of a single ticker, this is optional and if not specified
+            all of the available data will be returned.  In the event of a list of tickers,
+            this parameter is required.
+        """
+        url = self._get_url(ticker, params['resampleFreq'])
+        response = self._request('GET', url, params=params)
+        if params['format'] == 'csv':
+            if sys.version_info < (3, 0):  # python 2
+                from StringIO import StringIO
+            else:  # python 3
+                from io import StringIO
+
+            df = pd.read_csv(StringIO(response.content.decode('utf-8')))
+        else:
+            df = pd.DataFrame(response.json())
+
+        df.set_index('date', inplace=True)
+
+        if metric_name is not None:
+            prices = df[metric_name]
+        else:
+            prices = df
+
+        prices.index = pd.to_datetime(prices.index)
+
+        # Localize to UTC to ensure equivalence between data returned in json format and
+        # csv format. Tiingo daily data requested in csv format does not include a timezone.
+        if prices.index.tz is None:
+            prices.index = prices.index.tz_localize('UTC')
+
+        return prices
+
     def get_ticker_price(self, ticker,
                          startDate=None, endDate=None,
                          fmt='json', frequency='daily'):
@@ -205,7 +246,8 @@ class TiingoClient(RestClient):
             return response.content.decode("utf-8")
 
     def get_dataframe(self, tickers,
-                      startDate=None, endDate=None, metric_name=None, frequency='daily'):
+                      startDate=None, endDate=None, metric_name=None,
+                      frequency='daily', fmt='json'):
 
         """ Return a pandas.DataFrame of historical prices for one or more ticker symbols.
 
@@ -225,6 +267,7 @@ class TiingoClient(RestClient):
                     all of the available data will be returned.  In the event of a list of tickers,
                     this parameter is required.
                 frequency (string): Resample frequency (defaults to daily).
+                fmt (string): 'csv' or 'json'
         """
 
         valid_columns = {'open', 'high', 'low', 'close', 'volume', 'adjOpen', 'adjHigh', 'adjLow',
@@ -238,7 +281,7 @@ class TiingoClient(RestClient):
             Please provide a metric_name, or call this method with one ticker at a time.""")
 
         params = {
-            'format': 'json',
+            'format': fmt,
             'resampleFreq': frequency
         }
         if startDate:
@@ -248,28 +291,18 @@ class TiingoClient(RestClient):
 
         if pandas_is_installed:
             if type(tickers) is str:
-                stock = tickers
-                url = self._get_url(stock, frequency)
-                response = self._request('GET', url, params=params)
-                df = pd.DataFrame(response.json())
-                if metric_name is not None:
-                    prices = df[metric_name]
-                    prices.index = df['date']
-                else:
-                    prices = df
-                    prices.index = df['date']
-                    del (prices['date'])
+                prices = self._request_pandas(
+                    ticker=tickers, params=params, metric_name=metric_name)
             else:
                 prices = pd.DataFrame()
                 for stock in tickers:
-                    url = self._get_url(stock, frequency)
-                    response = self._request('GET', url, params=params)
-                    df = pd.DataFrame(response.json())
-                    df.index = df['date']
-                    df.rename(index=str, columns={metric_name: stock}, inplace=True)
-                    prices = pd.concat([prices, df[stock]], axis=1, sort=True)
-            prices.index = pd.to_datetime(prices.index)
+                    ticker_series = self._request_pandas(
+                        ticker=stock, params=params, metric_name=metric_name)
+                    ticker_series = ticker_series.rename(stock)
+                    prices = pd.concat([prices, ticker_series], axis=1, sort=True)
+
             return prices
+
         else:
             error_message = ("Pandas is not installed, but .get_ticker_price() was "
                              "called with fmt=pandas.  In order to install tiingo with "

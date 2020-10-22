@@ -5,6 +5,7 @@ History
 0.13.0 (2019-11-XX - Unreleased)
 --------------------------------
 * Minor: Address Pandas Future Warning for sorting in pd.concat (#392)
+* Feature: Add option to request data in csv format in get_dataframe method potentially boosting speed up to 4-5x. (#523)
 
 0.12.0 (2019-10-20)
 --------------------

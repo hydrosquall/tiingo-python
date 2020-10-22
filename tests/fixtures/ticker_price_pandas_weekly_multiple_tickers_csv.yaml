@@ -1,0 +1,94 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.13.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/daily/GOOGL/prices?format=csv&resampleFreq=weekly&startDate=2018-01-05&endDate=2018-01-19
+  response:
+    body:
+      string: 'date,close,high,low,open,volume,adjClose,adjHigh,adjLow,adjOpen,adjVolume,divCash,splitFactor
+
+        2018-01-05,1110.29,1113.58,1053.02,1053.02,5889084,1110.29,1113.58,1053.02,1053.02,5889084,0.0,1.0
+
+        2018-01-12,1130.65,1131.3,1103.98,1111.0,6529655,1130.65,1131.3,1103.98,1111.0,6529655,0.0,1.0
+
+        2018-01-19,1143.5,1148.88,1123.49,1140.31,5888987,1143.5,1148.88,1123.49,1140.31,5888987,0.0,1.0
+
+        '
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '385'
+      content-type:
+      - text/csv
+      date:
+      - Sat, 17 Oct 2020 19:45:21 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.13.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/daily/AAPL/prices?format=csv&resampleFreq=weekly&startDate=2018-01-05&endDate=2018-01-19
+  response:
+    body:
+      string: 'date,close,high,low,open,volume,adjClose,adjHigh,adjLow,adjOpen,adjVolume,divCash,splitFactor
+
+        2018-01-05,175.0,175.37,169.26,170.16,99095223,42.1719535342792,42.2611170931803,40.7887134583549,41.0055977908169,396380892,0.0,1.0
+
+        2018-01-12,177.09,177.36,173.0,174.35,107548622,42.6756071507743,42.7406724505129,41.6899883510303,42.0153148497233,430194488,0.0,1.0
+
+        2018-01-19,178.46,180.1,175.07,177.9,122974060,43.0057533012998,43.4009647515639,42.1888223156929,42.8708030499901,491896240,0.0,1.0
+
+        '
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '494'
+      content-type:
+      - text/csv
+      date:
+      - Sat, 17 Oct 2020 19:45:22 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

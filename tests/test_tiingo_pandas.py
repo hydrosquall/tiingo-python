@@ -38,12 +38,34 @@ class TestTiingoWithPython(TestCase):
         assert len(prices.columns) == 2
         assert len(prices.index) == 3
 
+    @vcr.use_cassette('tests/fixtures/ticker_price_pandas_weekly_multiple_tickers_csv.yaml')
+    def test_return_pandas_format_multiple(self):
+        """Test that valid pandas format is returned when specified"""
+        tickers = ["GOOGL", "AAPL"]
+        prices = self._client.get_dataframe(tickers, startDate='2018-01-05',
+            endDate='2018-01-19', metric_name='adjClose', frequency='weekly', fmt='csv')
+        self.assertTrue(isinstance(prices, pd.DataFrame))
+        assert len(prices.columns) == 2
+        assert len(prices.index) == 3
+
     @vcr.use_cassette('tests/fixtures/ticker_price_pandas_daily.yaml')
     def test_return_pandas_daily(self):
         """Test that valid pandas format is returned when specified"""
         prices = self._client.get_dataframe("GOOGL", startDate='2018-01-05',
                                             endDate='2018-01-19', frequency='daily')
         self.assertTrue(isinstance(prices, pd.DataFrame))
+        assert len(prices.columns) == 12
+
+    @vcr.use_cassette('tests/fixtures/ticker_price_pandas_daily_csv.yaml')
+    def test_return_pandas_daily_csv(self):
+        """Test that valid pandas format is returned when specified and csv data requested"""
+        prices = self._client.get_dataframe("GOOGL",
+                                            startDate='2018-01-05', endDate='2018-01-19',
+                                            frequency='daily', fmt='csv')
+        self.assertTrue(isinstance(prices, pd.DataFrame))
+        self.assertTrue(isinstance(prices.index, pd.DatetimeIndex))
+        assert prices.index.tz.zone == 'UTC'
+        assert len(prices) == 10
         assert len(prices.columns) == 12
 
     @vcr.use_cassette('tests/fixtures/ticker_price_pandas_daily_metric_name.yaml')
@@ -54,6 +76,36 @@ class TestTiingoWithPython(TestCase):
                                             endDate='2018-01-19', frequency='daily')
         self.assertTrue(isinstance(prices, pd.Series))
         assert len(prices.index) == 10
+
+    @vcr.use_cassette('tests/fixtures/ticker_price_pandas_daily_metric_name_csv.yaml')
+    def test_return_pandas_daily_metric_name_csv(self):
+        """Test that one column is returned when a metric name is specified and csv data requested
+           Request unadjusted close column to ensure data remains constant in case GOOGL splits
+           or distributes dividends.
+        """
+        prices = self._client.get_dataframe("GOOGL", startDate='2018-01-05', metric_name='close',
+                                            endDate='2018-01-19', frequency='daily', fmt='csv')
+        self.assertTrue(isinstance(prices, pd.Series))
+        self.assertTrue(isinstance(prices.index, pd.DatetimeIndex))
+        assert prices.index.tz.zone == 'UTC'
+        assert prices.values.tolist() == [
+            1110.29,1114.21,1112.79,1110.14,1112.05,
+            1130.65,1130.7,1139.1,1135.97,1143.5]
+        assert len(prices.index) == 10
+
+    @vcr.use_cassette('tests/fixtures/ticker_price_pandas_daily_equivalent_requesting_json_or_csv.yaml')
+    def test_price_pandas_daily_equivalent_requesting_json_or_csv(self):
+        """Test that equivalent data is returned when specifying reuqest format in json or csv.
+        """
+        prices_json = self._client.get_dataframe("GOOGL", 
+            startDate='2018-01-05', endDate='2018-01-19', 
+            metric_name='close', frequency='daily')
+
+        prices_csv = self._client.get_dataframe("GOOGL", 
+            startDate='2018-01-05', endDate='2018-01-19', 
+            metric_name='close', frequency='daily', fmt='csv')
+
+        self.assertTrue(prices_json.equals(prices_csv))
 
     @vcr.use_cassette('tests/fixtures/intraday_price.yaml')
     def test_intraday_ticker_price(self):
