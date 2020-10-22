@@ -201,7 +201,7 @@ class TiingoClient(RestClient):
         prices.index = pd.to_datetime(prices.index)
 
         # Localize to UTC to ensure equivalence between data returned in json format and
-        # csv format. Data requested in csv format does not include a timezone.
+        # csv format. Tiingo daily data requested in csv format does not include a timezone.
         if prices.index.tz is None:
             prices.index = prices.index.tz_localize('UTC')
 
