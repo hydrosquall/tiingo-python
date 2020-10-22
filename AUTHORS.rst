@@ -15,3 +15,4 @@ Contributors
 * Stephen Clark <steveclarkcode@gmail.com>
 * Davis Thames
 * Nima Yazdanmehr
+* Michael MacCormack
