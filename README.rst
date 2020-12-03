@@ -138,6 +138,20 @@ To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
 
 You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe`` methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
 
+
+You can obtain top-of-book Cryptocurrency quotes from the ``get_crypto_top_of_book()`` method.
+
+.. code-block:: python
+    # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+``crypto_price = client.get_crypto_top_of_book(['BTCUSD'])``
+
+You can obtain historical Cryptocurrency price quotes from the ``get_crypto_price_history()`` method.
+
+.. code-block:: python
+    # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+``client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2', endDate='2020-12-3', resampleFreq='1Hour')``
+
+
 Further Docs
 -------------
 
