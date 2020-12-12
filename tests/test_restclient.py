@@ -34,7 +34,7 @@ class TestRestClient(TestCase):
 
     # Test 404 error
     def test_invalid_url(self):
-        with self.assertRaisesRegexp(RestClientError, "404"),\
+        with self.assertRaisesRegex(RestClientError, "404"),\
                 vcr.use_cassette('tests/fixtures/invalid_url.yaml'):
             # Should return 404 error
             self._client._request('GET', "bing_is_great")
@@ -66,7 +66,7 @@ class TestRestClientWithSession(TestCase):
 
     # Test 404 error
     def test_invalid_url(self):
-        with self.assertRaisesRegexp(RestClientError, "404"),\
+        with self.assertRaisesRegex(RestClientError, "404"),\
                 vcr.use_cassette('tests/fixtures/invalid_url.yaml'):
             # Should return 404 error
             self._client._request('GET', "bing_is_great")
