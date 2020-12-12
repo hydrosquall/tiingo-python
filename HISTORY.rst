@@ -2,10 +2,17 @@
 History
 =======
 
-0.13.0 (2019-11-XX - Unreleased)
+0.14.0 (2020-12-XX - Unreleased)
+--------------------------------
+* Feature (Name #Number)
+
+0.13.0 (2020-12-12)
 --------------------------------
 * Minor: Address Pandas Future Warning for sorting in pd.concat (#392)
 * Feature: Add option to request data in csv format in get_dataframe method potentially boosting speed up to 4-5x. (#523)
+* Minor: bumped library dependencies, in particular cryptography
+* Development: Dropped official support for Python 3.5, replaced with 3.7
+* Development: Publish library with Github Actions instead of Travis (#546
 
 0.12.0 (2019-10-20)
 --------------------
