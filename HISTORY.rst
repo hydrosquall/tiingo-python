@@ -5,6 +5,7 @@ History
 0.14.0 (2020-12-XX - Unreleased)
 --------------------------------
 * Feature (Name #Number)
+* Development: Run tests in Github Actions instead of Travis.org
 
 0.13.0 (2020-12-12)
 --------------------------------
