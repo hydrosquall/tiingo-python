@@ -9,9 +9,6 @@ Tiingo Python
      :target: https://codecov.io/gh/hydrosquall/tiingo-python
      :alt: Coverage
 
-.. image:: https://img.shields.io/travis/hydrosquall/tiingo-python.svg?maxAge=600
-        :target: https://travis-ci.org/hydrosquall/tiingo-python
-
 .. image:: https://readthedocs.org/projects/tiingo-python/badge/?version=latest&maxAge=600
         :target: https://tiingo-python.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
