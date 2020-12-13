@@ -34,7 +34,14 @@ class TestRestClient(TestCase):
 
     # Test 404 error
     def test_invalid_url(self):
-        with self.assertRaisesRegex(RestClientError, "404"),\
+
+        #  Suppress deprecation warning in python 3
+        if hasattr(self, 'assertRaisesRegex'):
+            assertFunc = self.assertRaisesRegex
+        else:
+            assertFunc = self.assertRaisesRegexp
+
+        with assertFunc(RestClientError, "404"),\
                 vcr.use_cassette('tests/fixtures/invalid_url.yaml'):
             # Should return 404 error
             self._client._request('GET', "bing_is_great")
@@ -66,7 +73,14 @@ class TestRestClientWithSession(TestCase):
 
     # Test 404 error
     def test_invalid_url(self):
-        with self.assertRaisesRegex(RestClientError, "404"),\
+
+         #  Suppress deprecation warning in python 3
+        if hasattr(self, 'assertRaisesRegex'):
+            assertFunc = self.assertRaisesRegex
+        else:
+            assertFunc = self.assertRaisesRegexp
+
+        with assertFunc(RestClientError, "404"),\
                 vcr.use_cassette('tests/fixtures/invalid_url.yaml'):
             # Should return 404 error
             self._client._request('GET', "bing_is_great")
