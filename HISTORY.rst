@@ -13,7 +13,7 @@ History
 * Feature: Add option to request data in csv format in get_dataframe method potentially boosting speed up to 4-5x. (#523)
 * Minor: bumped library dependencies, in particular cryptography
 * Development: Dropped official support for Python 3.5, replaced with 3.7
-* Development: Publish library with Github Actions instead of Travis (#546
+* Development: Publish library with Github Actions instead of Travis (#546)
 
 0.12.0 (2019-10-20)
 --------------------
