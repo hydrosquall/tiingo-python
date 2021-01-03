@@ -38,10 +38,10 @@ class TiingoWebsocketClient:
     while True:pass
     '''
 
-    def __init__(self,config,endpoint=None,on_msg_cb=None):
+    def __init__(self,config=None,endpoint=None,on_msg_cb=None):
         
         self._base_url = "wss://api.tiingo.com"
-        self.config=config
+        self.config = {} if config is None else config        
         
         try:
             api_key = self.config['authorization']
