@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 from tiingo.wsclient import TiingoWebsocketClient
 from tiingo.exceptions import MissingRequiredArgumentError
@@ -12,7 +13,7 @@ class TestRestClientWithSession(TestCase):
 
         self.config =  {
             'eventName':'subscribe',
-            'authorization':'API_KEY_GOES_HERE',
+            'authorization':os.getenv("TIINGO_API_KEY"),
             #see https://api.tiingo.com/documentation/websockets/iex > Request for more info
             'eventData': { 
                 'thresholdLevel':5
@@ -29,14 +30,15 @@ class TestRestClientWithSession(TestCase):
              TiingoWebsocketClient(config=self.config,endpoint='wq',on_msg_cb=self.cb)
         self.assertTrue(type(ex.exception)==AttributeError)
 
-    # test for missing API keys in config dict
-    def test_missing_api_key(self):
-        with self.assertRaises(RuntimeError) as ex:
-            TiingoWebsocketClient(config={},endpoint='iex',on_msg_cb=self.cb)
-        self.assertTrue(type(ex.exception)==RuntimeError)
-
     # test for missing callback argument    
     def test_missing_msg_cb(self):
         with self.assertRaises(MissingRequiredArgumentError) as ex:
             TiingoWebsocketClient(config=self.config,endpoint='iex')
         self.assertTrue(type(ex.exception)==MissingRequiredArgumentError)
+
+    # test for missing API keys in config dict and in os env
+    def test_missing_api_key(self):
+        del os.environ['TIINGO_API_KEY']
+        with self.assertRaises(RuntimeError) as ex:
+            TiingoWebsocketClient(config={},endpoint='iex',on_msg_cb=self.cb)
+        self.assertTrue(type(ex.exception)==RuntimeError)
