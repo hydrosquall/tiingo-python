@@ -16,3 +16,4 @@ Contributors
 * Davis Thames
 * Nima Yazdanmehr
 * Michael MacCormack
+* David Minnen

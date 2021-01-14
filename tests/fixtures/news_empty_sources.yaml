@@ -1,0 +1,47 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.13.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/news?limit=1&offset=0&sortBy=publishedDate&tickers=aapl&tickers=googl&tags=Technology&tags=Bitcoin&startDate=2016-01-01&endDate=2017-08-31&onlyWithTickers=False
+  response:
+    body:
+      string: "[{\"source\":\"finance.yahoo.com\",\"description\":\"Elon Musk disupted\
+        \ claims of a Gigafactory Bitcoin ATM, BitMEX hired a head of compliance and\
+        \ there's nearly $1.5 billion worth of Ethereum-tokenized bitcoin.\",\"tags\"\
+        :[\"Bitcoin\",\"CryptoCurrency\",\"Defi\",\"Ethereum\",\"Stock\",\"Technology\"\
+        ,\"Unknown Sector\"],\"tickers\":[\"defi\",\"goog\",\"googl\"],\"publishedDate\"\
+        :\"2020-10-12T16:45:48Z\",\"url\":\"https://finance.yahoo.com/news/blockchain-bites-bitcoin-ethereum-whos-164548067.html\"\
+        ,\"title\":\"Blockchain Bites: Bitcoin on Ethereum \u2013 The Whos, Whats\
+        \ and Whys\",\"crawlDate\":\"2020-10-12T17:57:59.290788Z\",\"id\":29484963}]"
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '598'
+      content-type:
+      - application/json
+      date:
+      - Mon, 11 Jan 2021 04:16:10 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

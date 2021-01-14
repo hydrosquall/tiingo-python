@@ -183,6 +183,15 @@ class TestNews(TestCase):
         for article in articles:
             assert all(key in article for key in self.article_keys)
 
+    @vcr.use_cassette('tests/fixtures/news_empty_sources.yaml')
+    def test_get_news_empty_sources(self):
+        search_params = self.search_params.copy()
+        search_params['sources'] = []
+        articles = self._client.get_news(**search_params)
+        assert len(articles) == self.num_articles
+        for article in articles:
+            assert all(key in article for key in self.article_keys)
+
     @vcr.use_cassette('tests/fixtures/news_bulk.yaml')
     def test_get_news_bulk(self):
         """Fails because this API key lacks institutional license"""

@@ -6,6 +6,7 @@ History
 --------------------------------
 * Feature (Name #Number)
 * Development: Run tests in Github Actions instead of Travis.org
+* [/news] Fix bug in get_news() when sources list is empty (#566)
 
 0.13.0 (2020-12-12)
 --------------------------------
