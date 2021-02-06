@@ -226,3 +226,58 @@ class TestNews(TestCase):
         """Fails because this API key lacks institutional license"""
         with self.assertRaises(RestClientError):
             assert self._client.get_bulk_news(file_id="1", fmt="object")
+
+# FUNDAMENTALS ENDPOINTS
+class TestFundamentals(TestCase):
+
+    def setUp(self):
+        self._client = TiingoClient()
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_definitions.yaml')
+    def test_definitions(self):
+        definitions = self._client.get_fundamentals_definitions("GOOGL")
+        assert len(definitions) > 1
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_definitions_csv.yaml')
+    def test_definitions_csv(self):
+        definitions = self._client.get_fundamentals_definitions("GOOGL",
+                                                                fmt='csv')
+        assert len(definitions) > 1
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_daily.yaml')
+    def test_daily(self):
+        daily = self._client.get_fundamentals_daily("GOOGL",
+                                                    startDate='2020-1-1',
+                                                    endDate='2020-4-1')
+        assert len(daily) > 1
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_daily_csv.yaml')
+    def test_daily_with_csv(self):
+        daily = self._client.get_fundamentals_daily("GOOGL",
+                                                    startDate='2020-1-1',
+                                                    endDate='2020-4-1',
+                                                    fmt='csv')
+        assert len(daily) > 1
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_statements.yaml')
+    def test_statements(self):
+        statements = self._client.get_fundamentals_statements("GOOGL",
+                                                              startDate='2020-1-1',
+                                                              endDate='2020-4-1')
+        assert len(statements) > 1
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_statements_with_as_reported.yaml')
+    def test_statements(self):
+        statements = self._client.get_fundamentals_statements("GOOGL",
+                                                              startDate='2020-1-1',
+                                                              endDate='2020-4-1',
+                                                              asReported=True)
+        assert len(statements) > 1
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_statements_csv.yaml')
+    def test_statements_with_csv(self):
+        statements = self._client.get_fundamentals_statements("GOOGL",
+                                                              startDate='2020-1-1',
+                                                              endDate='2020-4-1',
+                                                              fmt='csv')
+        assert len(statements) > 1

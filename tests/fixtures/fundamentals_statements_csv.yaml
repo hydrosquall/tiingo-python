@@ -1,0 +1,456 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.13.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/fundamentals/GOOGL/statements?startDate=2020-1-1&endDate=2020-4-1&asReported=false&format=csv
+  response:
+    body:
+      string: 'date,year,quarter,statementType,dataCode,value
+
+        2020-03-31,2020,1,cashFlow,ncfi,-1847000000.0
+
+        2020-03-31,2020,1,balanceSheet,taxAssets,2640000000.0
+
+        2020-03-31,2020,1,incomeStatement,opex,14200000000.0
+
+        2020-03-31,2020,1,incomeStatement,netinc,6836000000.0
+
+        2020-03-31,2020,1,cashFlow,issrepayEquity,-9737000000.0
+
+        2020-03-31,2020,1,balanceSheet,intangibles,22574000000.0
+
+        2020-03-31,2020,1,cashFlow,freeCashFlow,5446000000.0
+
+        2020-03-31,2020,1,cashFlow,ncfx,-272000000.0
+
+        2020-03-31,2020,1,incomeStatement,prefDVDs,0.0
+
+        2020-03-31,2020,1,balanceSheet,totalLiabilities,69744000000.0
+
+        2020-03-31,2020,1,cashFlow,ncfo,11451000000.0
+
+        2020-03-31,2020,1,balanceSheet,investments,109952000000.0
+
+        2020-03-31,2020,1,incomeStatement,intexp,0.0
+
+        2020-03-31,2020,1,incomeStatement,grossProfit,22177000000.0
+
+        2020-03-31,2020,1,incomeStatement,shareswa,687286090.0
+
+        2020-03-31,2020,1,cashFlow,issrepayDebt,-49000000.0
+
+        2020-03-31,2020,1,balanceSheet,debtCurrent,0.0
+
+        2020-03-31,2020,1,balanceSheet,assetsCurrent,147018000000.0
+
+        2020-03-31,2020,1,incomeStatement,netIncDiscOps,0.0
+
+        2020-03-31,2020,1,balanceSheet,retainedEarnings,151068000000.0
+
+        2020-03-31,2020,1,cashFlow,depamor,3108000000.0
+
+        2020-03-31,2020,1,incomeStatement,revenue,41159000000.0
+
+        2020-03-31,2020,1,balanceSheet,liabilitiesNonCurrent,29555000000.0
+
+        2020-03-31,2020,1,balanceSheet,accoci,-1097000000.0
+
+        2020-03-31,2020,1,cashFlow,capex,-6005000000.0
+
+        2020-03-31,2020,1,cashFlow,sbcomp,3191000000.0
+
+        2020-03-31,2020,1,balanceSheet,cashAndEq,19644000000.0
+
+        2020-03-31,2020,1,cashFlow,ncf,1146000000.0
+
+        2020-03-31,2020,1,cashFlow,businessAcqDisposals,-190000000.0
+
+        2020-03-31,2020,1,balanceSheet,acctRec,21825000000.0
+
+        2020-03-31,2020,1,balanceSheet,sharesBasic,687286090.0
+
+        2020-03-31,2020,1,balanceSheet,liabilitiesCurrent,40189000000.0
+
+        2020-03-31,2020,1,incomeStatement,rnd,6820000000.0
+
+        2020-03-31,2020,1,balanceSheet,acctPay,4099000000.0
+
+        2020-03-31,2020,1,incomeStatement,netIncComStock,6836000000.0
+
+        2020-03-31,2020,1,incomeStatement,sga,7380000000.0
+
+        2020-03-31,2020,1,incomeStatement,costRev,18982000000.0
+
+        2020-03-31,2020,1,incomeStatement,epsDil,9.87
+
+        2020-03-31,2020,1,balanceSheet,investmentsCurrent,97585000000.0
+
+        2020-03-31,2020,1,balanceSheet,debt,15492000000.0
+
+        2020-03-31,2020,1,incomeStatement,eps,9.96
+
+        2020-03-31,2020,1,cashFlow,payDiv,0.0
+
+        2020-03-31,2020,1,incomeStatement,taxExp,921000000.0
+
+        2020-03-31,2020,1,incomeStatement,ebit,7757000000.0
+
+        2020-03-31,2020,1,cashFlow,investmentsAcqDisposals,3936000000.0
+
+        2020-03-31,2020,1,balanceSheet,deferredRev,7270000000.0
+
+        2020-03-31,2020,1,incomeStatement,consolidatedIncome,6836000000.0
+
+        2020-03-31,2020,1,balanceSheet,taxLiabilities,12199000000.0
+
+        2020-03-31,2020,1,balanceSheet,totalAssets,273403000000.0
+
+        2020-03-31,2020,1,balanceSheet,ppeq,87966000000.0
+
+        2020-03-31,2020,1,cashFlow,ncff,-8186000000.0
+
+        2020-03-31,2020,1,balanceSheet,investmentsNonCurrent,12367000000.0
+
+        2020-03-31,2020,1,balanceSheet,debtNonCurrent,15492000000.0
+
+        2020-03-31,2020,1,incomeStatement,opinc,7977000000.0
+
+        2020-03-31,2020,1,incomeStatement,ebt,7757000000.0
+
+        2020-03-31,2020,1,balanceSheet,equity,203659000000.0
+
+        2020-03-31,2020,1,incomeStatement,nonControllingInterests,0.0
+
+        2020-03-31,2020,1,balanceSheet,deposits,0.0
+
+        2020-03-31,2020,1,incomeStatement,ebitda,10865000000.0
+
+        2020-03-31,2020,1,balanceSheet,assetsNonCurrent,126385000000.0
+
+        2020-03-31,2020,1,balanceSheet,inventory,889000000.0
+
+        2020-03-31,2020,1,overview,roa,0.129119730854069
+
+        2020-03-31,2020,1,overview,grossMargin,0.538812896328871
+
+        2020-03-31,2020,1,overview,bvps,296.323471350919
+
+        2020-03-31,2020,1,overview,roe,0.174295876869016
+
+        2020-03-31,2020,1,overview,rps,59.8862694864085
+
+        2020-03-31,2020,1,overview,currentRatio,3.65816516957376
+
+        2020-03-31,2020,1,overview,profitMargin,0.538812896328871
+
+        2020-03-31,2020,1,overview,piotroskiFScore,5.0
+
+        2020-03-31,2020,1,overview,bookVal,203659000000.0
+
+        2020-03-31,2020,1,overview,longTermDebtEquity,0.076068329904399
+
+        2020-03-31,2020,1,overview,revenueQoQ,0.132639863507526
+
+        2020-03-31,2020,1,overview,epsQoQ,0.0396659707724427
+
+        2019-12-31,2019,4,balanceSheet,totalLiabilities,74467000000.0
+
+        2019-12-31,2019,4,incomeStatement,revenue,46075000000.0
+
+        2019-12-31,2019,4,incomeStatement,epsDil,15.33
+
+        2019-12-31,2019,4,incomeStatement,netinc,10671000000.0
+
+        2019-12-31,2019,4,balanceSheet,sharesBasic,689687449.0
+
+        2019-12-31,2019,4,incomeStatement,eps,15.47
+
+        2019-12-31,2019,4,balanceSheet,ppeq,84587000000.0
+
+        2019-12-31,2019,4,incomeStatement,ebitda,14117000000.0
+
+        2019-12-31,2019,4,cashFlow,freeCashFlow,8375000000.0
+
+        2019-12-31,2019,4,cashFlow,issrepayDebt,-47000000.0
+
+        2019-12-31,2019,4,cashFlow,capex,-6052000000.0
+
+        2019-12-31,2019,4,incomeStatement,rnd,7222000000.0
+
+        2019-12-31,2019,4,incomeStatement,sga,8567000000.0
+
+        2019-12-31,2019,4,balanceSheet,investmentsCurrent,101177000000.0
+
+        2019-12-31,2019,4,cashFlow,payDiv,0.0
+
+        2019-12-31,2019,4,cashFlow,investmentsAcqDisposals,3370000000.0
+
+        2019-12-31,2019,4,balanceSheet,taxLiabilities,11860000000.0
+
+        2019-12-31,2019,4,cashFlow,ncff,-7326000000.0
+
+        2019-12-31,2019,4,incomeStatement,opinc,9266000000.0
+
+        2019-12-31,2019,4,incomeStatement,nonControllingInterests,0.0
+
+        2019-12-31,2019,4,balanceSheet,assetsNonCurrent,123331000000.0
+
+        2019-12-31,2019,4,balanceSheet,taxAssets,2887000000.0
+
+        2019-12-31,2019,4,cashFlow,issrepayEquity,-7297000000.0
+
+        2019-12-31,2019,4,cashFlow,ncfx,68000000.0
+
+        2019-12-31,2019,4,cashFlow,ncfo,14427000000.0
+
+        2019-12-31,2019,4,incomeStatement,grossProfit,25055000000.0
+
+        2019-12-31,2019,4,balanceSheet,debtCurrent,0.0
+
+        2019-12-31,2019,4,balanceSheet,retainedEarnings,152122000000.0
+
+        2019-12-31,2019,4,balanceSheet,liabilitiesNonCurrent,29246000000.0
+
+        2019-12-31,2019,4,cashFlow,sbcomp,2645000000.0
+
+        2019-12-31,2019,4,cashFlow,businessAcqDisposals,-2142000000.0
+
+        2019-12-31,2019,4,balanceSheet,liabilitiesCurrent,45221000000.0
+
+        2019-12-31,2019,4,balanceSheet,acctRec,25326000000.0
+
+        2019-12-31,2019,4,balanceSheet,cashAndEq,18498000000.0
+
+        2019-12-31,2019,4,balanceSheet,accoci,-1232000000.0
+
+        2019-12-31,2019,4,cashFlow,depamor,3413000000.0
+
+        2019-12-31,2019,4,balanceSheet,assetsCurrent,152578000000.0
+
+        2019-12-31,2019,4,incomeStatement,shareswa,689687449.0
+
+        2019-12-31,2019,4,balanceSheet,investments,114255000000.0
+
+        2019-12-31,2019,4,incomeStatement,prefDVDs,0.0
+
+        2019-12-31,2019,4,balanceSheet,intangibles,22603000000.0
+
+        2019-12-31,2019,4,incomeStatement,opex,15789000000.0
+
+        2019-12-31,2019,4,balanceSheet,inventory,999000000.0
+
+        2019-12-31,2019,4,balanceSheet,deposits,0.0
+
+        2019-12-31,2019,4,incomeStatement,ebt,10704000000.0
+
+        2019-12-31,2019,4,balanceSheet,investmentsNonCurrent,13078000000.0
+
+        2019-12-31,2019,4,balanceSheet,totalAssets,275909000000.0
+
+        2019-12-31,2019,4,balanceSheet,deferredRev,8182000000.0
+
+        2019-12-31,2019,4,incomeStatement,taxExp,33000000.0
+
+        2019-12-31,2019,4,balanceSheet,debt,14768000000.0
+
+        2019-12-31,2019,4,incomeStatement,costRev,21020000000.0
+
+        2019-12-31,2019,4,balanceSheet,acctPay,5561000000.0
+
+        2019-12-31,2019,4,cashFlow,ncf,2466000000.0
+
+        2019-12-31,2019,4,incomeStatement,netIncDiscOps,0.0
+
+        2019-12-31,2019,4,cashFlow,ncfi,-4703000000.0
+
+        2019-12-31,2019,4,balanceSheet,debtNonCurrent,14768000000.0
+
+        2019-12-31,2019,4,incomeStatement,ebit,10704000000.0
+
+        2019-12-31,2019,4,incomeStatement,netIncComStock,10671000000.0
+
+        2019-12-31,2019,4,incomeStatement,intexp,0.0
+
+        2019-12-31,2019,4,incomeStatement,consolidatedIncome,10671000000.0
+
+        2019-12-31,2019,4,balanceSheet,equity,201442000000.0
+
+        2019-12-31,2019,4,overview,grossMargin,0.543787303309821
+
+        2019-12-31,2019,4,overview,roa,0.131910509188086
+
+        2019-12-31,2019,4,overview,bookVal,201442000000.0
+
+        2019-12-31,2019,4,overview,bvps,292.077230478933
+
+        2019-12-31,2019,4,overview,profitMargin,0.543787303309821
+
+        2019-12-31,2019,4,overview,revenueQoQ,0.173108259496894
+
+        2019-12-31,2019,4,overview,rps,66.8056234266777
+
+        2019-12-31,2019,4,overview,roe,0.177925719651588
+
+        2019-12-31,2019,4,overview,currentRatio,3.374051878552
+
+        2019-12-31,2019,4,overview,piotroskiFScore,4.0
+
+        2019-12-31,2019,4,overview,longTermDebtEquity,0.073311424628429
+
+        2019-12-31,2019,4,overview,epsQoQ,0.201086956521739
+
+        2019-12-31,2019,0,cashFlow,issrepayEquity,-23161000000.0
+
+        2019-12-31,2019,0,balanceSheet,inventory,999000000.0
+
+        2019-12-31,2019,0,cashFlow,freeCashFlow,30972000000.0
+
+        2019-12-31,2019,0,balanceSheet,taxAssets,2887000000.0
+
+        2019-12-31,2019,0,balanceSheet,deposits,0.0
+
+        2019-12-31,2019,0,balanceSheet,debtNonCurrent,14768000000.0
+
+        2019-12-31,2019,0,balanceSheet,assetsNonCurrent,123331000000.0
+
+        2019-12-31,2019,0,incomeStatement,ebt,39625000000.0
+
+        2019-12-31,2019,0,incomeStatement,consolidatedIncome,34343000000.0
+
+        2019-12-31,2019,0,incomeStatement,nonControllingInterests,0.0
+
+        2019-12-31,2019,0,balanceSheet,investmentsNonCurrent,13078000000.0
+
+        2019-12-31,2019,0,incomeStatement,ebitda,51406000000.0
+
+        2019-12-31,2019,0,incomeStatement,opinc,34231000000.0
+
+        2019-12-31,2019,0,balanceSheet,totalAssets,275909000000.0
+
+        2019-12-31,2019,0,incomeStatement,ebit,39625000000.0
+
+        2019-12-31,2019,0,cashFlow,ncff,-23209000000.0
+
+        2019-12-31,2019,0,balanceSheet,deferredRev,8182000000.0
+
+        2019-12-31,2019,0,incomeStatement,epsDil,49.16
+
+        2019-12-31,2019,0,balanceSheet,taxLiabilities,11860000000.0
+
+        2019-12-31,2019,0,incomeStatement,taxExp,5282000000.0
+
+        2019-12-31,2019,0,balanceSheet,ppeq,84587000000.0
+
+        2019-12-31,2019,0,cashFlow,investmentsAcqDisposals,-4017000000.0
+
+        2019-12-31,2019,0,balanceSheet,debt,14768000000.0
+
+        2019-12-31,2019,0,incomeStatement,netIncComStock,34343000000.0
+
+        2019-12-31,2019,0,cashFlow,payDiv,0.0
+
+        2019-12-31,2019,0,incomeStatement,costRev,71896000000.0
+
+        2019-12-31,2019,0,incomeStatement,netinc,34343000000.0
+
+        2019-12-31,2019,0,balanceSheet,investmentsCurrent,101177000000.0
+
+        2019-12-31,2019,0,balanceSheet,acctPay,5561000000.0
+
+        2019-12-31,2019,0,incomeStatement,eps,49.59
+
+        2019-12-31,2019,0,incomeStatement,sga,28015000000.0
+
+        2019-12-31,2019,0,cashFlow,ncf,1797000000.0
+
+        2019-12-31,2019,0,balanceSheet,acctRec,25326000000.0
+
+        2019-12-31,2019,0,incomeStatement,intexp,0.0
+
+        2019-12-31,2019,0,balanceSheet,liabilitiesCurrent,45221000000.0
+
+        2019-12-31,2019,0,balanceSheet,cashAndEq,18498000000.0
+
+        2019-12-31,2019,0,incomeStatement,rnd,26018000000.0
+
+        2019-12-31,2019,0,cashFlow,businessAcqDisposals,-2515000000.0
+
+        2019-12-31,2019,0,balanceSheet,accoci,-1232000000.0
+
+        2019-12-31,2019,0,incomeStatement,netIncDiscOps,0.0
+
+        2019-12-31,2019,0,cashFlow,sbcomp,10794000000.0
+
+        2019-12-31,2019,0,cashFlow,depamor,11781000000.0
+
+        2019-12-31,2019,0,balanceSheet,equity,201442000000.0
+
+        2019-12-31,2019,0,balanceSheet,liabilitiesNonCurrent,29246000000.0
+
+        2019-12-31,2019,0,balanceSheet,assetsCurrent,152578000000.0
+
+        2019-12-31,2019,0,cashFlow,capex,-23548000000.0
+
+        2019-12-31,2019,0,balanceSheet,retainedEarnings,152122000000.0
+
+        2019-12-31,2019,0,incomeStatement,shareswa,689687449.0
+
+        2019-12-31,2019,0,balanceSheet,totalLiabilities,74467000000.0
+
+        2019-12-31,2019,0,balanceSheet,debtCurrent,0.0
+
+        2019-12-31,2019,0,balanceSheet,investments,114255000000.0
+
+        2019-12-31,2019,0,incomeStatement,revenue,161857000000.0
+
+        2019-12-31,2019,0,incomeStatement,grossProfit,89961000000.0
+
+        2019-12-31,2019,0,incomeStatement,prefDVDs,0.0
+
+        2019-12-31,2019,0,cashFlow,issrepayDebt,-268000000.0
+
+        2019-12-31,2019,0,cashFlow,ncfo,54520000000.0
+
+        2019-12-31,2019,0,balanceSheet,intangibles,22603000000.0
+
+        2019-12-31,2019,0,cashFlow,ncfi,-29491000000.0
+
+        2019-12-31,2019,0,cashFlow,ncfx,-23000000.0
+
+        2019-12-31,2019,0,incomeStatement,opex,55730000000.0
+
+        2019-12-31,2019,0,balanceSheet,sharesBasic,689687449.0
+
+'
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '11225'
+      content-type:
+      - text/csv
+      date:
+      - Sat, 06 Feb 2021 16:23:40 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

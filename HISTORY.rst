@@ -5,6 +5,7 @@ History
 0.14.0 (2020-12-XX - Unreleased)
 --------------------------------
 * Feature (Name #Number)
+* Feature: Added 3 new methods for fundamentals-endpoint: definitions, daily and statements
 * Development: Run tests in Github Actions instead of Travis.org
 * [/news] Fix bug in get_news() when sources list is empty (#566)
 

@@ -17,3 +17,4 @@ Contributors
 * Nima Yazdanmehr
 * Michael MacCormack
 * David Minnen
+* Tobias Kaesser <t.kaesser@gmail.com>
