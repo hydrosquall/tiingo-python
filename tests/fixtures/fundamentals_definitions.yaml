@@ -1,0 +1,202 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.13.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/fundamentals/definitions?tickers=GOOGL&format=json
+  response:
+    body:
+      string: '[{"dataCode":"rps","name":"Revenue Per Share","description":"Revenue
+        per share","statementType":"overview","units":"$"},{"dataCode":"roa","name":"Return
+        on Assets ROA","description":"Net Income\/Total Assets","statementType":"overview","units":"%"},{"dataCode":"assetTurnover","name":"Asset
+        Turnover","description":"Revenue over assets","statementType":"overview","units":null},{"dataCode":"bookVal","name":"Book
+        Value","description":"Book value of the share, assets - liabilities","statementType":"overview","units":"$"},{"dataCode":"bvps","name":"Book
+        Value Per Share","description":"Book Value per each share","statementType":"overview","units":"$"},{"dataCode":"revenue","name":"Revenue","description":"Revenue","statementType":"incomeStatement","units":"$"},{"dataCode":"epsDil","name":"Earnings
+        Per Share Diluted","description":"EPS for diluted shares","statementType":"incomeStatement","units":"$"},{"dataCode":"netinc","name":"Net
+        Income","description":"Net income","statementType":"incomeStatement","units":"$"},{"dataCode":"profitMargin","name":"Profit
+        Margin","description":"This field is marked for DEPRECATION. Please use grossMargin
+        instead. Profit Margin is calculated by the (Revenue - COGS)\/Revenue","statementType":"overview","units":"%"},{"dataCode":"revenueQoQ","name":"Revenue
+        QoQ Growth","description":"Revenue Quarter-over-Quarter Growth rate","statementType":"overview","units":"%"},{"dataCode":"debtEquity","name":"Debt
+        to Equity Ratio","description":"Debt\/Equity ratio","statementType":"overview","units":""},{"dataCode":"grossMargin","name":"Gross
+        Margin","description":"The margin of good sold, basically how much of the
+        money the company keeps after selling their goods and services. (Rev.-Cost
+        of Rev.)\/Rev.","statementType":"overview","units":"%"},{"dataCode":"roe","name":"Return
+        on Equity ROE","description":"Return on Shareholder''s equity; ROE=Net Income\/Shareholder''s
+        Equity","statementType":"overview","units":"%"},{"dataCode":"currentRatio","name":"Current
+        Ratio","description":"Ability for a company to pay off its short-term liabilities,
+        Current Assets\/Current Liabilities","statementType":"overview","units":""},{"dataCode":"fxRate","name":"FX
+        Rate","description":"The exchange rate used for the conversion of foreign
+        currency to USD for non-US companies that do not report in USD.","statementType":"overview","units":null},{"dataCode":"sharesBasic","name":"Shares
+        Outstanding","description":"Outstanding shares","statementType":"balanceSheet","units":""},{"dataCode":"piotroskiFScore","name":"Piotroski
+        F-Score","description":"0-9 point scale to determine strength of company''s
+        financial position","statementType":"overview","units":null},{"dataCode":"longTermDebtEquity","name":"Long-term
+        Debt to Equity","description":"Long term debt to equity","statementType":"overview","units":null},{"dataCode":"opMargin","name":"Operating
+        Margin","description":"Operating margin, or how much money a company makes
+        on each dollar of revenue. In other words Operating Income\/Revenue","statementType":"overview","units":"%"},{"dataCode":"epsQoQ","name":"Earnings
+        Per Share QoQ Growth","description":"Earnings Per Share Quarter-over-Quarter
+        Growth rate","statementType":"overview","units":"%"},{"dataCode":"shareswaDil","name":"Weighted
+        Average Shares Diluted","description":"Used to calculated diluted EPS. Considers
+        all outstanding common stock plus all instruments that can be converted into
+        shares (like stock options) ","statementType":"incomeStatement","units":""},{"dataCode":"eps","name":"Earnings
+        Per Share","description":"Earnings per basic share (not diluted)","statementType":"incomeStatement","units":"$"},{"dataCode":"ppeq","name":"Property,
+        Plant & Equipment","description":"A component of assets representing the total
+        amount of marketable and non-marketable securties, loans receivable and other
+        invested assets.","statementType":"balanceSheet","units":"$"},{"dataCode":"ebitda","name":"EBITDA","description":"EBITDA
+        is a non-GAAP accounting metric that is widely used when assessing the performance
+        of companies, calculated by adding Depreciation\/Amortization back to Earnings
+        before interest and taxes","statementType":"incomeStatement","units":"$"},{"dataCode":"freeCashFlow","name":"Free
+        Cash Flow","description":"Operating Cash Flow - Capex, How much cash is left
+        over after reinvesting it in the business. Used as a measure to evaluate financial
+        performance of a company","statementType":"cashFlow","units":"$"},{"dataCode":"issrepayDebt","name":"Issuance
+        or Repayment of Debt Securities","description":"Representing the net cash
+        inflow (outflow) from issuance (repayment) of debt securities.","statementType":"cashFlow","units":"$"},{"dataCode":"capex","name":"Capital
+        Expenditure","description":"Money uses to upgrade or acquire property or materials
+        to maintain and increase size","statementType":"cashFlow","units":"$"},{"dataCode":"rnd","name":"Research
+        & Development","description":"The aggregate costs incurred in a planned search
+        or critical investigation aimed at discovery of new knowledge with the hope
+        that such knowledge will be useful in developing a new product or service.","statementType":"incomeStatement","units":"$"},{"dataCode":"sga","name":"Selling,
+        General & Administrative","description":"The aggregate total costs related
+        to selling a firm''s product and services, as well as all other general and
+        administrative expenses. Direct selling expenses (for example, credit, warranty,
+        and advertising) are expenses that can be directly linked to the sale of specific
+        products. Indirect selling expenses are expenses that cannot be directly linked
+        to the sale of specific products, for example telephone expenses, Internet,
+        and postal charges. General and administrative expenses include salaries","statementType":"incomeStatement","units":"$"},{"dataCode":"investmentsCurrent","name":"Current
+        Investments","description":"The current portion of Investments, reported if
+        the company operates a classified balance sheet that segments current and
+        non-current assets.","statementType":"balanceSheet","units":"$"},{"dataCode":"payDiv","name":"Payment
+        of Dividends & Other Cash Distributions","description":"Representing dividends
+        and dividend equivalents paid on common stock and restricted stock units.","statementType":"cashFlow","units":"$"},{"dataCode":"peRatio","name":"Price
+        to Earnings Ratio","description":"P\/E Ratio","statementType":"overview","units":""},{"dataCode":"investmentsAcqDisposals","name":"Investment
+        Acquisitions & Disposals","description":"A component of cash flow from financing,
+        representing the net cash inflow (outflow) associated with the acquisition
+        & disposal of investments, including marketable securities and loan originations.","statementType":"cashFlow","units":"$"},{"dataCode":"taxLiabilities","name":"Tax
+        Liabilities","description":"A component of liabilities representing outstanding
+        tax liabilities.","statementType":"balanceSheet","units":"$"},{"dataCode":"ncff","name":"Net
+        Cash Flow from Financing","description":"Net Cash flow from financing activities
+        like issuing stock or debt minus dividends or acquiring debt","statementType":"cashFlow","units":"$"},{"dataCode":"opinc","name":"Operating
+        Income","description":"Operating income is a measure of financial performance
+        before the deduction of interest expense, tax expenses and other Non-Operating
+        items. It is calculated as gross profit minus operating expenses","statementType":"incomeStatement","units":"$"},{"dataCode":"nonControllingInterests","name":"Net
+        Income to Non-Controlling Interests","description":"The portion of income
+        which is attributable to non-controlling interest shareholders, subtracted
+        from consolidated income in order to obtain net income","statementType":"incomeStatement","units":"$"},{"dataCode":"assetsNonCurrent","name":"Other
+        Assets","description":"Assets that cannot be easily converted into cash and
+        where the value of the item will be realized in a year","statementType":"balanceSheet","units":"$"},{"dataCode":"taxAssets","name":"Tax
+        Assets","description":"A component of assets representing tax assets and receivables.","statementType":"balanceSheet","units":"$"},{"dataCode":"issrepayEquity","name":"Issuance
+        or Repayment of Equity","description":"Representing the net cash inflow (outflow)
+        from issuance (repayment) of equity.","statementType":"cashFlow","units":"$"},{"dataCode":"ncfx","name":"Effect
+        of Exchange Rate Changes on Cash","description":"Cash flow from exchange rate
+        changes","statementType":"cashFlow","units":"$"},{"dataCode":"ncfo","name":"Net
+        Cash Flow from Operations","description":"Cash flow generating from a company''s
+        operations","statementType":"cashFlow","units":"$"},{"dataCode":"grossProfit","name":"Gross
+        Profit","description":"Aggregate revenue [REVENUE] less cost of revenue [COR]
+        directly attributable to the revenue generation activity.","statementType":"incomeStatement","units":"$"},{"dataCode":"debtCurrent","name":"Current
+        Debt","description":"Current debt - debt due within a year","statementType":"balanceSheet","units":"$"},{"dataCode":"retainedEarnings","name":"Accumulated
+        Retained Earnings or Deficit","description":"A component of Shareholder''s
+        Equity representing the cumulative amount of the entities undistributed earnings
+        or deficit. May only be reported annually by certain companies, rather than
+        quarterly.","statementType":"balanceSheet","units":"$"},{"dataCode":"liabilitiesNonCurrent","name":"Other
+        Liabilities","description":"Long-term liabilities (like debt) that are not
+        due within a year","statementType":"balanceSheet","units":"$"},{"dataCode":"sbcomp","name":"Shared-based
+        Compensation","description":"A component of cash flow from operating activities,
+        representing the total amount of noncash, equity-based employee remuneration.
+        This may include the value of stock or unit options, amortization of restricted
+        stock or units, and adjustment for officers'' compensation. As noncash, this
+        element is an add back when calculating net cash generated by operating activities
+        using the indirect method.","statementType":"cashFlow","units":"$"},{"dataCode":"businessAcqDisposals","name":"Business
+        Acquisitions & Disposals","description":"A component of cash flow from investing,
+        representing the net cash inflow (outflow) associated with the acquisition
+        & disposal of businesses, joint-ventures, affiliates, and other named investments.","statementType":"cashFlow","units":"$"},{"dataCode":"liabilitiesCurrent","name":"Current
+        Liabilities","description":"Debt or liabilities that are due within a year","statementType":"balanceSheet","units":"$"},{"dataCode":"acctRec","name":"Accounts
+        Receivable","description":"Amount company will receive based on work already
+        completed and delivered","statementType":"balanceSheet","units":"$"},{"dataCode":"cashAndEq","name":"Cash
+        and Equivalents","description":"Cash or assets that can be converted to cash
+        immediately","statementType":"balanceSheet","units":"$"},{"dataCode":"accoci","name":"Accumulated
+        Other Comprehensive Income","description":"Unrealized gains and losses - such
+        as items that have changed in value but haven''t been bought or sold yet","statementType":"balanceSheet","units":"$"},{"dataCode":"depamor","name":"Depreciation,
+        Amortization & Accretion","description":"Depreciation, Amortization, and Accretion","statementType":"cashFlow","units":"$"},{"dataCode":"assetsCurrent","name":"Current
+        Assets","description":"Assets that can easily be converted to cash and can
+        be used to fund day-to-day operations","statementType":"balanceSheet","units":"$"},{"dataCode":"shareswa","name":"Weighted
+        Average Shares","description":"Weighted average shares (undiluted)","statementType":"incomeStatement","units":""},{"dataCode":"investments","name":"Investments","description":"A
+        component of assets representing the total amount of marketable and non-marketable
+        securties, loans receivable and other invested assets.","statementType":"balanceSheet","units":"$"},{"dataCode":"prefDVDs","name":"Preferred
+        Dividends Income Statement Impact","description":"Impact of dividend on company''s
+        preferred shares","statementType":"incomeStatement","units":"$"},{"dataCode":"intangibles","name":"Intangible
+        Assets","description":"Goodwill and Intangible Assets","statementType":"balanceSheet","units":"$"},{"dataCode":"opex","name":"Operating
+        Expenses","description":"Operating expenses represents the total expenditure
+        on SG&A, R&D and other operating expense items, it excludes cost of revenue.","statementType":"incomeStatement","units":"$"},{"dataCode":"inventory","name":"Inventory","description":"A
+        component of Total Assets representing the amount after valuation and reserves
+        of inventory expected to be sold, or consumed within one year or operating
+        cycle, if longer.","statementType":"balanceSheet","units":"$"},{"dataCode":"deposits","name":"Deposits","description":"Deposit
+        liabilities, both domestic and international including deposits such as savings
+        deposts","statementType":"balanceSheet","units":"$"},{"dataCode":"ebt","name":"Earnings
+        before tax","description":"Revenue - Expenses and excluding tax","statementType":"incomeStatement","units":"$"},{"dataCode":"netMargin","name":"Net
+        Margin","description":"Net Profit Margin, or the Net Income as a proportion
+        of Revenue. In other words, Net Income\/Revenue","statementType":"overview","units":"%"},{"dataCode":"investmentsNonCurrent","name":"Non-Current
+        Investments","description":"The non-current portion of investments, reported
+        if the company operates a classified balance sheet that segments current and
+        non-current assets.","statementType":"balanceSheet","units":"$"},{"dataCode":"totalAssets","name":"Total
+        Assets","description":"Total assets","statementType":"balanceSheet","units":"$"},{"dataCode":"deferredRev","name":"Deferred
+        Revenue","description":"Revenue that was received, but not yet paid out  including
+        sales, license fees, and royalties, but excluding interest income.","statementType":"balanceSheet","units":"$"},{"dataCode":"taxExp","name":"Tax
+        Expense","description":"Tax expenses","statementType":"incomeStatement","units":"$"},{"dataCode":"debt","name":"Total
+        Debt","description":"Debt","statementType":"balanceSheet","units":"$"},{"dataCode":"costRev","name":"Cost
+        of Revenue","description":"The aggregate cost of goods produced and sold and
+        services rendered during the reporting period.","statementType":"incomeStatement","units":"$"},{"dataCode":"acctPay","name":"Accounts
+        Payable","description":"Short-term debt the company must pay off within a
+        year","statementType":"balanceSheet","units":"$"},{"dataCode":"ncf","name":"Net
+        Cash Flow to Change in Cash & Cash Equivalents","description":"Net Cash flow
+        - Total cash minux liabilities","statementType":"cashFlow","units":"$"},{"dataCode":"netIncDiscOps","name":"Net
+        Income from Discontinued Operations","description":"Net income from discontinued
+        operations","statementType":"incomeStatement","units":"$"},{"dataCode":"totalLiabilities","name":"Total
+        Liabilities","description":"Total Liabilities","statementType":"balanceSheet","units":"$"},{"dataCode":"ncfi","name":"Net
+        Cash Flow from Investing","description":"Cash flow from investments made by
+        the company","statementType":"cashFlow","units":"$"},{"dataCode":"debtNonCurrent","name":"Non-Current
+        Debt","description":"Longer-term debt, typically greater than a year","statementType":"balanceSheet","units":"$"},{"dataCode":"ebit","name":"Earning
+        Before Interest & Taxes EBIT","description":"Earning Before Interest & Taxes
+        (EBIT)","statementType":"incomeStatement","units":"$"},{"dataCode":"netIncComStock","name":"Net
+        Income Common Stock","description":"Net Income applied to common share holders.
+        Used in calculating EPS (earnings per share).","statementType":"incomeStatement","units":"$"},{"dataCode":"intexp","name":"Interest
+        Expense","description":"Interest expense","statementType":"incomeStatement","units":"$"},{"dataCode":"consolidatedIncome","name":"Consolidated
+        Income","description":"The portion of profit or loss for the period, net of
+        income taxes, which is attributable to the consolidated entity.","statementType":"incomeStatement","units":"$"},{"dataCode":"equity","name":"Shareholders
+        Equity","description":"Shareholders Equity","statementType":"balanceSheet","units":"$"},{"dataCode":"marketCap","name":"Market
+        Capitalization","description":"Size of the company (shares outstanding * share
+        price)","statementType":"overview","units":"$"},{"dataCode":"enterpriseVal","name":"Enterprise
+        Value","description":"An alternative to marketcap that''s the theoretical
+        takeover price of a company (marketcap + debt - cash and cash equivalents)","statementType":"overview","units":"$"},{"dataCode":"pbRatio","name":"Price
+        to Book Ratio","description":"Price\/Book value per share ratio","statementType":"overview","units":null},{"dataCode":"trailingPEG1Y","name":"PEG
+        Ratio","description":"PEG ratio using the trailing 1 year EPS growth rate
+        in the denominator","statementType":"overview","units":null}]'
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '17003'
+      content-type:
+      - application/json
+      date:
+      - Sat, 06 Feb 2021 16:23:39 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -106,6 +106,25 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
                               startDate='2017-01-01',
                               endDate='2017-08-31')
 
+  # Get definitions for fields available in the fundamentals-api, ticker is
+  # optional
+  definitions = get_fundamentals_definitions('GOOGL')
+
+  # Get fundamentals which require daily-updated (like marketCap). A start-
+  # and end-date can be passed. If omited, will get all available data.
+  fundamentals_daily = CLIENT.get_fundamentals_daily('GOOGL',
+                                          startDate='2020-01-01',
+                                          endDate='2020-12-31')
+
+  # Get fundamentals based on quarterly statements. Accepts time-range like
+  # daily-fundamentals. asReported can be set to get the data exactly like
+  # it was reported to SEC. Set to False if you want to get data containing
+  # corrections
+  fundamentals_stmnts = CLIENT.get_fundamentals_statements('GOOGL',
+                                                           startDate='2020-01-01',
+                                                           endDate='2020-12-31',
+                                                           asReported=True)
+
 
 To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
 

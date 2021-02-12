@@ -428,3 +428,85 @@ class TiingoClient(RestClient):
             return response.content.decode("utf-8")
         else:
             return response.json()
+
+    # FUNDAMENTAL DEFINITIONS
+    # tiingo/fundamentals/definitions
+    def get_fundamentals_definitions(self, tickers=[], fmt='json'):
+        """Return definitions for fundamentals for specified tickers
+            https://api.tiingo.com/documentation/fundamentals
+
+            Args:
+                tickers [string] : optional, either list or string
+                fmt (string): 'csv' or 'json'
+        """
+        url = "tiingo/fundamentals/definitions"
+        params = {
+            'tickers': tickers,
+            'format': fmt
+        }
+        response = self._request('GET', url, params=params)
+        if fmt == 'json':
+            return response.json()
+        elif fmt == 'csv':
+            return response.content.decode("utf-8")
+
+    # FUNDAMENTAL DAILY
+    # tiingo/fundamentals/<ticker>/daily
+    def get_fundamentals_daily(self, ticker, fmt='json',
+                                startDate=None, endDate=None):
+        """Returns metrics which rely on daily price-updates
+            https://api.tiingo.com/documentation/fundamentals
+
+            # Dates are in YYYY-MM-DD Format.
+
+            Args:
+                tickers [string] : List of unique Stock Tickers to search
+                startDate, endDate [date]: Boundaries of search window
+                fmt (string): 'csv' or 'json'
+        """
+        url = 'tiingo/fundamentals/{}/daily'.format(ticker)
+        params = {
+            'startDate': startDate,
+            'endDate': endDate,
+            'format': fmt
+        }
+        response = self._request('GET', url, params=params)
+        if fmt == 'json':
+            return response.json()
+        elif fmt == 'csv':
+            return response.content.decode("utf-8")
+
+    # FUNDAMENTAL STATEMENTS
+    # tiingo/fundamentals/<ticker>/statements
+    def get_fundamentals_statements(self, ticker, asReported=False, fmt='json',
+                                startDate=None, endDate=None):
+        """Returns data that is extracted from quarterly and annual statements.
+            https://api.tiingo.com/documentation/fundamentals
+
+            # Dates are in YYYY-MM-DD Format.
+
+            Args:
+                tickers [string] : List of unique Stock Tickers to search
+                startDate, endDate [date]: Boundaries of search window
+                asReported [bool]: get most-recent data (False) or data \
+                                   as it was reported on the release-date
+                                   (True)
+                fmt (string): 'csv' or 'json'
+        """
+        if asReported:
+            asReported = 'true'
+        else:
+            asReported = 'false'
+
+        url = 'tiingo/fundamentals/{}/statements'.format(ticker)
+        params = {
+            'startDate': startDate,
+            'endDate': endDate,
+            'asReported': asReported,
+            'format': fmt
+        }
+        response = self._request('GET', url, params=params)
+        if fmt == 'json':
+            return response.json()
+        elif fmt == 'csv':
+            return response.content.decode("utf-8")
