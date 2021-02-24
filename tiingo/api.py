@@ -85,12 +85,22 @@ class TiingoClient(RestClient):
         }
 
         self._frequency_pattern = re.compile('^[0-9]+(min|hour)$', re.IGNORECASE)
+        self._ticker_list = None
 
     def __repr__(self):
         return '<TiingoClient(url="{}")>'.format(self._base_url)
 
-    def _is_eod_frequency(self,frequency):
+    def _is_eod_frequency(self, frequency):
         return frequency.lower() in ['daily', 'weekly', 'monthly', 'annually']
+
+    def _get_ticker_list(self):
+        """Downloads the list of supported tickers."""
+        listing_file_url = "https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip"
+        response = requests.get(listing_file_url)
+        zipdata = get_zipfile_from_response(response)
+        raw_csv = get_buffer_from_zipfile(zipdata, 'supported_tickers.csv')
+        reader = csv.DictReader(raw_csv)
+        return [row for row in reader]
 
     # TICKER PRICE ENDPOINTS
     # https://api.tiingo.com/docs/tiingo/daily
@@ -102,18 +112,15 @@ class TiingoClient(RestClient):
            Tickers for unrelated products are omitted.
            https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip
            """
-        listing_file_url = "https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip"
-        response = requests.get(listing_file_url)
-        zipdata = get_zipfile_from_response(response)
-        raw_csv = get_buffer_from_zipfile(zipdata, 'supported_tickers.csv')
-        reader = csv.DictReader(raw_csv)
+        if self._ticker_list is None:
+            # Cache the list of tickers
+            self._ticker_list = self._get_ticker_list()
 
         if not len(assetTypes):
-            return [row for row in reader]
-
-        assetTypesSet = set(assetTypes)
-        return [row for row in reader
-                if row.get('assetType') in assetTypesSet]
+            return self._ticker_list
+        else:
+            return [row for row in self._ticker_list
+                    if row.get("assetType") in set(assetTypes)]
 
     def list_stock_tickers(self):
         return self.list_tickers(['Stock'])
