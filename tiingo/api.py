@@ -242,7 +242,6 @@ class TiingoClient(RestClient):
         """
         url = "tiingo/daily/{}".format(ticker)
         response = self._request('GET', url)
-        data = response.json()
         return self._format_response(response, fmt, object_name="Ticker")
 
     def get_ticker_price(self, ticker,
