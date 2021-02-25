@@ -517,7 +517,19 @@ class TiingoClient(RestClient):
             'format': fmt
         }
         response = self._request('GET', url, params=params)
-        if fmt == 'json':
-            return response.json()
-        elif fmt == 'csv':
-            return response.content.decode("utf-8")
+        return self._format_response(response, fmt)
+
+    # METADATA
+    # tiingo/fundamentals/meta
+    def get_fundamentals_meta(self, tickers, fmt="json"):
+
+        if isinstance(tickers, str):
+            tickers = [tickers]
+
+        params = {
+            "format": fmt,
+            "tickers": ",".join(tickers)
+        }
+        url = "tiingo/fundamentals/meta"
+        response = self._request("GET", url, params=params)
+        return self._format_response(response, fmt)

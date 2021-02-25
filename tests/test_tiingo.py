@@ -289,8 +289,32 @@ class TestFundamentals(TestCase):
 
     @vcr.use_cassette('tests/fixtures/fundamentals_statements_csv.yaml')
     def test_statements_with_csv(self):
-        statements = self._client.get_fundamentals_statements("GOOGL",
+        statements = self._client.get_fundamentals_statements(TEST_TICKER1,
                                                               startDate='2020-1-1',
                                                               endDate='2020-4-1',
                                                               fmt='csv')
         assert len(statements) > 1
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_meta.yaml')
+    def test_fundamentals_meta(self):
+        meta = self._client.get_fundamentals_meta(TEST_TICKER1)
+        assert len(meta) == 1
+        assert meta[0]["ticker"] == TEST_TICKER1.lower()
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_meta_multi.yaml')
+    def test_fundamentals_meta_multi(self):
+        meta = self._client.get_fundamentals_meta([TEST_TICKER1, TEST_TICKER2])
+        assert len(meta) == 2
+        assert {meta[0]["ticker"], meta[1]["ticker"]} == {TEST_TICKER1.lower(),
+                                                          TEST_TICKER2.lower()}
+
+    @vcr.use_cassette('tests/fixtures/fundamentals_meta_csv.yaml')
+    def test_fundamentals_meta_csv(self):
+        meta = self._client.get_fundamentals_meta([TEST_TICKER1, TEST_TICKER2],
+                                                  fmt="csv")
+        reader = csv.reader(meta.splitlines(), delimiter=",")
+        rows = list(reader)
+
+        assert len(rows) == 3
+        assert (TEST_TICKER1.lower() in rows[1]) or (TEST_TICKER2.lower() in rows[1])
+        assert (TEST_TICKER1.lower() in rows[2]) or (TEST_TICKER2.lower() in rows[2])
