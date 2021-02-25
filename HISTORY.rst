@@ -2,6 +2,10 @@
 History
 =======
 
+0.15.0 (2021-02-XX - Unreleased)
+--------------------------------
+* Feature: Added method get_fundamentals_meta to query the tiingo/fundamentals/meta endpoint
+
 0.14.0 (2020-12-XX - Unreleased)
 --------------------------------
 * Feature (Name #Number)
