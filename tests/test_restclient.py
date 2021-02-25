@@ -73,8 +73,7 @@ class TestRestClientWithSession(TestCase):
 
     # Test 404 error
     def test_invalid_url(self):
-
-         #  Suppress deprecation warning in python 3
+        #  Suppress deprecation warning in python 3
         if hasattr(self, 'assertRaisesRegex'):
             assertFunc = self.assertRaisesRegex
         else:

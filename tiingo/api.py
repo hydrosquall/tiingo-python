@@ -117,19 +117,22 @@ class TiingoClient(RestClient):
             return response.json()
         elif fmt == "object":
             if object_name is None:
-                raise ValueError("If fmt='object' then object_name must not be None.")
+                raise ValueError(
+                    "If fmt='object' then object_name must not be None.")
             json_resp = response.json()
             if isinstance(json_resp, dict):  # Single response
                 return dict_to_object(json_resp, object_name)
             else:  # Multiple responses
-                return [dict_to_object(data, object_name) for data in json_resp]
+                return [dict_to_object(data, object_name)
+                        for data in json_resp]
         elif fmt == "csv":
             return response.content.decode("utf-8")
         elif fmt == "raw":
             return response
         else:
-            raise ValueError("fmt must be one of 'json', 'object', 'csv', or 'raw', "
-                             f"but got {fmt}.")
+            raise ValueError(
+                "fmt must be one of 'json', 'object', 'csv', or 'raw', "
+                f"but got {fmt}.")
 
 
     def _invalid_frequency(self, frequency):
@@ -524,7 +527,7 @@ class TiingoClient(RestClient):
     def get_fundamentals_meta(self, tickers, fmt="json"):
         """Returns metadata for the given tickers tiingo/fundamentals/meta.
 
-        :param tickers (List[string]): A list of unique stock tickers to search.
+        :param tickers (List[string]): list of unique stock tickers to search.
         :return: Return csv string or list of dicts according to fmt.
         """
 

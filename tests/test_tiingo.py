@@ -316,5 +316,7 @@ class TestFundamentals(TestCase):
         rows = list(reader)
 
         assert len(rows) == 3
-        assert (TEST_TICKER1.lower() in rows[1]) or (TEST_TICKER2.lower() in rows[1])
-        assert (TEST_TICKER1.lower() in rows[2]) or (TEST_TICKER2.lower() in rows[2])
+        assert ((TEST_TICKER1.lower() in rows[1]) or
+                (TEST_TICKER2.lower() in rows[1]))
+        assert ((TEST_TICKER1.lower() in rows[2]) or
+                (TEST_TICKER2.lower() in rows[2]))
