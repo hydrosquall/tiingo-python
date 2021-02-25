@@ -522,6 +522,11 @@ class TiingoClient(RestClient):
     # METADATA
     # tiingo/fundamentals/meta
     def get_fundamentals_meta(self, tickers, fmt="json"):
+        """Returns metadata for the given tickers tiingo/fundamentals/meta.
+
+        :param tickers (List[string]): A list of unique stock tickers to search.
+        :return: Return csv string or list of dicts according to fmt.
+        """
 
         if isinstance(tickers, str):
             tickers = [tickers]
