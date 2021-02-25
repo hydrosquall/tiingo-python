@@ -90,10 +90,12 @@ class TiingoClient(RestClient):
     def __repr__(self):
         return '<TiingoClient(url="{}")>'.format(self._base_url)
 
-    def _is_eod_frequency(self, frequency):
+    @staticmethod
+    def _is_eod_frequency(frequency):
         return frequency.lower() in ['daily', 'weekly', 'monthly', 'annually']
 
-    def _get_ticker_list(self):
+    @staticmethod
+    def _get_ticker_list():
         """Downloads the list of supported tickers."""
         listing_file_url = "https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip"
         response = requests.get(listing_file_url)
@@ -101,6 +103,102 @@ class TiingoClient(RestClient):
         raw_csv = get_buffer_from_zipfile(zipdata, 'supported_tickers.csv')
         reader = csv.DictReader(raw_csv)
         return [row for row in reader]
+
+    @staticmethod
+    def _format_response(response, fmt, object_name=None):
+        """Converts the api response into json, csv, or objects.
+
+        response: A response from self._request
+        fmt: One of 'json', 'object', 'csv', or 'raw'
+        object_name: The name of the object if fmt = 'object'
+        """
+        fmt = fmt.lower()
+        if fmt == "json":
+            return response.json()
+        elif fmt == "object":
+            if object_name is None:
+                raise ValueError("If fmt='object' then object_name must not be None.")
+            json_resp = response.json()
+            if isinstance(json_resp, dict):  # Single response
+                return dict_to_object(json_resp, object_name)
+            else:  # Multiple responses
+                return [dict_to_object(data, object_name) for data in json_resp]
+        elif fmt == "csv":
+            return response.content.decode("utf-8")
+        elif fmt == "raw":
+            return response
+        else:
+            raise ValueError("fmt must be one of 'json', 'object', 'csv', or 'raw', "
+                             f"but got {fmt}.")
+
+
+    def _invalid_frequency(self, frequency):
+        """
+        Check to see that frequency was specified correctly
+        :param frequency (string): frequency string
+        :return (boolean):
+        """
+        is_valid = self._is_eod_frequency(frequency) or re.match(self._frequency_pattern, frequency)
+        return not is_valid
+
+    def _get_prices_url(self, ticker, frequency):
+        """
+        Return url based on frequency.  Daily, weekly, or yearly use Tiingo
+        EOD api; anything less than daily uses the iex intraday api.
+        :param ticker (string): ticker to be embedded in the url
+        :param frequency (string): valid frequency per Tiingo api
+        :return (string): url
+        """
+        if self._invalid_frequency(frequency):
+            etext = ("Error: {} is an invalid frequency.  Check Tiingo API documentation "
+                     "for valid EOD or intraday frequency format.")
+            raise InvalidFrequencyError(etext.format(frequency))
+        else:
+            if self._is_eod_frequency(frequency):
+                return "tiingo/daily/{}/prices".format(ticker)
+            else:
+                return "iex/{}/prices".format(ticker)
+
+    def _request_pandas(self, ticker, metric_name, params):
+        """
+        Return data for ticker as a pandas.DataFrame if metric_name is not
+        specified or as a pandas.Series if metric_name is specified.
+
+        :param ticker (string): ticker to be requested
+        :param params (dict): a dictionary containing valid resampleFreq
+            and format strings per the Tiingo api
+        :param metric_name (string): Optional parameter specifying metric to be returned for each
+            ticker.  In the event of a single ticker, this is optional and if not specified
+            all of the available data will be returned.  In the event of a list of tickers,
+            this parameter is required.
+        """
+        url = self._get_prices_url(ticker, params['resampleFreq'])
+        response = self._request('GET', url, params=params)
+        if params['format'] == 'csv':
+            if sys.version_info < (3, 0):  # python 2
+                from StringIO import StringIO
+            else:  # python 3
+                from io import StringIO
+
+            df = pd.read_csv(StringIO(response.content.decode('utf-8')))
+        else:
+            df = pd.DataFrame(response.json())
+
+        df.set_index('date', inplace=True)
+
+        if metric_name is not None:
+            prices = df[metric_name]
+        else:
+            prices = df
+
+        prices.index = pd.to_datetime(prices.index)
+
+        # Localize to UTC to ensure equivalence between data returned in json format and
+        # csv format. Tiingo daily data requested in csv format does not include a timezone.
+        if prices.index.tz is None:
+            prices.index = prices.index.tz_localize('UTC')
+
+        return prices
 
     # TICKER PRICE ENDPOINTS
     # https://api.tiingo.com/docs/tiingo/daily
@@ -141,78 +239,7 @@ class TiingoClient(RestClient):
         url = "tiingo/daily/{}".format(ticker)
         response = self._request('GET', url)
         data = response.json()
-        if fmt == 'json':
-            return data
-        elif fmt == 'object':
-            return dict_to_object(data, "Ticker")
-
-    def _invalid_frequency(self, frequency):
-        """
-        Check to see that frequency was specified correctly
-        :param frequency (string): frequency string
-        :return (boolean):
-        """
-        is_valid = self._is_eod_frequency(frequency) or re.match(self._frequency_pattern, frequency)
-        return not is_valid
-
-    def _get_url(self, ticker, frequency):
-        """
-        Return url based on frequency.  Daily, weekly, or yearly use Tiingo
-        EOD api; anything less than daily uses the iex intraday api.
-        :param ticker (string): ticker to be embedded in the url
-        :param frequency (string): valid frequency per Tiingo api
-        :return (string): url
-        """
-        if self._invalid_frequency(frequency):
-            etext = ("Error: {} is an invalid frequency.  Check Tiingo API documentation "
-                     "for valid EOD or intraday frequency format.")
-            raise InvalidFrequencyError(etext.format(frequency))
-        else:
-            if self._is_eod_frequency(frequency):
-                return "tiingo/daily/{}/prices".format(ticker)
-            else:
-                return "iex/{}/prices".format(ticker)
-
-    def _request_pandas(self, ticker, metric_name, params):
-        """
-        Return data for ticker as a pandas.DataFrame if metric_name is not
-        specified or as a pandas.Series if metric_name is specified.
-
-        :param ticker (string): ticker to be requested
-        :param params (dict): a dictionary containing valid resampleFreq
-            and format strings per the Tiingo api
-        :param metric_name (string): Optional parameter specifying metric to be returned for each
-            ticker.  In the event of a single ticker, this is optional and if not specified
-            all of the available data will be returned.  In the event of a list of tickers,
-            this parameter is required.
-        """
-        url = self._get_url(ticker, params['resampleFreq'])
-        response = self._request('GET', url, params=params)
-        if params['format'] == 'csv':
-            if sys.version_info < (3, 0):  # python 2
-                from StringIO import StringIO
-            else:  # python 3
-                from io import StringIO
-
-            df = pd.read_csv(StringIO(response.content.decode('utf-8')))
-        else:
-            df = pd.DataFrame(response.json())
-
-        df.set_index('date', inplace=True)
-
-        if metric_name is not None:
-            prices = df[metric_name]
-        else:
-            prices = df
-
-        prices.index = pd.to_datetime(prices.index)
-
-        # Localize to UTC to ensure equivalence between data returned in json format and
-        # csv format. Tiingo daily data requested in csv format does not include a timezone.
-        if prices.index.tz is None:
-            prices.index = prices.index.tz_localize('UTC')
-
-        return prices
+        return self._format_response(response, fmt, object_name="Ticker")
 
     def get_ticker_price(self, ticker,
                          startDate=None, endDate=None,
@@ -230,7 +257,7 @@ class TiingoClient(RestClient):
                 fmt (string): 'csv' or 'json'
                 frequency (string): Resample frequency
         """
-        url = self._get_url(ticker, frequency)
+        url = self._get_prices_url(ticker, frequency)
         params = {
             'format': fmt if fmt != "object" else 'json',  # conversion local
             'resampleFreq': frequency
@@ -244,13 +271,7 @@ class TiingoClient(RestClient):
         # TODO: evaluate whether to stream CSV to cache on disk, or
         # load as array in memory, or just pass plain text
         response = self._request('GET', url, params=params)
-        if fmt == "json":
-            return response.json()
-        elif fmt == "object":
-            data = response.json()
-            return [dict_to_object(item, "TickerPrice") for item in data]
-        else:
-            return response.content.decode("utf-8")
+        return self._format_response(response, fmt, object_name="TickerPrice")
 
     def get_dataframe(self, tickers,
                       startDate=None, endDate=None, metric_name=None,
@@ -352,11 +373,7 @@ class TiingoClient(RestClient):
             'onlyWithTickers': onlyWithTickers
         }
         response = self._request('GET', url, params=params)
-        data = response.json()
-        if fmt == 'json':
-            return data
-        elif fmt == 'object':
-            return [dict_to_object(item, "NewsArticle") for item in data]
+        return self._format_response(response, fmt, object_name="NewsArticle")
 
     def get_bulk_news(self, file_id=None, fmt='json'):
         """Only available to institutional clients.
@@ -370,11 +387,7 @@ class TiingoClient(RestClient):
             url = "tiingo/news/bulk_download"
 
         response = self._request('GET', url)
-        data = response.json()
-        if fmt == 'json':
-            return data
-        elif fmt == 'object':
-            return dict_to_object(data, "BulkNews")
+        return self._format_response(response, fmt, object_name="BulkNews")
 
     # Crypto
     # tiingo/crypto
@@ -393,7 +406,7 @@ class TiingoClient(RestClient):
             params['convertCurrency'] = convertCurrency
 
         response = self._request('GET', url, params=params)
-        return response.json()
+        return self._format_response(response, fmt="json")
 
     def get_crypto_price_history(self, tickers=[], baseCurrency=None,
                                  startDate=None, endDate=None, exchanges=[],
@@ -420,7 +433,7 @@ class TiingoClient(RestClient):
             params['convertCurrency'] = convertCurrency
 
         response = self._request('GET', url, params=params)
-        return response.json()
+        return self._format_response(response, fmt="json")
 
     def get_crypto_metadata(self, tickers=[], fmt='json'):
         url = 'tiingo/crypto'
@@ -431,10 +444,7 @@ class TiingoClient(RestClient):
         }
 
         response = self._request('GET', url, params=params)
-        if fmt == 'csv':
-            return response.content.decode("utf-8")
-        else:
-            return response.json()
+        return self._format_response(response, fmt)
 
     # FUNDAMENTAL DEFINITIONS
     # tiingo/fundamentals/definitions
@@ -452,15 +462,12 @@ class TiingoClient(RestClient):
             'format': fmt
         }
         response = self._request('GET', url, params=params)
-        if fmt == 'json':
-            return response.json()
-        elif fmt == 'csv':
-            return response.content.decode("utf-8")
+        return self._format_response(response, fmt)
 
     # FUNDAMENTAL DAILY
     # tiingo/fundamentals/<ticker>/daily
     def get_fundamentals_daily(self, ticker, fmt='json',
-                                startDate=None, endDate=None):
+                               startDate=None, endDate=None):
         """Returns metrics which rely on daily price-updates
             https://api.tiingo.com/documentation/fundamentals
 
@@ -478,15 +485,12 @@ class TiingoClient(RestClient):
             'format': fmt
         }
         response = self._request('GET', url, params=params)
-        if fmt == 'json':
-            return response.json()
-        elif fmt == 'csv':
-            return response.content.decode("utf-8")
+        return self._format_response(response, fmt)
 
     # FUNDAMENTAL STATEMENTS
     # tiingo/fundamentals/<ticker>/statements
     def get_fundamentals_statements(self, ticker, asReported=False, fmt='json',
-                                startDate=None, endDate=None):
+                                    startDate=None, endDate=None):
         """Returns data that is extracted from quarterly and annual statements.
             https://api.tiingo.com/documentation/fundamentals
 

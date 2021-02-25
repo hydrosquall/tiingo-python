@@ -9,10 +9,12 @@ from tiingo import TiingoClient
 from tiingo.exceptions import InvalidFrequencyError
 from tiingo.restclient import RestClientError
 
+TEST_TICKER1 = "GOOGL"
+TEST_TICKER2 = "AAPL"
+
 
 # TODO
 # Add tests for
-# - Invalid API key
 # - Invalid ticker
 # Use unittest asserts rather than regular asserts if applicable
 # Wrap server errors with client side descriptive errors
@@ -36,6 +38,17 @@ class TestClient(TestCase):
             client = TiingoClient(config=config)
             assert client
 
+    def test_invalid_api_key(self):
+        # A random key
+        # "".join([np.base_repr(randint(0, 15), 16) for _ in range(40)]).lower()
+        config = {
+            "api_key": "'b8c02ff9369c9e46d4327726120a3b7bbb064052'"
+            }
+        client = TiingoClient(config=config)
+        with self.assertRaises(RestClientError):
+            client.get_ticker_price("AAPL")
+        return
+
 
 # PRICES ENDPOINTS
 class TestTickerPrices(TestCase):
@@ -46,28 +59,28 @@ class TestTickerPrices(TestCase):
     @vcr.use_cassette('tests/fixtures/ticker_metadata.yaml')
     def test_ticker_metadata(self):
         """Refactor this with python data schemavalidation"""
-        metadata = self._client.get_ticker_metadata("GOOGL")
+        metadata = self._client.get_ticker_metadata(TEST_TICKER1)
 
-        assert metadata.get('ticker') == "GOOGL"
+        assert metadata.get('ticker') == TEST_TICKER1
         assert metadata.get("name")
 
     @vcr.use_cassette('tests/fixtures/ticker_metadata.yaml')
     def test_ticker_metadata_as_object(self):
-        metadata = self._client.get_ticker_metadata("GOOGL", fmt="object")
-        assert metadata.ticker == "GOOGL"  # Access property via ATTRIBUTE
+        metadata = self._client.get_ticker_metadata(TEST_TICKER1, fmt="object")
+        assert metadata.ticker == TEST_TICKER1  # Access property via ATTRIBUTE
         assert metadata.name               # (contrast with key access above
 
     @vcr.use_cassette('tests/fixtures/ticker_price.yaml')
     def test_ticker_price(self):
         """Test that EOD Prices Endpoint works"""
-        prices = self._client.get_ticker_price("GOOGL")
+        prices = self._client.get_ticker_price(TEST_TICKER1)
         assert len(prices) == 1
         assert prices[0].get('adjClose')
 
     @vcr.use_cassette('tests/fixtures/ticker_price_weekly.yaml')
     def test_ticker_price(self):
         """Test that weekly frequency works"""
-        prices = self._client.get_ticker_price("GOOGL", startDate='2018-01-05',
+        prices = self._client.get_ticker_price(TEST_TICKER1, startDate='2018-01-05',
                     endDate='2018-01-19', frequency='weekly')
         assert len(prices) == 3
         assert prices[0].get('adjClose')
@@ -75,14 +88,14 @@ class TestTickerPrices(TestCase):
     @vcr.use_cassette('tests/fixtures/ticker_price.yaml')
     def test_ticker_price_as_object(self):
         """Test that EOD Prices Endpoint works"""
-        prices = self._client.get_ticker_price("GOOGL", fmt="object")
+        prices = self._client.get_ticker_price(TEST_TICKER1, fmt="object")
         assert len(prices) == 1
         assert hasattr(prices[0], 'adjClose')
 
     @vcr.use_cassette('tests/fixtures/ticker_price_with_date.yaml')
     def test_ticker_price_with_date(self):
         """Test the EOD Prices Endpoint with data param"""
-        prices = self._client.get_ticker_price("GOOGL",
+        prices = self._client.get_ticker_price(TEST_TICKER1,
                                                startDate="2015-01-01",
                                                endDate="2015-01-05")
         self.assertGreater(len(prices), 1)
@@ -90,7 +103,7 @@ class TestTickerPrices(TestCase):
     @vcr.use_cassette('tests/fixtures/ticker_price_with_date_csv.yaml')
     def test_ticker_price_with_csv(self):
         """Confirm that CSV endpoint works"""
-        prices_csv = self._client.get_ticker_price("GOOGL",
+        prices_csv = self._client.get_ticker_price(TEST_TICKER1,
                                                    startDate="2015-01-01",
                                                    endDate="2015-01-05",
                                                    fmt='csv')
@@ -101,7 +114,7 @@ class TestTickerPrices(TestCase):
     @vcr.use_cassette('tests/fixtures/intraday_price.yaml')
     def test_intraday_ticker_price(self):
         """Test the EOD Prices Endpoint with data param"""
-        prices = self._client.get_ticker_price("GOOGL",
+        prices = self._client.get_ticker_price(TEST_TICKER1,
                                                startDate="2018-01-02",
                                                endDate="2018-01-02",
                                                frequency="30Min")
@@ -144,7 +157,7 @@ class TestTickerPrices(TestCase):
 
     def test_invalid_frequency_error(self):
         with self.assertRaises(InvalidFrequencyError):
-            prices = self._client.get_ticker_price("GOOGL",
+            prices = self._client.get_ticker_price(TEST_TICKER1,
                                                    startDate="2018-01-02",
                                                    endDate="2018-01-02",
                                                    frequency="1.5mins")
@@ -168,7 +181,7 @@ class TestNews(TestCase):
         # Search for articles about a topic
         self.num_articles = 1
         self.search_params = {
-            "tickers": ["aapl", "googl"],
+            "tickers": [TEST_TICKER2.lower(), TEST_TICKER1.lower()],
             "tags": ["Technology", "Bitcoin"],
             "startDate": "2016-01-01",
             "endDate": "2017-08-31",
@@ -235,25 +248,25 @@ class TestFundamentals(TestCase):
 
     @vcr.use_cassette('tests/fixtures/fundamentals_definitions.yaml')
     def test_definitions(self):
-        definitions = self._client.get_fundamentals_definitions("GOOGL")
+        definitions = self._client.get_fundamentals_definitions(TEST_TICKER1)
         assert len(definitions) > 1
 
     @vcr.use_cassette('tests/fixtures/fundamentals_definitions_csv.yaml')
     def test_definitions_csv(self):
-        definitions = self._client.get_fundamentals_definitions("GOOGL",
+        definitions = self._client.get_fundamentals_definitions(TEST_TICKER1,
                                                                 fmt='csv')
         assert len(definitions) > 1
 
     @vcr.use_cassette('tests/fixtures/fundamentals_daily.yaml')
     def test_daily(self):
-        daily = self._client.get_fundamentals_daily("GOOGL",
+        daily = self._client.get_fundamentals_daily(TEST_TICKER1,
                                                     startDate='2020-1-1',
                                                     endDate='2020-4-1')
         assert len(daily) > 1
 
     @vcr.use_cassette('tests/fixtures/fundamentals_daily_csv.yaml')
     def test_daily_with_csv(self):
-        daily = self._client.get_fundamentals_daily("GOOGL",
+        daily = self._client.get_fundamentals_daily(TEST_TICKER1,
                                                     startDate='2020-1-1',
                                                     endDate='2020-4-1',
                                                     fmt='csv')
@@ -261,14 +274,14 @@ class TestFundamentals(TestCase):
 
     @vcr.use_cassette('tests/fixtures/fundamentals_statements.yaml')
     def test_statements(self):
-        statements = self._client.get_fundamentals_statements("GOOGL",
+        statements = self._client.get_fundamentals_statements(TEST_TICKER1,
                                                               startDate='2020-1-1',
                                                               endDate='2020-4-1')
         assert len(statements) > 1
 
     @vcr.use_cassette('tests/fixtures/fundamentals_statements_with_as_reported.yaml')
     def test_statements(self):
-        statements = self._client.get_fundamentals_statements("GOOGL",
+        statements = self._client.get_fundamentals_statements(TEST_TICKER1,
                                                               startDate='2020-1-1',
                                                               endDate='2020-4-1',
                                                               asReported=True)
