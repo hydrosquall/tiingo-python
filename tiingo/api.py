@@ -76,7 +76,8 @@ class TiingoClient(RestClient):
 
         if not(api_key):
             raise RuntimeError("Tiingo API Key not provided. Please provide"
-                               " via environment variable or config argument.")
+                               " via environment variable TIINGO_API_KEY "
+                               "or config argument.")
 
         self._headers = {
             'Authorization': "Token {}".format(api_key),
