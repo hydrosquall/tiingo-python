@@ -172,7 +172,8 @@ day on 12-31 of each year.  The intraday frequencies are specified using an inte
   # You can obtain historical Cryptocurrency price quotes from the get_crypto_price_history() method.
   # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
   
-  client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2', endDate='2020-12-3', resampleFreq='1Hour')
+  client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2', 
+                                  endDate='2020-12-3', resampleFreq='1Hour')
 
 Further Docs
 -------------
