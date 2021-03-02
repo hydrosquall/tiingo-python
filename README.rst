@@ -160,6 +160,8 @@ day on 12-31 of each year.  The intraday frequencies are specified using an inte
 .. code-block:: python
 
   # You can obtain cryptocurrency metadata using the following method.
+  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
   client.get_crypto_metadata(['BTCUSD'], fmt='json')
 
   #You can obtain top-of-book cryptocurrency quotes from the ``get_crypto_top_of_book()`` method.
