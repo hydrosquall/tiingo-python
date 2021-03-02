@@ -162,14 +162,14 @@ day on 12-31 of each year.  The intraday frequencies are specified using an inte
   # You can obtain cryptocurrency metadata using the following method.
   client.get_crypto_metadata(['BTCUSD'], fmt='json')
 
-You can obtain top-of-book cryptocurrency quotes from the ``get_crypto_top_of_book()`` method.
-
+  #You can obtain top-of-book cryptocurrency quotes from the ``get_crypto_top_of_book()`` method.
   # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
   crypto_price = client.get_crypto_top_of_book(['BTCUSD'])``
 
-You can obtain historical Cryptocurrency price quotes from the get_crypto_price_history() method.
-
+  # You can obtain historical Cryptocurrency price quotes from the get_crypto_price_history() method.
   # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
   client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2', endDate='2020-12-3', resampleFreq='1Hour')
 
 Further Docs
