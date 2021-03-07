@@ -1,13 +1,15 @@
 =======
 History
 =======
-
-0.14.0 (2020-12-XX - Unreleased)
+0.15.0 (2021-XX - Unreleased)
 --------------------------------
-* Feature (Name #Number)
+
+0.14.0 (2021-03-06 - Unreleased)
+--------------------------------
 * Feature: Added 3 new methods for fundamentals-endpoint: definitions, daily and statements
-* Development: Run tests in Github Actions instead of Travis.org
 * [/news] Fix bug in get_news() when sources list is empty (#566)
+* Development: Run tests in Github Actions instead of Travis.org
+* Development: This is the last version of tiingo that will support Python 3.5 and below. (#601)
 
 0.13.0 (2020-12-12)
 --------------------------------
