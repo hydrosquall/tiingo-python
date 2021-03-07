@@ -4,7 +4,7 @@ History
 0.15.0 (2021-XX - Unreleased)
 --------------------------------
 
-0.14.0 (2021-03-06 - Unreleased)
+0.14.0 (2021-03-06)
 --------------------------------
 * Feature: Added 3 new methods for fundamentals-endpoint: definitions, daily and statements
 * [/news] Fix bug in get_news() when sources list is empty (#566)
