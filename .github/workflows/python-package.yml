@@ -43,5 +43,5 @@ jobs:
         TIINGO_API_KEY: 0000000000000000000000000000000000000000
       run: |
         py.test --cov=./tiingo
-    - name: Run code coverage 
+    - name: Run code coverage
       run: codecov
