@@ -206,15 +206,18 @@ class TiingoClient(RestClient):
 
     # TICKER PRICE ENDPOINTS
     # https://api.tiingo.com/docs/tiingo/daily
-    def list_tickers(self, assetTypes=[]):
+    def list_tickers(self, assetTypes=[], refresh_cache=False):
         """Return a list of dicts of metadata tickers for all supported tickers
             of the specified asset type, as well as metadata about each ticker.
             This includes supported date range, the exchange the ticker is traded
             on, and the currency the stock is traded on.
            Tickers for unrelated products are omitted.
            https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip
+
+           By default, this function will cache the list of tickers.  In order
+           to force refreshing the cache from the source, pass `refresh_cache=True`.
            """
-        if self._ticker_list is None:
+        if refresh_cache or self._ticker_list is None:
             # Cache the list of tickers
             self._ticker_list = self._get_ticker_list()
 
@@ -225,12 +228,18 @@ class TiingoClient(RestClient):
                     if row.get("assetType") in set(assetTypes)]
 
     def list_stock_tickers(self):
+        """A convience function for accessing cached stock tickersfrom
+        `list_tickers`."""
         return self.list_tickers(['Stock'])
 
     def list_etf_tickers(self):
+        """A convience function for accessing cached etf tickers from
+        `list_tickers`."""
         return self.list_tickers(['ETF'])
 
     def list_fund_tickers(self):
+        """A convience function for accessing cached fund tickers from
+        `list_tickers`."""
         return self.list_tickers(['Mutual Fund'])
 
     def get_ticker_metadata(self, ticker, fmt='json'):
