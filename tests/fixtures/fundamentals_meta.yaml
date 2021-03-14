@@ -1,0 +1,46 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.13.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=json&tickers=GOOGL
+  response:
+    body:
+      string: '[{"permaTicker":"US000000000326","ticker":"googl","name":"Alphabet
+        Inc - Class A","isActive":true,"isADR":false,"sector":"Field not available
+        for free\/evaluation","industry":"Field not available for free\/evaluation","sicCode":"Field
+        not available for free\/evaluation","sicSector":"Field not available for free\/evaluation","sicIndustry":"Field
+        not available for free\/evaluation","reportingCurrency":"usd","location":"Field
+        not available for free\/evaluation","companyWebsite":"Field not available
+        for free\/evaluation","secFilingWebsite":"Field not available for free\/evaluation","statementLastUpdated":"2021-02-09T00:35:22.358Z","dailyLastUpdated":"2021-02-24T22:07:19.489Z"}]'
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '682'
+      content-type:
+      - application/json
+      date:
+      - Thu, 25 Feb 2021 00:38:38 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

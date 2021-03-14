@@ -1,0 +1,48 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.14.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=json&tickers=GOOGL%2CAAPL
+  response:
+    body:
+      string: '[{"permaTicker":"US000000000038","ticker":"aapl","name":"Apple Inc","isActive":true,"isADR":false,"sector":"Technology","industry":"Consumer
+        Electronics","sicCode":3571,"sicSector":"Manufacturing","sicIndustry":"Electronic
+        Computers","reportingCurrency":"usd","location":"California, USA","companyWebsite":"http:\/\/www.apple.com","secFilingWebsite":"https:\/\/www.sec.gov\/cgi-bin\/browse-edgar?action=getcompany&CIK=0000320193","statementLastUpdated":"2021-02-02T23:02:06.053Z","dailyLastUpdated":"2021-03-12T21:55:08.278Z"},{"permaTicker":"US000000000326","ticker":"googl","name":"Alphabet
+        Inc - Class A","isActive":true,"isADR":false,"sector":"Field not available
+        for free\/evaluation","industry":"Field not available for free\/evaluation","sicCode":"Field
+        not available for free\/evaluation","sicSector":"Field not available for free\/evaluation","sicIndustry":"Field
+        not available for free\/evaluation","reportingCurrency":"usd","location":"Field
+        not available for free\/evaluation","companyWebsite":"Field not available
+        for free\/evaluation","secFilingWebsite":"Field not available for free\/evaluation","statementLastUpdated":"2021-02-09T00:35:22.358Z","dailyLastUpdated":"2021-03-12T23:33:18.287Z"}]'
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '1208'
+      content-type:
+      - application/json
+      date:
+      - Sun, 14 Mar 2021 02:55:57 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

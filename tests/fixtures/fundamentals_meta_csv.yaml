@@ -1,0 +1,53 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.13.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=csv&tickers=GOOGL%2CAAPL
+  response:
+    body:
+      string: 'permaTicker,ticker,name,isActive,isADR,sector,industry,sicCode,sicSector,sicIndustry,reportingCurrency,location,companyWebsite,secFilingWebsite,statementLastUpdated,dailyLastUpdated
+
+        US000000000038,aapl,Apple Inc,True,False,Technology,Consumer Electronics,3571,Manufacturing,Electronic
+        Computers,usd,"California, USA",http://www.apple.com,https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193,2021-02-02
+        23:02:06.053179+00:00,2021-02-24 21:41:44.381616+00:00
+
+        US000000000326,googl,Alphabet Inc - Class A,True,False,Field not available
+        for free/evaluation,Field not available for free/evaluation,Field not available
+        for free/evaluation,Field not available for free/evaluation,Field not available
+        for free/evaluation,usd,Field not available for free/evaluation,Field not
+        available for free/evaluation,Field not available for free/evaluation,2021-02-09
+        00:35:22.358097+00:00,2021-02-24 22:07:19.489601+00:00
+
+        '
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '923'
+      content-type:
+      - text/csv
+      date:
+      - Thu, 25 Feb 2021 00:43:59 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1
