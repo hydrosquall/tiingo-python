@@ -164,7 +164,6 @@ class TestTickerPrices(TestCase):
 
 # tiingo/news
 class TestNews(TestCase):
-
     def setUp(self):
         self._client = TiingoClient()
         self.article_keys = [  # Properties every article should have.
