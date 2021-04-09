@@ -4,6 +4,8 @@ History
 0.15.0 (2021-XX - Unreleased)
 --------------------------------
 
+* Documentation: Add crypto endpoint examples (#621)
+
 0.14.0 (2021-03-06)
 --------------------------------
 * Feature: Added 3 new methods for fundamentals-endpoint: definitions, daily and statements
