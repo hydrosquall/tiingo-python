@@ -78,7 +78,8 @@ Alternately, you may use a dictionary to customize/authorize your client.
   # Initialize
   client = TiingoClient(config)
 
-Now you can use ``TiingoClient`` to make your API calls. (Other parameters are available for each endpoint beyond what is used in the below examples, inspect the docstring for each function for details.).
+Now you can use ``TiingoClient`` to make your API calls. (Other parameters are available for each endpoint beyond what is used in the below examples, inspect the docstring
+for each function for details.).
 
 .. code-block:: python
 
@@ -111,11 +112,11 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
 
   # Get definitions for fields available in the fundamentals-api, ticker is
   # optional
-  definitions = get_fundamentals_definitions('GOOGL')
+  definitions = client.get_fundamentals_definitions('GOOGL')
 
   # Get fundamentals which require daily-updated (like marketCap). A start-
   # and end-date can be passed. If omited, will get all available data.
-  fundamentals_daily = CLIENT.get_fundamentals_daily('GOOGL',
+  fundamentals_daily = client.get_fundamentals_daily('GOOGL',
                                           startDate='2020-01-01',
                                           endDate='2020-12-31')
 
@@ -123,7 +124,7 @@ Now you can use ``TiingoClient`` to make your API calls. (Other parameters are a
   # daily-fundamentals. asReported can be set to get the data exactly like
   # it was reported to SEC. Set to False if you want to get data containing
   # corrections
-  fundamentals_stmnts = CLIENT.get_fundamentals_statements('GOOGL',
+  fundamentals_stmnts = client.get_fundamentals_statements('GOOGL',
                                                            startDate='2020-01-01',
                                                            endDate='2020-12-31',
                                                            asReported=True)
@@ -155,7 +156,27 @@ To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
                                         endDate='2018-05-31')
 
 
-You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe`` methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
+You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe``
+methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of
+day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
+
+.. code-block:: python
+
+  # You can obtain cryptocurrency metadata using the following method.
+  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
+  client.get_crypto_metadata(['BTCUSD'], fmt='json')
+
+  #You can obtain top-of-book cryptocurrency quotes from the ``get_crypto_top_of_book()`` method.
+  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
+  crypto_price = client.get_crypto_top_of_book(['BTCUSD'])``
+
+  # You can obtain historical Cryptocurrency price quotes from the get_crypto_price_history() method.
+  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
+  client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2', 
+                                  endDate='2020-12-3', resampleFreq='1Hour')
 
 Further Docs
 -------------

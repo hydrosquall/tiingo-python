@@ -3,12 +3,10 @@ History
 =======
 0.15.0 (2021-XX - Unreleased)
 --------------------------------
-
-0.15.0 (2021-02-XX - Unreleased)
---------------------------------
 * Feature: Added method get_fundamentals_meta to query the tiingo/fundamentals/meta endpoint
+* Documentation: Add crypto endpoint examples (#621)
 
-0.14.0 (2020-12-XX - Unreleased)
+0.14.0 (2021-03-06)
 --------------------------------
 * Feature: Added 3 new methods for fundamentals-endpoint: definitions, daily and statements
 * [/news] Fix bug in get_news() when sources list is empty (#566)
