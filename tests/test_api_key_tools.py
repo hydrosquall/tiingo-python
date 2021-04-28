@@ -17,7 +17,7 @@ interactions:
       Accept-Encoding:
       - gzip, deflate
       Authorization:
-      - Token 0000000000000000000000000000000000000000
+      - Token zxcvbnmlkjhgfdsaqwertyuiop0987654321qwer
       Connection:
       - keep-alive
       Content-Type:
