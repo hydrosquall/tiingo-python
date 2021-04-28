@@ -180,7 +180,7 @@ class TestNews(TestCase):
         # Search for articles about a topic
         self.num_articles = 1
         self.search_params = {
-            "tickers": [TEST_TICKER2.lower(), TEST_TICKER1.lower()],
+            "tickers": ["aapl", "googl"],
             "tags": ["Technology", "Bitcoin"],
             "startDate": "2016-01-01",
             "endDate": "2017-08-31",
