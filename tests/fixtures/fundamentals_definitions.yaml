@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - tiingo-python-client 0.13.0
+      - tiingo-python-client 0.14.0
     method: GET
-    uri: https://api.tiingo.com/tiingo/fundamentals/definitions?tickers=GOOGL&format=json
+    uri: https://api.tiingo.com/tiingo/fundamentals/definitions?tickers=PG&format=json
   response:
     body:
       string: '[{"dataCode":"rps","name":"Revenue Per Share","description":"Revenue
@@ -189,11 +189,11 @@ interactions:
       content-type:
       - application/json
       date:
-      - Sat, 06 Feb 2021 16:23:39 GMT
+      - Wed, 28 Apr 2021 17:14:16 GMT
       server:
-      - nginx/1.14.0 (Ubuntu)
+      - nginx/1.16.1
       vary:
-      - Accept, Cookie, Origin
+      - Accept, Cookie
       x-frame-options:
       - SAMEORIGIN
     status:

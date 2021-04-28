@@ -13,9 +13,9 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - tiingo-python-client 0.13.0
+      - tiingo-python-client 0.14.0
     method: GET
-    uri: https://api.tiingo.com/tiingo/fundamentals/definitions?tickers=GOOGL&format=csv
+    uri: https://api.tiingo.com/tiingo/fundamentals/definitions?tickers=PG&format=csv
   response:
     body:
       string: 'dataCode,name,description,statementType,units
@@ -275,7 +275,7 @@ interactions:
         trailingPEG1Y,PEG Ratio,PEG ratio using the trailing 1 year EPS growth rate
         in the denominator,overview,
 
-'
+        '
     headers:
       allow:
       - GET, HEAD, OPTIONS
@@ -284,7 +284,7 @@ interactions:
       content-type:
       - text/csv
       date:
-      - Sat, 06 Feb 2021 16:34:49 GMT
+      - Wed, 28 Apr 2021 17:14:16 GMT
       server:
       - nginx/1.14.0 (Ubuntu)
       vary:

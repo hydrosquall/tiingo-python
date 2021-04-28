@@ -2,23 +2,39 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Authorization: [Token 0000000000000000000000000000000000000000]
-      Connection: [keep-alive]
-      Content-Type: [application/json]
-      User-Agent: [tiingo-python-client 0.5.0]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.14.0
     method: GET
-    uri: https://api.tiingo.com/tiingo/daily/GOOGL/prices?format=json&resampleFreq=daily
+    uri: https://api.tiingo.com/tiingo/daily/PG/prices?format=json&resampleFreq=daily
   response:
-    body: {string: '[{"adjClose":1037.29,"adjHigh":1044.65,"adjLow":1026.05,"adjOpen":1031.47,"adjVolume":1644794,"close":1037.29,"date":"2018-04-12T00:00:00+00:00","divCash":0.0,"high":1044.65,"low":1026.05,"open":1031.47,"splitFactor":1.0,"volume":1644794}]'}
+    body:
+      string: '[{"adjClose":131.18,"adjHigh":131.89,"adjLow":130.295,"adjOpen":131.24,"adjVolume":8297033,"close":131.18,"date":"2021-04-27T00:00:00+00:00","divCash":0.0,"high":131.89,"low":130.295,"open":131.24,"splitFactor":1.0,"volume":8297033}]'
     headers:
-      Allow: ['GET, HEAD, OPTIONS']
-      Content-Length: ['239']
-      Content-Type: [application/json]
-      Date: ['Fri, 13 Apr 2018 02:42:05 GMT']
-      Server: [nginx/1.10.1]
-      Vary: ['Accept, Cookie']
-      X-Frame-Options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '233'
+      content-type:
+      - application/json
+      date:
+      - Wed, 28 Apr 2021 17:10:06 GMT
+      server:
+      - nginx/1.16.1
+      vary:
+      - Accept, Cookie
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
 version: 1

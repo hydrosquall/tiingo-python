@@ -15,31 +15,30 @@ interactions:
       User-Agent:
       - tiingo-python-client 0.14.0
     method: GET
-    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=json&tickers=GOOGL%2CAAPL
+    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=json&tickers=PG%2CCAT
   response:
     body:
-      string: '[{"permaTicker":"US000000000038","ticker":"aapl","name":"Apple Inc","isActive":true,"isADR":false,"sector":"Technology","industry":"Consumer
-        Electronics","sicCode":3571,"sicSector":"Manufacturing","sicIndustry":"Electronic
-        Computers","reportingCurrency":"usd","location":"California, USA","companyWebsite":"http:\/\/www.apple.com","secFilingWebsite":"https:\/\/www.sec.gov\/cgi-bin\/browse-edgar?action=getcompany&CIK=0000320193","statementLastUpdated":"2021-02-02T23:02:06.053Z","dailyLastUpdated":"2021-03-12T21:55:08.278Z"},{"permaTicker":"US000000000326","ticker":"googl","name":"Alphabet
-        Inc - Class A","isActive":true,"isADR":false,"sector":"Field not available
-        for free\/evaluation","industry":"Field not available for free\/evaluation","sicCode":"Field
-        not available for free\/evaluation","sicSector":"Field not available for free\/evaluation","sicIndustry":"Field
-        not available for free\/evaluation","reportingCurrency":"usd","location":"Field
-        not available for free\/evaluation","companyWebsite":"Field not available
-        for free\/evaluation","secFilingWebsite":"Field not available for free\/evaluation","statementLastUpdated":"2021-02-09T00:35:22.358Z","dailyLastUpdated":"2021-03-12T23:33:18.287Z"}]'
+      string: '[{"permaTicker":"US000000000140","ticker":"cat","name":"Caterpillar
+        Inc","isActive":true,"isADR":false,"sector":"Industrials","industry":"Farm
+        & Heavy Construction Machinery","sicCode":3531,"sicSector":"Manufacturing","sicIndustry":"Construction
+        Machinery & Equip","reportingCurrency":"usd","location":"Illinois, USA","companyWebsite":"http:\/\/www.caterpillar.com","secFilingWebsite":"https:\/\/www.sec.gov\/cgi-bin\/browse-edgar?action=getcompany&CIK=0000018230","statementLastUpdated":"2021-02-23T00:06:46.211Z","dailyLastUpdated":"2021-04-27T20:52:44.524Z"},{"permaTicker":"US000000000309","ticker":"pg","name":"Procter
+        & Gamble Company","isActive":true,"isADR":false,"sector":"Consumer Defensive","industry":"Household
+        & Personal Products","sicCode":2840,"sicSector":"Manufacturing","sicIndustry":"Soap
+        Detergents Cleang Preparations Perfumes Cosmetics","reportingCurrency":"usd","location":"Ohio,
+        USA","companyWebsite":"http:\/\/www.pginvestor.com","secFilingWebsite":"https:\/\/www.sec.gov\/cgi-bin\/browse-edgar?action=getcompany&CIK=0000080424","statementLastUpdated":"2021-04-24T00:19:24.681Z","dailyLastUpdated":"2021-04-27T21:07:49.725Z"}]'
     headers:
       allow:
       - GET, HEAD, OPTIONS
       content-length:
-      - '1208'
+      - '1151'
       content-type:
       - application/json
       date:
-      - Sun, 14 Mar 2021 02:55:57 GMT
+      - Wed, 28 Apr 2021 17:14:17 GMT
       server:
-      - nginx/1.14.0 (Ubuntu)
+      - nginx/1.16.1
       vary:
-      - Accept, Cookie, Origin
+      - Accept, Cookie
       x-frame-options:
       - SAMEORIGIN
     status:

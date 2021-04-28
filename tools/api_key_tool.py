@@ -8,9 +8,9 @@ import argparse
 fixtures_directory = 'tests/fixtures/'
 
 # restclient api header configuration
-zero_api_regex = r'(\[Token )0{40}(\])'
-real_api_regex = r'(\[Token ).{40}(\])'
-zero_token_string = '[Token ' + 40 * '0' + ']'
+zero_api_regex = r'Token 0{40}'
+real_api_regex = r'Token .{40}'
+zero_token_string = 'Token ' + 40 * '0'
 
 
 def has_api_key(file_name):

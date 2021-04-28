@@ -9,8 +9,8 @@ from tiingo import TiingoClient
 from tiingo.exceptions import InvalidFrequencyError
 from tiingo.restclient import RestClientError
 
-TEST_TICKER1 = "GOOGL"
-TEST_TICKER2 = "AAPL"
+TEST_TICKER1 = "PG"
+TEST_TICKER2 = "CAT"
 
 
 # TODO
@@ -43,7 +43,7 @@ class TestClient(TestCase):
         # "".join([np.base_repr(randint(0, 15), 16) for _ in range(40)]).lower()
         config = {
             "api_key": "'b8c02ff9369c9e46d4327726120a3b7bbb064052'"
-            }
+                }
         client = TiingoClient(config=config)
         with self.assertRaises(RestClientError):
             client.get_ticker_price("AAPL")
@@ -276,15 +276,15 @@ class TestFundamentals(TestCase):
         statements = self._client.get_fundamentals_statements(TEST_TICKER1,
                                                               startDate='2020-1-1',
                                                               endDate='2020-4-1')
-        assert len(statements) > 1
+        assert len(statements) == 2
 
     @vcr.use_cassette('tests/fixtures/fundamentals_statements_with_as_reported.yaml')
-    def test_statements(self):
+    def test_statements_as_reported(self):
         statements = self._client.get_fundamentals_statements(TEST_TICKER1,
                                                               startDate='2020-1-1',
                                                               endDate='2020-4-1',
                                                               asReported=True)
-        assert len(statements) > 1
+        assert len(statements) == 1
 
     @vcr.use_cassette('tests/fixtures/fundamentals_statements_csv.yaml')
     def test_statements_with_csv(self):
@@ -296,7 +296,7 @@ class TestFundamentals(TestCase):
 
     @vcr.use_cassette('tests/fixtures/fundamentals_meta.yaml')
     def test_fundamentals_meta(self):
-        meta = self._client.get_fundamentals_meta(TEST_TICKER1)
+        meta = self._client.get_fundamentals_meta([TEST_TICKER1])
         assert len(meta) == 1
         assert meta[0]["ticker"] == TEST_TICKER1.lower()
 

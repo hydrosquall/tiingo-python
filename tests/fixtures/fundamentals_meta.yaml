@@ -13,27 +13,25 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - tiingo-python-client 0.13.0
+      - tiingo-python-client 0.14.0
     method: GET
-    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=json&tickers=GOOGL
+    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=json&tickers=PG
   response:
     body:
-      string: '[{"permaTicker":"US000000000326","ticker":"googl","name":"Alphabet
-        Inc - Class A","isActive":true,"isADR":false,"sector":"Field not available
-        for free\/evaluation","industry":"Field not available for free\/evaluation","sicCode":"Field
-        not available for free\/evaluation","sicSector":"Field not available for free\/evaluation","sicIndustry":"Field
-        not available for free\/evaluation","reportingCurrency":"usd","location":"Field
-        not available for free\/evaluation","companyWebsite":"Field not available
-        for free\/evaluation","secFilingWebsite":"Field not available for free\/evaluation","statementLastUpdated":"2021-02-09T00:35:22.358Z","dailyLastUpdated":"2021-02-24T22:07:19.489Z"}]'
+      string: '[{"permaTicker":"US000000000309","ticker":"pg","name":"Procter & Gamble
+        Company","isActive":true,"isADR":false,"sector":"Consumer Defensive","industry":"Household
+        & Personal Products","sicCode":2840,"sicSector":"Manufacturing","sicIndustry":"Soap
+        Detergents Cleang Preparations Perfumes Cosmetics","reportingCurrency":"usd","location":"Ohio,
+        USA","companyWebsite":"http:\/\/www.pginvestor.com","secFilingWebsite":"https:\/\/www.sec.gov\/cgi-bin\/browse-edgar?action=getcompany&CIK=0000080424","statementLastUpdated":"2021-04-24T00:19:24.681Z","dailyLastUpdated":"2021-04-27T21:07:49.725Z"}]'
     headers:
       allow:
       - GET, HEAD, OPTIONS
       content-length:
-      - '682'
+      - '590'
       content-type:
       - application/json
       date:
-      - Thu, 25 Feb 2021 00:38:38 GMT
+      - Wed, 28 Apr 2021 17:14:16 GMT
       server:
       - nginx/1.14.0 (Ubuntu)
       vary:
