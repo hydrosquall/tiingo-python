@@ -89,8 +89,8 @@ class TiingoWebsocketClient:
         return on_msg_cb_local
 
     # since methods need to be unbound in order for websocketClient these methods don't have a self as their first parameter
-    def on_error(ws, error):
+    def on_error(ws, error): # lgtm[py/not-named-self]
         print(error)
 
-    def on_close(ws):
+    def on_close(ws):  # lgtm[py/not-named-self]
         pass
