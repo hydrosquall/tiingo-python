@@ -1,5 +1,5 @@
 import os
-from unittest import TestCase
+from unittest import TestCase,mock
 from tiingo.wsclient import TiingoWebsocketClient
 from tiingo.exceptions import MissingRequiredArgumentError
 
@@ -38,7 +38,7 @@ class TestRestClientWithSession(TestCase):
 
     # test for missing API keys in config dict and in os env
     def test_missing_api_key(self):
-        del os.environ['TIINGO_API_KEY']
-        with self.assertRaises(RuntimeError) as ex:
-            TiingoWebsocketClient(config={},endpoint='iex',on_msg_cb=self.cb)
-        self.assertTrue(type(ex.exception)==RuntimeError)
+        with mock.patch.dict(os.environ, {}, clear=True): #clear env vars including the TIINGO_API_KEY
+            with self.assertRaises(RuntimeError) as ex:
+                TiingoWebsocketClient(config={},endpoint='iex',on_msg_cb=self.cb)
+            self.assertTrue(type(ex.exception)==RuntimeError)
