@@ -152,9 +152,39 @@ To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
                                         startDate='2017-01-01',
                                         endDate='2018-05-31')
 
-Websocket support::
+
+
+You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe``
+methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of
+day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
+
+Cryptocurrency 
+--------
 
 .. code-block:: python
+
+  # You can obtain cryptocurrency metadata using the following method.
+  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
+  client.get_crypto_metadata(['BTCUSD'], fmt='json')
+
+  #You can obtain top-of-book cryptocurrency quotes from the ``get_crypto_top_of_book()`` method.
+  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
+  crypto_price = client.get_crypto_top_of_book(['BTCUSD'])``
+
+  # You can obtain historical Cryptocurrency price quotes from the get_crypto_price_history() method.
+  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
+  
+  client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2', 
+                                  endDate='2020-12-3', resampleFreq='1Hour')
+
+
+Websockets Support
+--------
+
+.. code-block:: python
+
     from tiingo import TiingoWebsocketClient
     
     def cb_fn(msg):
@@ -182,33 +212,11 @@ Websocket support::
                 'thresholdLevel':5
           }
     }
-    # notice how the object isn't needed after using it
-    # any logic should be implemented in the callback function 
+    
+    # any logic should be implemented in the callback function (cb_fn)
     TiingoWebsocketClient(subscribe,endpoint="iex",on_msg_cb=cb_fn)
-    while True:pass
   
 
-You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe``
-methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of
-day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
-
-.. code-block:: python
-
-  # You can obtain cryptocurrency metadata using the following method.
-  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
-  
-  client.get_crypto_metadata(['BTCUSD'], fmt='json')
-
-  #You can obtain top-of-book cryptocurrency quotes from the ``get_crypto_top_of_book()`` method.
-  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
-  
-  crypto_price = client.get_crypto_top_of_book(['BTCUSD'])``
-
-  # You can obtain historical Cryptocurrency price quotes from the get_crypto_price_history() method.
-  # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
-  
-  client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2', 
-                                  endDate='2020-12-3', resampleFreq='1Hour')
 
 Further Docs
 -------------
