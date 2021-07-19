@@ -152,6 +152,41 @@ To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
                                         startDate='2017-01-01',
                                         endDate='2018-05-31')
 
+Websocket support::
+
+.. code-block:: python
+    from tiingo import TiingoWebsocketClient
+    
+    def cb_fn(msg):
+
+        # Example response 
+        # msg = {
+        #   "service":"iex" # An identifier telling you this is IEX data. 
+        #   The value returned by this will correspond to the endpoint argument.
+        #   
+        #   # Will always return "A" meaning new price quotes. There are also H type Heartbeat msgs used to keep the connection alive
+        #   "messageType":"A" # A value telling you what kind of data packet this is from our IEX feed.
+        #  
+        #   # see https://api.tiingo.com/documentation/websockets/iex > Response for more info
+        #   "data":[] # an array containing trade information and a timestamp
+        #   
+        # }
+
+        print(msg)
+
+    subscribe = {
+            'eventName':'subscribe',
+            'authorization':'API_KEY_GOES_HERE',
+            #see https://api.tiingo.com/documentation/websockets/iex > Request for more info
+            'eventData': { 
+                'thresholdLevel':5
+          }
+    }
+    # notice how the object isn't needed after using it
+    # any logic should be implemented in the callback function 
+    TiingoWebsocketClient(subscribe,endpoint="iex",on_msg_cb=cb_fn)
+    while True:pass
+  
 
 You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe``
 methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of

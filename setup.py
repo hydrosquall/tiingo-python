@@ -26,6 +26,7 @@ LONG_DESCRIPTION = read('README.rst', 'HISTORY.rst')
 
 requirements = [
     'requests',
+    'websocket-client'
 ]
 
 setup_requirements = [
