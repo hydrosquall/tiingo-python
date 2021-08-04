@@ -86,6 +86,9 @@ for each function for details.).
   # Get Ticker
   ticker_metadata = client.get_ticker_metadata("GOOGL")
 
+  # Additional metadata is available
+  ticker_extra_metadata = client.get_fundamentals_metadata("GOOGL")
+
   # Get latest prices, based on 3+ sources as JSON, sampled weekly
   ticker_price = client.get_ticker_price("GOOGL", frequency="weekly")
 

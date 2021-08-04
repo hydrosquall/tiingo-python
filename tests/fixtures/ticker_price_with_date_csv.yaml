@@ -2,29 +2,45 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Authorization: [Token 0000000000000000000000000000000000000000]
-      Connection: [keep-alive]
-      Content-Type: [application/json]
-      User-Agent: [tiingo-python-client 0.5.0]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.14.0
     method: GET
-    uri: https://api.tiingo.com/tiingo/daily/GOOGL/prices?format=csv&resampleFreq=daily&startDate=2015-01-01&endDate=2015-01-05
+    uri: https://api.tiingo.com/tiingo/daily/PG/prices?format=csv&resampleFreq=daily&startDate=2015-01-01&endDate=2015-01-05
   response:
-    body: {string: 'date,close,high,low,open,volume,adjClose,adjHigh,adjLow,adjOpen,adjVolume,divCash,splitFactor
+    body:
+      string: 'date,close,high,low,open,volume,adjClose,adjHigh,adjLow,adjOpen,adjVolume,divCash,splitFactor
 
-        2015-01-02,529.55,535.8,527.88,532.6,1327870,529.55,535.8,527.88,532.6,1327870,0.0,1.0
+        2015-01-02,90.44,91.0,89.92,90.84,7255394,74.3979026216209,74.858570749309,73.9701393601963,74.7269512842552,7255394,0.0,1.0
 
-        2015-01-05,519.46,527.9899,517.75,527.15,2059119,519.46,527.9899,517.75,527.15,2059119,0.0,1.0
+        2015-01-05,90.01,91.0,89.85,90.23,8626143,74.044175309289,74.858570749309,73.9125558442353,74.2251520737379,8626143,0.0,1.0
 
-        '}
+        '
     headers:
-      Allow: ['GET, HEAD, OPTIONS']
-      Content-Length: ['276']
-      Content-Type: [text/csv]
-      Date: ['Fri, 13 Apr 2018 02:42:06 GMT']
-      Server: [nginx/1.10.1]
-      Vary: ['Accept, Cookie']
-      X-Frame-Options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '343'
+      content-type:
+      - text/csv
+      date:
+      - Wed, 28 Apr 2021 17:10:06 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
 version: 1

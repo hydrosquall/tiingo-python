@@ -1,0 +1,52 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.14.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=csv&tickers=PG%2CCAT
+  response:
+    body:
+      string: 'permaTicker,ticker,name,isActive,isADR,sector,industry,sicCode,sicSector,sicIndustry,reportingCurrency,location,companyWebsite,secFilingWebsite,statementLastUpdated,dailyLastUpdated
+
+        US000000000140,cat,Caterpillar Inc,True,False,Industrials,Farm & Heavy Construction
+        Machinery,3531,Manufacturing,Construction Machinery & Equip,usd,"Illinois,
+        USA",http://www.caterpillar.com,https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000018230,2021-02-23
+        00:06:46.211656+00:00,2021-04-27 20:52:44.524200+00:00
+
+        US000000000309,pg,Procter & Gamble Company,True,False,Consumer Defensive,Household
+        & Personal Products,2840,Manufacturing,Soap Detergents Cleang Preparations
+        Perfumes Cosmetics,usd,"Ohio, USA",http://www.pginvestor.com,https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000080424,2021-04-24
+        00:19:24.681664+00:00,2021-04-27 21:07:49.725202+00:00
+
+        '
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '872'
+      content-type:
+      - text/csv
+      date:
+      - Wed, 28 Apr 2021 17:14:17 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

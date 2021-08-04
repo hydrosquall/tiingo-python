@@ -7,38 +7,64 @@ from os import path
 from unittest import TestCase
 from tools.api_key_tool import remove_api_key, has_api_key
 
+TEST_TEXT = """
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token zxcvbnmlkjhgfdsaqwertyuiop0987654321qwer
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.14.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/daily/PG
+  response:
+    body:
+      string: '{"name": "Procter & Gamble Company", "description": "P&G serves consumers
+        around the world with one of the strongest portfolios of trusted, quality,
+        leadership brands, including Always\u00ae, Ambi Pur\u00ae, Ariel\u00ae, Bounty\u00ae,
+        Charmin\u00ae, Crest\u00ae, Dawn\u00ae, Downy\u00ae, Fairy\u00ae, Febreze\u00ae,
+        Gain\u00ae, Gillette\u00ae, Head & Shoulders\u00ae, Lenor\u00ae, Olay\u00ae,
+        Oral-B\u00ae, Pampers\u00ae, Pantene\u00ae, SK-II\u00ae, Tide\u00ae, Vicks\u00ae,
+        and Whisper\u00ae. The P&G community includes operations in approximately
+        70 countries worldwide.", "ticker": "PG", "exchangeCode": "NYSE", "startDate":
+        "1970-01-02", "endDate": "2021-04-27"}'
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '666'
+      content-type:
+      - application/json
+      date:
+      - Wed, 28 Apr 2021 17:10:05 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1
+"""
+
 
 class TestAPIKeyTools(TestCase):
 
     def setUp(self):
         self.test_dir = tempfile.mkdtemp()
         f = open(path.join(self.test_dir, 'test.yaml'), 'w')
-        txt = '''interactions:
-                    - request:
-                        body: null
-                        headers:
-                          Accept: ['*/*']
-                          Accept-Encoding: ['gzip, deflate']
-                          Authorization: [Token a00000000000000000000a00000000000000000a]
-                          Connection: [keep-alive]
-                          Content-Type: [application/json]
-                          User-Agent: [tiingo-python-client 0.5.0]
-                        method: GET
-                        uri: https://api.tiingo.com/tiingo/daily/GOOGL/prices?format=json&resampleFreq=daily
-                      response:
-                        body: {string: '[{"adjClose":1037.29,"adjHigh":1044.65,"adjLow":1026.05,"adjOpen":1031.47,"adjVolume":1644794,"close":1037.29,"date":"2018-04-12T00:00:00+00:00","divCash":0.0,"high":1044.65,"low":1026.05,"open":1031.47,"splitFactor":1.0,"volume":1644794}]'}
-                        headers:
-                          Allow: ['GET, HEAD, OPTIONS']
-                          Content-Length: ['239']
-                          Content-Type: [application/json]
-                          Date: ['Fri, 13 Apr 2018 02:42:05 GMT']
-                          Server: [nginx/1.10.1]
-                          Vary: ['Accept, Cookie']
-                          X-Frame-Options: [SAMEORIGIN]
-                        status: {code: 200, message: OK}
-                    version: 1
-                    '''
-        f.write(txt)
+        f.write(TEST_TEXT)
 
     def tearDown(self):
         shutil.rmtree(self.test_dir)

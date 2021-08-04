@@ -1,0 +1,44 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.14.0
+    method: GET
+    uri: https://api.tiingo.com/tiingo/fundamentals/meta?format=json&tickers=PG
+  response:
+    body:
+      string: '[{"permaTicker":"US000000000309","ticker":"pg","name":"Procter & Gamble
+        Company","isActive":true,"isADR":false,"sector":"Consumer Defensive","industry":"Household
+        & Personal Products","sicCode":2840,"sicSector":"Manufacturing","sicIndustry":"Soap
+        Detergents Cleang Preparations Perfumes Cosmetics","reportingCurrency":"usd","location":"Ohio,
+        USA","companyWebsite":"http:\/\/www.pginvestor.com","secFilingWebsite":"https:\/\/www.sec.gov\/cgi-bin\/browse-edgar?action=getcompany&CIK=0000080424","statementLastUpdated":"2021-04-24T00:19:24.681Z","dailyLastUpdated":"2021-04-27T21:07:49.725Z"}]'
+    headers:
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '590'
+      content-type:
+      - application/json
+      date:
+      - Wed, 28 Apr 2021 17:14:16 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
+version: 1

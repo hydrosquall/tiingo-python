@@ -2,23 +2,39 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Authorization: [Token 0000000000000000000000000000000000000000]
-      Connection: [keep-alive]
-      Content-Type: [application/json]
-      User-Agent: [tiingo-python-client 0.5.0]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.14.0
     method: GET
-    uri: https://api.tiingo.com/tiingo/daily/GOOGL/prices?format=json&resampleFreq=daily&startDate=2015-01-01&endDate=2015-01-05
+    uri: https://api.tiingo.com/tiingo/daily/PG/prices?format=json&resampleFreq=daily&startDate=2015-01-01&endDate=2015-01-05
   response:
-    body: {string: '[{"date":"2015-01-02T00:00:00.000Z","close":529.55,"high":535.8,"low":527.88,"open":532.6,"volume":1327870,"adjClose":529.55,"adjHigh":535.8,"adjLow":527.88,"adjOpen":532.6,"adjVolume":1327870,"divCash":0.0,"splitFactor":1.0},{"date":"2015-01-05T00:00:00.000Z","close":519.46,"high":527.9899,"low":517.75,"open":527.15,"volume":2059119,"adjClose":519.46,"adjHigh":527.9899,"adjLow":517.75,"adjOpen":527.15,"adjVolume":2059119,"divCash":0.0,"splitFactor":1.0}]'}
+    body:
+      string: '[{"date":"2015-01-02T00:00:00.000Z","close":90.44,"high":91.0,"low":89.92,"open":90.84,"volume":7255394,"adjClose":74.3979026216,"adjHigh":74.8585707493,"adjLow":73.9701393602,"adjOpen":74.7269512843,"adjVolume":7255394,"divCash":0.0,"splitFactor":1.0},{"date":"2015-01-05T00:00:00.000Z","close":90.01,"high":91.0,"low":89.85,"open":90.23,"volume":8626143,"adjClose":74.0441753093,"adjHigh":74.8585707493,"adjLow":73.9125558442,"adjOpen":74.2251520737,"adjVolume":8626143,"divCash":0.0,"splitFactor":1.0}]'
     headers:
-      Allow: ['GET, HEAD, OPTIONS']
-      Content-Length: ['459']
-      Content-Type: [application/json]
-      Date: ['Fri, 13 Apr 2018 02:42:06 GMT']
-      Server: [nginx/1.10.1]
-      Vary: ['Accept, Cookie']
-      X-Frame-Options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '505'
+      content-type:
+      - application/json
+      date:
+      - Wed, 28 Apr 2021 17:10:06 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
 version: 1

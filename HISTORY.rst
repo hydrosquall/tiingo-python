@@ -3,7 +3,7 @@ History
 =======
 0.15.0 (2021-XX - Unreleased)
 --------------------------------
-
+* Feature: Added method get_fundamentals_meta to query the tiingo/fundamentals/meta endpoint
 * Documentation: Add crypto endpoint examples (#621)
 
 0.14.0 (2021-03-06)

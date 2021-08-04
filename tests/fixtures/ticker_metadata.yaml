@@ -2,35 +2,47 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Authorization: [Token 0000000000000000000000000000000000000000]
-      Connection: [keep-alive]
-      Content-Type: [application/json]
-      User-Agent: [tiingo-python-client 0.3.2]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token 0000000000000000000000000000000000000000
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      User-Agent:
+      - tiingo-python-client 0.14.0
     method: GET
-    uri: https://api.tiingo.com/tiingo/daily/GOOGL
+    uri: https://api.tiingo.com/tiingo/daily/PG
   response:
-    body: {string: '{"endDate":"2017-10-06","startDate":"2004-08-19","exchangeCode":"NASDAQ","name":"Alphabet
-        Inc.(\"Google\") - Class A","description":"Google Inc. (Google) is a global
-        technology company. The Company''s business is primarily focused around key
-        areas, such as search, advertising, operating systems and platforms, enterprise
-        and hardware products. The Company generates revenue primarily by delivering
-        online advertising. The Company also generates revenues from Motorola by selling
-        hardware products. The Company provides its products and services in more
-        than 100 languages and in more than 50 countries, regions, and territories.
-        Effective May 16, 2014, Google Inc acquired Quest Visual Inc. Effective May
-        20, 2014, Google Inc acquired Enterproid Inc, doing business as Divide. In
-        June 2014, Google Inc acquired mDialog Corp. Effective June 25, 2014, Google
-        Inc acquired Appurify Inc, a San Francisco-based developer of mobile bugging
-        application software.","ticker":"GOOGL"}'}
+    body:
+      string: '{"name": "Procter & Gamble Company", "description": "P&G serves consumers
+        around the world with one of the strongest portfolios of trusted, quality,
+        leadership brands, including Always\u00ae, Ambi Pur\u00ae, Ariel\u00ae, Bounty\u00ae,
+        Charmin\u00ae, Crest\u00ae, Dawn\u00ae, Downy\u00ae, Fairy\u00ae, Febreze\u00ae,
+        Gain\u00ae, Gillette\u00ae, Head & Shoulders\u00ae, Lenor\u00ae, Olay\u00ae,
+        Oral-B\u00ae, Pampers\u00ae, Pantene\u00ae, SK-II\u00ae, Tide\u00ae, Vicks\u00ae,
+        and Whisper\u00ae. The P&G community includes operations in approximately
+        70 countries worldwide.", "ticker": "PG", "exchangeCode": "NYSE", "startDate":
+        "1970-01-02", "endDate": "2021-04-27"}'
     headers:
-      Allow: ['GET, HEAD, OPTIONS']
-      Content-Length: ['974']
-      Content-Type: [application/json]
-      Date: ['Sun, 08 Oct 2017 10:17:19 GMT']
-      Server: [nginx/1.10.1]
-      Vary: ['Accept, Cookie']
-      X-Frame-Options: [SAMEORIGIN]
-    status: {code: 200, message: OK}
+      allow:
+      - GET, HEAD, OPTIONS
+      content-length:
+      - '666'
+      content-type:
+      - application/json
+      date:
+      - Wed, 28 Apr 2021 17:10:05 GMT
+      server:
+      - nginx/1.14.0 (Ubuntu)
+      vary:
+      - Accept, Cookie, Origin
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
 version: 1
