@@ -12,13 +12,12 @@ class RestClientError(Exception):
 
 
 class RestClient(object):
-
     def __init__(self, config={}):
         """Base class for interacting with RESTful APIs
-           Child class MUST have a ._base_url property!
+        Child class MUST have a ._base_url property!
 
-            Args:
-                config (dict): Arbitrary options that child classes can access
+         Args:
+             config (dict): Arbitrary options that child classes can access
         """
         self._config = config
 
@@ -28,7 +27,7 @@ class RestClient(object):
         self._headers = {}
         self._base_url = ""
 
-        if config.get('session'):
+        if config.get("session"):
             self._session = requests.Session()
         else:
             self._session = requests
@@ -39,15 +38,14 @@ class RestClient(object):
     def _request(self, method, url, **kwargs):
         """Make HTTP request and return response object
 
-            Args:
-                method (str): GET, POST, PUT, DELETE
-                url (str): path appended to the base_url to create request
-                **kwargs: passed directly to a requests.request object
+        Args:
+            method (str): GET, POST, PUT, DELETE
+            url (str): path appended to the base_url to create request
+            **kwargs: passed directly to a requests.request object
         """
-        resp = self._session.request(method,
-                                     '{}/{}'.format(self._base_url, url),
-                                     headers=self._headers,
-                                     **kwargs)
+        resp = self._session.request(
+            method, "{}/{}".format(self._base_url, url), headers=self._headers, **kwargs
+        )
 
         try:
             resp.raise_for_status()

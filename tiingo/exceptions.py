@@ -10,5 +10,6 @@ class APIColumnNameError(Exception):
 class InvalidFrequencyError(Exception):
     pass
 
+
 class MissingRequiredArgumentError(Exception):
     pass
