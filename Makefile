@@ -53,6 +53,8 @@ lint: ## check style with flake8
 format: ## apply opinionated formatting
 	black tiingo/
 
+format-check: ## check formatting for CI
+	black --check tiingo/
 
 test: ## run tests quickly with the default Python
 	py.test
