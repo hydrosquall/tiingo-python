@@ -310,8 +310,9 @@ class TiingoClient(RestClient):
                 """When tickers is provided as a list, metric_name is a required argument.
             Please provide a metric_name, or call this method with one ticker at a time."""
             )
-
         params = {"format": fmt, "resampleFreq": frequency}
+        if includeIntradayVolume:
+            params['columns'] = 'open,high,low,close,volume'
         if startDate:
             params["startDate"] = startDate
         if endDate:
