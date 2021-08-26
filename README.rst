@@ -21,8 +21,11 @@ Tiingo Python
      :target: https://mybinder.org/v2/gh/hydrosquall/tiingo-python/master?filepath=examples%2Fbasic-usage-with-pandas.ipynb
      :alt: Launch Binder
 
-
-
+.. image:: https://mybinder.org/badge_logo.svg
+    :target: https://mybinder.org/v2/gh/datatalking/tiingo-python/blob/datatalking-patch-1/examples/crypto-usage-tiingo-pandas.ipynb/HEAD
+    :alt: Launch Crypto Binder
+    
+    
 Tiingo is a financial data platform that makes high quality financial tools available to all. Tiingo has a REST and Real-Time Data API, which this library helps you to access. Presently, the API includes support for the following endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
