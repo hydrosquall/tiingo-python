@@ -1,4 +1,4 @@
-pip==21.3
+pip==21.3.1
 bumpversion==0.6.0
 wheel==0.37.0
 watchdog==2.1.6
@@ -6,10 +6,10 @@ flake8==4.0.1
 tox==3.24.4
 coverage==6.2
 cryptography==3.4.8
-Sphinx==4.3.0
+Sphinx==4.3.1
 PyYAML==5.4.1
 pytest==6.2.5
 pytest-runner==5.3.1
 vcrpy==2.1.1
 twine==3.7.0
-black==21.11b1
+black==21.12b0
