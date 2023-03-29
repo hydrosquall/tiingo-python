@@ -40,7 +40,6 @@ class TiingoWebsocketClient:
     """
 
     def __init__(self, config=None, endpoint=None, on_msg_cb=None):
-
         self._base_url = "wss://api.tiingo.com"
         self.config = {} if config is None else config
 
