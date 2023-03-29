@@ -265,7 +265,6 @@ class TiingoClient(RestClient):
         frequency="daily",
         fmt="json",
     ):
-
         """Return a pandas.DataFrame of historical prices for one or more ticker symbols.
 
         By default, return latest EOD Composite Price for a list of stock tickers.
