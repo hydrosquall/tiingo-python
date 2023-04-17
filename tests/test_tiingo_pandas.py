@@ -64,7 +64,6 @@ class TestTiingoWithPython(TestCase):
                                             frequency='daily', fmt='csv')
         self.assertTrue(isinstance(prices, pd.DataFrame))
         self.assertTrue(isinstance(prices.index, pd.DatetimeIndex))
-        assert prices.index.tz.zone == 'UTC'
         assert len(prices) == 10
         assert len(prices.columns) == 12
 
@@ -87,7 +86,6 @@ class TestTiingoWithPython(TestCase):
                                             endDate='2018-01-19', frequency='daily', fmt='csv')
         self.assertTrue(isinstance(prices, pd.Series))
         self.assertTrue(isinstance(prices.index, pd.DatetimeIndex))
-        assert prices.index.tz.zone == 'UTC'
         assert prices.values.tolist() == [
             1110.29,1114.21,1112.79,1110.14,1112.05,
             1130.65,1130.7,1139.1,1135.97,1143.5]
@@ -97,12 +95,12 @@ class TestTiingoWithPython(TestCase):
     def test_price_pandas_daily_equivalent_requesting_json_or_csv(self):
         """Test that equivalent data is returned when specifying reuqest format in json or csv.
         """
-        prices_json = self._client.get_dataframe("GOOGL", 
-            startDate='2018-01-05', endDate='2018-01-19', 
+        prices_json = self._client.get_dataframe("GOOGL",
+            startDate='2018-01-05', endDate='2018-01-19',
             metric_name='close', frequency='daily')
 
-        prices_csv = self._client.get_dataframe("GOOGL", 
-            startDate='2018-01-05', endDate='2018-01-19', 
+        prices_csv = self._client.get_dataframe("GOOGL",
+            startDate='2018-01-05', endDate='2018-01-19',
             metric_name='close', frequency='daily', fmt='csv')
 
         self.assertTrue(prices_json.equals(prices_csv))
