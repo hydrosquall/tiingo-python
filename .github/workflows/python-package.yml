@@ -30,7 +30,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python setup.py develop
-        python -m pip install flake8 pytest-cov codecov vcrpy black
+        python -m pip install flake8 pytest-cov coverage vcrpy black
         tools/install_pandas.sh
     - name: black
       run: |
@@ -46,5 +46,5 @@ jobs:
         TIINGO_API_KEY: 0000000000000000000000000000000000000000
       run: |
         py.test --cov=./tiingo
-    - name: Run code coverage
-      run: codecov
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
