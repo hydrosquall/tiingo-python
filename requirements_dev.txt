@@ -7,7 +7,7 @@ tox==4.5.0
 coverage==7.3.2
 cryptography==41.0.4
 Sphinx==7.2.6
-PyYAML==6.0
+PyYAML==6.0.1
 pytest==7.4.2
 vcrpy==2.1.1
 twine==4.0.2
