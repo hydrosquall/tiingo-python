@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9']
+        python-version: ['3.10', '3.11', '3.12']
         WITH_PANDAS: [false, true]
 
     steps:
@@ -27,8 +27,13 @@ jobs:
     - name: Install dependencies
       env:
         WITH_PANDAS: ${{ matrix.WITH_PANDAS }}
+      # Install setuptools for the newer versions
+      # https://docs.python.org/3/whatsnew/3.12.html
       run: |
         python -m pip install --upgrade pip
+        if [ "$(python --version | cut -d ' ' -f 2 | cut -d '.' -f 1,2)" = "3.12" ]; then
+          pip install setuptools
+        fi
         python setup.py develop
         python -m pip install flake8 pytest-cov coverage vcrpy black
         tools/install_pandas.sh
