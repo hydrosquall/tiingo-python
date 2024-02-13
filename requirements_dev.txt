@@ -9,6 +9,6 @@ cryptography==41.0.7
 Sphinx==7.2.6
 PyYAML==6.0.1
 pytest==7.4.3
-vcrpy==2.1.1
+vcrpy==6.0.1
 twine==4.0.2
 black==23.11.0
