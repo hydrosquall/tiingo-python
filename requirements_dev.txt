@@ -11,4 +11,4 @@ PyYAML==6.0.1
 pytest==8.1.1
 vcrpy==2.1.1
 twine==5.0.0
-black==24.4.0
+black==24.4.1
