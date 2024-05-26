@@ -4,7 +4,7 @@ History
 0.16.0 (2024-XX - Unreleased)
 --------------------------------
 
-0.15.0 (2024-05-25)
+0.15.1 (2024-05-25)
 --------------------------------
 
 * Feature: Support websockets client / endpoints (#508)
@@ -14,6 +14,7 @@ History
 * CI: fixed CodeCov upload (#856)
 * CI: Add CodeQL for static analysis scanning (#785)
 * Minor: bumped development / examples dependencies
+* Minor: Switch to trusted publisher workflow
 
 0.14.0 (2021-03-06)
 --------------------------------
