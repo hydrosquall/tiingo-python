@@ -7,9 +7,12 @@ History
 0.15.0 (2024-05-25)
 --------------------------------
 
+* Feature: Support websockets client / endpoints (#508)
 * Documentation: Add crypto endpoint examples (#621)
-* Development: Code is formatted with black: (#663)
-* CI: No longer testing Python versions older than 3.10 (#944)
+* Development: Code is formatted with black (#663)
+* CI: Stopped testing Python versions older than 3.10 (#944)
+* CI: fixed CodeCov upload (#856)
+* CI: Add CodeQL for static analysis scanning (#785)
 * Minor: bumped development / examples dependencies
 
 0.14.0 (2021-03-06)
