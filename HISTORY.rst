@@ -1,10 +1,19 @@
 =======
 History
 =======
-0.15.0 (2021-XX - Unreleased)
+0.16.0 (2024-XX - Unreleased)
 --------------------------------
 
+0.15.0 (2024-05-25)
+--------------------------------
+
+* Feature: Support websockets client / endpoints (#508)
 * Documentation: Add crypto endpoint examples (#621)
+* Development: Code is formatted with black (#663)
+* CI: Stopped testing Python versions older than 3.10 (#944)
+* CI: fixed CodeCov upload (#856)
+* CI: Add CodeQL for static analysis scanning (#785)
+* Minor: bumped development / examples dependencies
 
 0.14.0 (2021-03-06)
 --------------------------------
@@ -23,7 +32,7 @@ History
 
 0.12.0 (2019-10-20)
 --------------------
-* Feature: Added 3 new methods for crypo endpoints: top of book prices, historical, and metadata endpoints (@n1rna #340)
+* Feature: Added 3 new methods for crypto endpoints: top of book prices, historical, and metadata endpoints (@n1rna #340)
 * Feature: Permit list_tickers to support multiple asset types at once (@n1rna #346)
 
 0.11.0 (2019-09-01)

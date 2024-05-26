@@ -23,10 +23,11 @@ Tiingo Python
 
 
 
-Tiingo is a financial data platform that makes high quality financial tools available to all. Tiingo has a REST and Real-Time Data API, which this library helps you to access. Presently, the API includes support for the following endpoints:
+Tiingo is a financial data platform making high quality financial tools available to all. Tiingo has a REST and Real-Time Data API, which this library helps you access. The API includes support for these endpoints:
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
 * Curated news from top financial news sources + blogs. Stories are tagged with topic tags and relevant stock tickers by Tiingo's algorithms.
+* Fundamentals data, including definitions, daily data, and quarterly statements for tickers
 
 
 Usage
@@ -158,25 +159,25 @@ You can specify any of the end of day frequencies (daily, weekly, monthly, and a
 methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of
 day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
 
-Cryptocurrency 
+Cryptocurrency
 --------
 
 .. code-block:: python
 
   # You can obtain cryptocurrency metadata using the following method.
   # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
-  
+
   client.get_crypto_metadata(['BTCUSD'], fmt='json')
 
   #You can obtain top-of-book cryptocurrency quotes from the ``get_crypto_top_of_book()`` method.
   # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
-  
+
   crypto_price = client.get_crypto_top_of_book(['BTCUSD'])``
 
   # You can obtain historical Cryptocurrency price quotes from the get_crypto_price_history() method.
   # NOTE: Crypto symbol MUST be encapsulated in brackets as a Python list!
-  
-  client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2', 
+
+  client.get_crypto_price_history(tickers = ['BTCUSD'], startDate='2020-12-2',
                                   endDate='2020-12-3', resampleFreq='1Hour')
 
 
@@ -186,20 +187,20 @@ Websockets Support
 .. code-block:: python
 
     from tiingo import TiingoWebsocketClient
-    
+
     def cb_fn(msg):
 
-        # Example response 
+        # Example response
         # msg = {
-        #   "service":"iex" # An identifier telling you this is IEX data. 
+        #   "service":"iex" # An identifier telling you this is IEX data.
         #   The value returned by this will correspond to the endpoint argument.
-        #   
+        #
         #   # Will always return "A" meaning new price quotes. There are also H type Heartbeat msgs used to keep the connection alive
         #   "messageType":"A" # A value telling you what kind of data packet this is from our IEX feed.
-        #  
+        #
         #   # see https://api.tiingo.com/documentation/websockets/iex > Response for more info
         #   "data":[] # an array containing trade information and a timestamp
-        #   
+        #
         # }
 
         print(msg)
@@ -208,14 +209,14 @@ Websockets Support
             'eventName':'subscribe',
             'authorization':'API_KEY_GOES_HERE',
             #see https://api.tiingo.com/documentation/websockets/iex > Request for more info
-            'eventData': { 
+            'eventData': {
                 'thresholdLevel':5
           }
     }
-    
+
     # any logic should be implemented in the callback function (cb_fn)
     TiingoWebsocketClient(subscribe,endpoint="iex",on_msg_cb=cb_fn)
-  
+
 
 
 Further Docs
