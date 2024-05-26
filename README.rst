@@ -160,7 +160,7 @@ methods.  Weekly frequencies resample to the end of day on Friday, monthly frequ
 day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
 
 Cryptocurrency
---------
+-----------------
 
 .. code-block:: python
 
