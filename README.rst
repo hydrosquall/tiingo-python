@@ -182,7 +182,7 @@ Cryptocurrency
 
 
 Websockets Support
---------
+---------------------
 
 .. code-block:: python
 
