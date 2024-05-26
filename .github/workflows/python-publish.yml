@@ -12,8 +12,8 @@ on:
 jobs:
   deploy:
     environment: release
-      permissions:
-        id-token: write
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
 
     steps:
