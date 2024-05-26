@@ -27,6 +27,7 @@ Tiingo is a financial data platform making high quality financial tools availabl
 
 * Stock Market Ticker Closing Prices + Metadata. Data includes full distribution details and is validated using a proprietary EOD Price Engine.
 * Curated news from top financial news sources + blogs. Stories are tagged with topic tags and relevant stock tickers by Tiingo's algorithms.
+* Fundamentals data, including definitions, daily data, and quarterly statements for tickers
 
 
 Usage

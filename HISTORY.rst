@@ -29,7 +29,7 @@ History
 
 0.12.0 (2019-10-20)
 --------------------
-* Feature: Added 3 new methods for crypo endpoints: top of book prices, historical, and metadata endpoints (@n1rna #340)
+* Feature: Added 3 new methods for crypto endpoints: top of book prices, historical, and metadata endpoints (@n1rna #340)
 * Feature: Permit list_tickers to support multiple asset types at once (@n1rna #346)
 
 0.11.0 (2019-09-01)
