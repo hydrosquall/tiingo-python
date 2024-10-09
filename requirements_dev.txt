@@ -4,7 +4,7 @@ wheel==0.44.0
 watchdog==5.0.3
 flake8==7.1.1
 tox==4.20.0
-coverage==7.6.0
+coverage==7.6.2
 cryptography==43.0.1
 Sphinx==7.3.7
 PyYAML==6.0.2
