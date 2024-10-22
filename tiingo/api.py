@@ -262,6 +262,7 @@ class TiingoClient(RestClient):
         startDate=None,
         endDate=None,
         metric_name=None,
+        columns=None,
         frequency="daily",
         fmt="json",
     ):
@@ -278,6 +279,7 @@ class TiingoClient(RestClient):
             tickers (string/list): One or more unique identifiers for a stock ticker.
             startDate (string): Start of ticker range in YYYY-MM-DD format.
             endDate (string): End of ticker range in YYYY-MM-DD format.
+            columns (string): Comma seperated parameter specifying which columns to retrieve (to include volume)
             metric_name (string): Optional parameter specifying metric to be returned for each
                 ticker.  In the event of a single ticker, this is optional and if not specified
                 all of the available data will be returned.  In the event of a list of tickers,
@@ -315,6 +317,8 @@ class TiingoClient(RestClient):
             params["startDate"] = startDate
         if endDate:
             params["endDate"] = endDate
+        if columns:
+            params["columns"] = columns
 
         if pandas_is_installed:
             if type(tickers) is str:
