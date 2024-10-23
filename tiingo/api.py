@@ -231,7 +231,8 @@ class TiingoClient(RestClient):
              ticker (string): Unique identifier for stock ticker
              startDate (string): Start of ticker range in YYYY-MM-DD format
              endDate (string): End of ticker range in YYYY-MM-DD format
-             columns (string): Comma separated parameter specifying which columns to retrieve (to include volume)
+             columns (string): Optional comma separated parameter specifying which columns to retrieve.
+                By default, 'date', 'open', 'close', 'high' and 'low' are retrieved. 'volume' is an extra option.
              fmt (string): 'csv' or 'json'
              frequency (string): Resample frequency
         """
@@ -282,7 +283,8 @@ class TiingoClient(RestClient):
             tickers (string/list): One or more unique identifiers for a stock ticker.
             startDate (string): Start of ticker range in YYYY-MM-DD format.
             endDate (string): End of ticker range in YYYY-MM-DD format.
-            columns (string): Comma separated parameter specifying which columns to retrieve (to include volume)
+            columns (string): Optional comma separated parameter specifying which columns to retrieve.
+                By default, 'date', 'open', 'close', 'high' and 'low' are retrieved. 'volume' is an extra option.
             metric_name (string): Optional parameter specifying metric to be returned for each
                 ticker.  In the event of a single ticker, this is optional and if not specified
                 all of the available data will be returned.  In the event of a list of tickers,
