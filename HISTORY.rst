@@ -5,6 +5,7 @@ History
 --------------------------------
 
 * Dev: New config for readthedocs
+* Feature: Add 'columns' parameter to 'get_dataframe' func (#1057)
 
 0.15.6 (2024-05-25)
 --------------------------------
