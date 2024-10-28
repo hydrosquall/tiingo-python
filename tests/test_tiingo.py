@@ -100,7 +100,7 @@ class TestTickerPrices(TestCase):
 
     @vcr.use_cassette('tests/fixtures/ticker_price_with_volume_column.yaml')
     def test_ticker_price_with_volume_column(self):
-        """Confirm that CSV endpoint works"""
+        """Confirm that requesting a single column works"""
         prices = self._client.get_ticker_price("GOOGL",
                                                columns="volume",
                                                fmt='json')
@@ -114,7 +114,7 @@ class TestTickerPrices(TestCase):
 
     @vcr.use_cassette('tests/fixtures/ticker_price_with_multiple_columns.yaml')
     def test_ticker_price_with_multiple_columns(self):
-        """Confirm that CSV endpoint works"""
+        """Confirm that requesting specific columns works"""
         prices = self._client.get_ticker_price("GOOGL",
                                                columns="open,high,low,close,volume",
                                                fmt='json')
