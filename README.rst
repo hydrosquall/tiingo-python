@@ -90,6 +90,9 @@ for each function for details.).
   # Get latest prices, based on 3+ sources as JSON, sampled weekly
   ticker_price = client.get_ticker_price("GOOGL", frequency="weekly")
 
+  # Get 1 min prices, including the "open", "close" and "volume" columns
+  ticker_price = client.get_ticker_price("GOOGL", frequency="1min", columns="open,close,volume")
+
   # Get historical GOOGL prices from August 2017 as JSON, sampled daily
   historical_prices = client.get_ticker_price("GOOGL",
                                               fmt='json',
@@ -154,10 +157,20 @@ To receive results in ``pandas`` format, use the ``get_dataframe()`` method:
                                         endDate='2018-05-31')
 
 
+  #Get a pd.DataFrame for a list of symbols for "close" and "volume" columns:
+  ticker_history = client.get_dataframe(['GOOGL', 'AAPL'],
+                                        frequency='weekly',
+                                        columns="close,volume"
+                                        startDate='2017-01-01',
+                                        endDate='2018-05-31')
+
+
 
 You can specify any of the end of day frequencies (daily, weekly, monthly, and annually) or any intraday frequency for both the ``get_ticker_price`` and ``get_dataframe``
 methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of
 day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
+
+It's also possible to specify which columns you're interested in, for example:  "open", "close", "low", "high" and "volume" (see https://www.tiingo.com/documentation/iex for future columns).
 
 Cryptocurrency
 -----------------
