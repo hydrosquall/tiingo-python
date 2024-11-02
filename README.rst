@@ -170,7 +170,8 @@ You can specify any of the end of day frequencies (daily, weekly, monthly, and a
 methods.  Weekly frequencies resample to the end of day on Friday, monthly frequencies resample to the last day of the month, and annually frequencies resample to the end of
 day on 12-31 of each year.  The intraday frequencies are specified using an integer followed by "Min" or "Hour", for example "30Min" or "1Hour".
 
-It's also possible to specify which columns you're interested in, for example:  "open", "close", "low", "high" and "volume" (see https://www.tiingo.com/documentation/iex for future columns).
+It's also possible to specify which columns you're interested in, for example: "open", "close", "low", "high" and "volume" (see `End of Day response docs <https://www.tiingo.com/documentation/end-of-day>`_ for future columns).
+
 
 Cryptocurrency
 -----------------
