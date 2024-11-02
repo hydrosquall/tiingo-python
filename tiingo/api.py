@@ -219,7 +219,13 @@ class TiingoClient(RestClient):
         return prices
 
     def get_ticker_price(
-        self, ticker, startDate=None, endDate=None, columns=None, fmt="json", frequency="daily"
+        self,
+        ticker,
+        startDate=None,
+        endDate=None,
+        columns=None,
+        fmt="json",
+        frequency="daily",
     ):
         """By default, return latest EOD Composite Price for a stock ticker.
         On average, each feed contains 3 data sources.
