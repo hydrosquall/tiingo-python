@@ -132,7 +132,7 @@ class TestTiingoWithPython(TestCase):
                                                columns=requested_columns,
                                                fmt='json')
         assert len(prices) == 1
-        assert len(prices.columns) == len(requested_columns.split(",")) + 1
+        assert len(prices.columns) == len(requested_columns.split(','))
 
     def test_metric_name_column_error(self):
         with self.assertRaises(APIColumnNameError):

@@ -115,10 +115,12 @@ class TestTickerPrices(TestCase):
     @vcr.use_cassette('tests/fixtures/ticker_price_with_multiple_columns.yaml')
     def test_ticker_price_with_multiple_columns(self):
         """Confirm that requesting specific columns works"""
+        requested_columns = "open,high,low,close,volume"
         prices = self._client.get_ticker_price("GOOGL",
-                                               columns="open,high,low,close,volume",
+                                               columns=requested_columns,
                                                fmt='json')
         assert len(prices) == 1
+        assert len(prices[0]) == len(requested_columns.split(',')) + 1
         assert prices[0].get('date')
         assert prices[0].get('high')
         assert prices[0].get('low')
