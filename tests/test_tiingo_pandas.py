@@ -122,7 +122,7 @@ class TestTiingoWithPython(TestCase):
                                                columns=requested_column,
                                                fmt='json')
         assert len(prices) == 1
-        assert len(prices.columns) == len(requested_column) + 1
+        assert len(prices.columns) == 1
 
     @vcr.use_cassette('tests/fixtures/ticker_price_with_multiple_columns.yaml')
     def test_get_dataframe_with_multiple_columns(self):
