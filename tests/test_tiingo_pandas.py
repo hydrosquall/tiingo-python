@@ -114,6 +114,26 @@ class TestTiingoWithPython(TestCase):
                                             frequency="30Min")
         self.assertGreater(len(prices), 1)
 
+    @vcr.use_cassette('tests/fixtures/ticker_price_with_volume_column.yaml')
+    def test_get_dataframe_with_volume_column(self):
+        """Confirm that requesting a single column works"""
+        requested_column = "volume"
+        prices = self._client.get_dataframe("GOOGL",
+                                               columns=requested_column,
+                                               fmt='json')
+        assert len(prices) == 1
+        assert len(prices.columns) == 1
+
+    @vcr.use_cassette('tests/fixtures/ticker_price_with_multiple_columns.yaml')
+    def test_get_dataframe_with_multiple_columns(self):
+        """Confirm that requesting specific columns works"""
+        requested_columns = "open,high,low,close,volume"
+        prices = self._client.get_dataframe("GOOGL",
+                                               columns=requested_columns,
+                                               fmt='json')
+        assert len(prices) == 1
+        assert len(prices.columns) == len(requested_columns.split(','))
+
     def test_metric_name_column_error(self):
         with self.assertRaises(APIColumnNameError):
             self._client.get_dataframe(['GOOGL', 'AAPL'], startDate='2018-01-05',

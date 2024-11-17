@@ -55,7 +55,7 @@ class TestTickerPrices(TestCase):
     def test_ticker_metadata_as_object(self):
         metadata = self._client.get_ticker_metadata("GOOGL", fmt="object")
         assert metadata.ticker == "GOOGL"  # Access property via ATTRIBUTE
-        assert metadata.name               # (contrast with key access above
+        assert metadata.name  # (contrast with key access above
 
     @vcr.use_cassette('tests/fixtures/ticker_price.yaml')
     def test_ticker_price(self):
@@ -68,7 +68,7 @@ class TestTickerPrices(TestCase):
     def test_ticker_price(self):
         """Test that weekly frequency works"""
         prices = self._client.get_ticker_price("GOOGL", startDate='2018-01-05',
-                    endDate='2018-01-19', frequency='weekly')
+                                               endDate='2018-01-19', frequency='weekly')
         assert len(prices) == 3
         assert prices[0].get('adjClose')
 
@@ -97,6 +97,36 @@ class TestTickerPrices(TestCase):
         reader = csv.reader(prices_csv.splitlines(), delimiter=",")
         rows = list(reader)
         assert len(rows) > 2  # more than 1 day of data
+
+    @vcr.use_cassette('tests/fixtures/ticker_price_with_volume_column.yaml')
+    def test_ticker_price_with_volume_column(self):
+        """Confirm that requesting a single column works"""
+        prices = self._client.get_ticker_price("GOOGL",
+                                               columns="volume",
+                                               fmt='json')
+        assert len(prices) == 1
+        assert prices[0].get('date')
+        assert not prices[0].get('high')
+        assert not prices[0].get('low')
+        assert not prices[0].get('open')
+        assert not prices[0].get('close')
+        assert prices[0].get('volume')
+
+    @vcr.use_cassette('tests/fixtures/ticker_price_with_multiple_columns.yaml')
+    def test_ticker_price_with_multiple_columns(self):
+        """Confirm that requesting specific columns works"""
+        requested_columns = "open,high,low,close,volume"
+        prices = self._client.get_ticker_price("GOOGL",
+                                               columns=requested_columns,
+                                               fmt='json')
+        assert len(prices) == 1
+        assert len(prices[0]) == len(requested_columns.split(',')) + 1
+        assert prices[0].get('date')
+        assert prices[0].get('high')
+        assert prices[0].get('low')
+        assert prices[0].get('open')
+        assert prices[0].get('close')
+        assert prices[0].get('volume')
 
     @vcr.use_cassette('tests/fixtures/intraday_price.yaml')
     def test_intraday_ticker_price(self):
@@ -148,6 +178,7 @@ class TestTickerPrices(TestCase):
                                                    startDate="2018-01-02",
                                                    endDate="2018-01-02",
                                                    frequency="1.5mins")
+
 
 # tiingo/news
 class TestNews(TestCase):
@@ -226,6 +257,7 @@ class TestNews(TestCase):
         """Fails because this API key lacks institutional license"""
         with self.assertRaises(RestClientError):
             assert self._client.get_bulk_news(file_id="1", fmt="object")
+
 
 # FUNDAMENTALS ENDPOINTS
 class TestFundamentals(TestCase):
