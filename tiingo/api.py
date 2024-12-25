@@ -6,7 +6,6 @@ import json
 import os
 import re
 import sys
-import pkg_resources
 from zipfile import ZipFile
 
 import requests
