@@ -18,6 +18,8 @@ from tiingo.exceptions import (
     MissingRequiredArgumentError,
 )
 
+from tiingo.__version__ import __version__ as VERSION
+
 try:
     import pandas as pd
 
@@ -25,7 +27,6 @@ try:
 except ImportError:
     pandas_is_installed = False
 
-from .__version__ import __version__ as VERSION
 
 # These methods enable python 2 + 3 compatibility.
 def get_zipfile_from_response(response):
