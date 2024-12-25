@@ -26,8 +26,7 @@ try:
 except ImportError:
     pandas_is_installed = False
 
-VERSION = pkg_resources.get_distribution("tiingo").version
-
+from .__version__ import __version__ as VERSION
 
 # These methods enable python 2 + 3 compatibility.
 def get_zipfile_from_response(response):
