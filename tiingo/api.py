@@ -6,7 +6,6 @@ import json
 import os
 import re
 import sys
-import pkg_resources
 from zipfile import ZipFile
 
 import requests
@@ -19,14 +18,14 @@ from tiingo.exceptions import (
     MissingRequiredArgumentError,
 )
 
+from tiingo.__version__ import __version__ as VERSION
+
 try:
     import pandas as pd
 
     pandas_is_installed = True
 except ImportError:
     pandas_is_installed = False
-
-VERSION = pkg_resources.get_distribution("tiingo").version
 
 
 # These methods enable python 2 + 3 compatibility.
