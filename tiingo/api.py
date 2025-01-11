@@ -6,7 +6,6 @@ import json
 import os
 import re
 import sys
-import pkg_resources
 from zipfile import ZipFile
 
 import requests
@@ -19,14 +18,14 @@ from tiingo.exceptions import (
     MissingRequiredArgumentError,
 )
 
+from tiingo.__version__ import __version__ as VERSION
+
 try:
     import pandas as pd
 
     pandas_is_installed = True
 except ImportError:
     pandas_is_installed = False
-
-VERSION = pkg_resources.get_distribution("tiingo").version
 
 
 # These methods enable python 2 + 3 compatibility.
@@ -219,7 +218,13 @@ class TiingoClient(RestClient):
         return prices
 
     def get_ticker_price(
-        self, ticker, startDate=None, endDate=None, fmt="json", frequency="daily"
+        self,
+        ticker,
+        startDate=None,
+        endDate=None,
+        columns=None,
+        fmt="json",
+        frequency="daily",
     ):
         """By default, return latest EOD Composite Price for a stock ticker.
         On average, each feed contains 3 data sources.
@@ -231,6 +236,8 @@ class TiingoClient(RestClient):
              ticker (string): Unique identifier for stock ticker
              startDate (string): Start of ticker range in YYYY-MM-DD format
              endDate (string): End of ticker range in YYYY-MM-DD format
+             columns (string): Optional comma separated parameter specifying which columns to retrieve.
+                By default, 'date', 'open', 'close', 'high' and 'low' are retrieved. 'volume' is an extra option.
              fmt (string): 'csv' or 'json'
              frequency (string): Resample frequency
         """
@@ -244,6 +251,8 @@ class TiingoClient(RestClient):
             params["startDate"] = startDate
         if endDate:
             params["endDate"] = endDate
+        if columns:
+            params["columns"] = columns
 
         # TODO: evaluate whether to stream CSV to cache on disk, or
         # load as array in memory, or just pass plain text
@@ -262,6 +271,7 @@ class TiingoClient(RestClient):
         startDate=None,
         endDate=None,
         metric_name=None,
+        columns=None,
         frequency="daily",
         fmt="json",
     ):
@@ -278,6 +288,8 @@ class TiingoClient(RestClient):
             tickers (string/list): One or more unique identifiers for a stock ticker.
             startDate (string): Start of ticker range in YYYY-MM-DD format.
             endDate (string): End of ticker range in YYYY-MM-DD format.
+            columns (string): Optional comma separated parameter specifying which columns to retrieve.
+                By default, 'date', 'open', 'close', 'high' and 'low' are retrieved. 'volume' is an extra option.
             metric_name (string): Optional parameter specifying metric to be returned for each
                 ticker.  In the event of a single ticker, this is optional and if not specified
                 all of the available data will be returned.  In the event of a list of tickers,
@@ -315,6 +327,8 @@ class TiingoClient(RestClient):
             params["startDate"] = startDate
         if endDate:
             params["endDate"] = endDate
+        if columns:
+            params["columns"] = columns
 
         if pandas_is_installed:
             if type(tickers) is str:
