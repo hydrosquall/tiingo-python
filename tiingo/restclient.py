@@ -8,6 +8,7 @@ from requests.exceptions import HTTPError
 # TODO: Possibly print HTTP json response if available?
 class RestClientError(Exception):
     "Wrapper around HTTP Errors"
+
     pass
 
 
