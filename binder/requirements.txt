@@ -4,3 +4,4 @@ tiingo==0.15.6
 # You technically don't have to use tiingo with pandas, but
 # we included it since most data analysts will have it installed already.
 pandas==1.5.3
+urllib3>=2.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
