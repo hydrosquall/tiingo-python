@@ -1,0 +1,220 @@
+# IEX Exchange API Response Schemas
+# Reference: https://api.tiingo.com/documentation/iex
+
+IEXTopOfBook: &IEXTopOfBook
+  type: object
+  description: |
+    Top-of-book and last price data for a stock on IEX Exchange.
+
+    Note: Fields marked with "*IEX entitlement required*" will return null unless you are
+    registered with the IEX Exchange and have a market data policy in place. These fields
+    provide full TOPS feed data including direct bid/ask/last data from IEX.
+
+    Tiingo-enriched fields (tngoLast, mid, open, high, low) are calculated by Tiingo
+    and do not require IEX entitlement.
+  properties:
+    ticker:
+      $ref: '../schemas/common.yaml#/Ticker'
+      description: Ticker symbol for the asset
+    timestamp:
+      $ref: '../schemas/common.yaml#/DateTime'
+      description: Timestamp when the data was last refreshed
+    quoteTimestamp:
+      type: string
+      format: date-time
+      nullable: true
+      description: |
+        Timestamp when the last quote (bid/ask) data was received from IEX.
+        Requires IEX entitlement. Null if not entitled.
+    lastSaleTimeStamp:
+      type: string
+      format: date-time
+      nullable: true
+      description: |
+        Timestamp when the last trade (last/lastSize) data was received from IEX.
+        Requires IEX entitlement. Null if not entitled.
+    last:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        Last trade price executed on IEX.
+        Requires IEX entitlement. Null if not entitled.
+      example: 162.37
+    lastSize:
+      type: integer
+      format: int32
+      nullable: true
+      description: |
+        Number of shares traded at the last price on IEX.
+        Requires IEX entitlement. Null if not entitled.
+      example: 100
+    tngoLast:
+      type: number
+      format: double
+      description: |
+        Tiingo-calculated last price. Either the last trade price or mid price.
+        The mid price is only used if the spread is not considered too wide by Tiingo's algorithm.
+        After the official exchange print comes in, this value changes to that value.
+        This is a Tiingo-enriched field and does not require IEX entitlement.
+      example: 162.33
+    prevClose:
+      type: number
+      format: double
+      description: |
+        Previous day's closing price of the security.
+        Can be from any exchange (NYSE, NASDAQ, IEX, etc.)
+      example: 154.68
+    open:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        Opening price of the asset on the current day.
+        Tiingo-calculated field, does not require IEX entitlement.
+      example: 161.83
+    high:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        High price of the asset on the current day.
+        Tiingo-calculated field, does not require IEX entitlement.
+      example: 163.25
+    low:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        Low price of the asset on the current day.
+        Tiingo-calculated field, does not require IEX entitlement.
+      example: 160.38
+    mid:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        Mid price at current timestamp when both bidPrice and askPrice are not null.
+        Formula: mid = (bidPrice + askPrice) / 2.0
+        Tiingo-calculated field, does not require IEX entitlement.
+      example: 162.67
+    volume:
+      type: integer
+      format: int64
+      description: |
+        Volume data. IEX volume throughout the trading day.
+        Once the official closing price is received, reflects total volume across all exchanges.
+        This field is provided for convenience.
+      example: 0
+    bidSize:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        Number of shares available at the bid price.
+        Requires IEX entitlement. Null if not entitled.
+      example: 100
+    bidPrice:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        Current bid price.
+        Requires IEX entitlement. Null if not entitled.
+      example: 162.34
+    askSize:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        Number of shares available at the ask price.
+        Requires IEX entitlement. Null if not entitled.
+      example: 100
+    askPrice:
+      type: number
+      format: double
+      nullable: true
+      description: |
+        Current ask price.
+        Requires IEX entitlement. Null if not entitled.
+      example: 163.0
+  required:
+    - ticker
+    - timestamp
+    - tngoLast
+    - prevClose
+    - volume
+  example:
+    ticker: 'AAPL'
+    timestamp: '2019-01-30T10:33:38.186520297-05:00'
+    quoteTimestamp: '2019-01-30T10:33:38.186520297-05:00'
+    lastSaleTimeStamp: '2019-01-30T10:33:34.176037579-05:00'
+    last: 162.37
+    lastSize: 100
+    tngoLast: 162.33
+    prevClose: 154.68
+    open: 161.83
+    high: 163.25
+    low: 160.38
+    mid: 162.67
+    volume: 0
+    bidSize: 100
+    bidPrice: 162.34
+    askSize: 100
+    askPrice: 163.0
+
+IEXPrice: &IEXPrice
+  type: object
+  description: |
+    Historical intraday price data in OHLC format from IEX Exchange.
+
+    The time period covered by each bar is determined by the resampleFreq parameter.
+    Volume data is IEX-only and must be explicitly requested using the columns parameter.
+  properties:
+    date:
+      $ref: '../schemas/common.yaml#/DateTime'
+      description: |
+        Timestamp for this OHLC bar. Marks the beginning of the time period.
+        Format: ISO 8601 (RFC 3339)
+    open:
+      type: number
+      format: double
+      description: Opening price for the time period
+      example: 154.74
+    high:
+      type: number
+      format: double
+      description: Highest price during the time period
+      example: 155.52
+    low:
+      type: number
+      format: double
+      description: Lowest price during the time period
+      example: 154.58
+    close:
+      type: number
+      format: double
+      description: Closing price for the time period
+      example: 154.76
+    volume:
+      type: integer
+      format: int64
+      nullable: true
+      description: |
+        Number of shares traded on IEX only during the time period.
+        This field is only included if explicitly requested via the columns parameter
+        (e.g., ?columns=open,high,low,close,volume)
+      example: 16102
+  required:
+    - date
+    - open
+    - high
+    - low
+    - close
+  example:
+    date: '2019-01-02T14:30:00.000Z'
+    open: 154.74
+    high: 155.52
+    low: 154.58
+    close: 154.76
+    volume: 16102

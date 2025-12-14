@@ -1,0 +1,212 @@
+# News API Path Definitions
+# Reference these using: $ref: '../paths/news.yaml#/PathName'
+
+news: &news
+  get:
+    summary: Get latest news articles
+    description: |
+      Retrieves the latest news articles from Tiingo's comprehensive news feeds.
+      Tiingo incorporates financial news sites as well as financial blogs and tags them using proprietary algorithms.
+      On a typical day, Tiingo adds over 8,000-12,000 articles.
+
+      This endpoint supports filtering by tickers, tags, source domains, and date ranges.
+      Results can be sorted by either publishedDate or crawlDate in descending order.
+    operationId: getNews
+    tags:
+      - News
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+      - name: tickers
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            pattern: '^[A-Z0-9]+$'
+        style: form
+        explode: false
+        description: Comma-separated list of ticker symbols to filter news articles
+        example: ["AAPL", "GOOGL"]
+      - name: tags
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        style: form
+        explode: false
+        description: Comma-separated list of tags/countries/topics to filter news articles
+        example: ["election", "argentina"]
+      - name: source
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: hostname
+        style: form
+        explode: false
+        description: Comma-separated list of source domains to filter news articles
+        example: ["bloomberg.com", "reuters.com"]
+      - $ref: '../parameters/_index.yaml#/StartDateParam'
+      - $ref: '../parameters/_index.yaml#/EndDateParam'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          default: 100
+        description: Maximum number of news objects to return. Default is 100, max is 1000. Contact support@tiingo.com for adjustments.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+        description: Pagination variable used alongside limit. Returns results shifted by offset. Example - limit=100, offset=2 returns results 2-102 instead of 0-99.
+      - name: sortBy
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - publishedDate
+            - crawlDate
+          default: publishedDate
+        description: The date field to sort results by in descending order. Defaults to publishedDate.
+    responses:
+      '200':
+        description: Successful response with news articles
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/news-schemas.yaml#/NewsArticle'
+            examples:
+              singleArticle:
+                summary: Example news article
+                value:
+                  - source: "cnbc.com"
+                    crawlDate: "2019-01-29T22:20:01.696871Z"
+                    description: "Apple CEO Tim Cook told CNBC that trade tensions between the U.S. and China have improved since late December."
+                    url: "https://www.cnbc.com/2019/01/29/apples-ceo-sees-optimism-as-trade-tension-between-us-and-china-lessens.html"
+                    publishedDate: "2019-01-29T22:17:00Z"
+                    tags: ["China", "Economic Measures", "Economics", "Markets", "Stock", "Technology"]
+                    tickers: ["AAPL"]
+                    title: "Apple's CEO sees optimism as trade tension between U.S. and China lessens"
+                    id: 28515261
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+bulk-list: &bulk-list
+  get:
+    summary: List available bulk download files
+    description: |
+      Returns a list of all available bulk download files for the entire news database.
+      An "incremental" batchType file is added every evening. At 12am EST, a batch process
+      runs saving all news articles for the past 24 hours.
+
+      **Note:** Bulk Download is only available to institutional clients.
+    operationId: listBulkDownloadFiles
+    tags:
+      - News
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with list of bulk download files
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/news-schemas.yaml#/BulkDownloadFile'
+            examples:
+              bulkFileList:
+                summary: Example list of bulk download files
+                value:
+                  - id: 755
+                    filename: "bulkfile_2019-01-28_2019-01-29.tar.gz"
+                    batchType: "incremental"
+                    startDate: "2019-01-28T05:00:00Z"
+                    endDate: "2019-01-29T05:00:00Z"
+                    url: "https://api.tiingo.com/tiingo/news/bulk_download/755?token=YOUR_API_TOKEN"
+                    fileSizeUncompressed: 10385878
+                    fileSizeCompressed: 3018550
+                  - id: 754
+                    filename: "bulkfile_2019-01-27_2019-01-28.tar.gz"
+                    batchType: "incremental"
+                    startDate: "2019-01-27T05:00:00Z"
+                    endDate: "2019-01-28T05:00:00Z"
+                    url: "https://api.tiingo.com/tiingo/news/bulk_download/754?token=YOUR_API_TOKEN"
+                    fileSizeUncompressed: 9854321
+                    fileSizeCompressed: 2945678
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+bulk-download: &bulk-download
+  get:
+    summary: Download a specific bulk news file
+    description: |
+      Downloads a specific batch file by ID. The file contains news articles in compressed format (gzip).
+      Use the bulk-list endpoint to get the list of available files and their IDs.
+
+      The downloaded file is in tar.gz format and contains news articles for the specified date range.
+
+      **Note:** Bulk Download is only available to institutional clients.
+    operationId: downloadBulkFile
+    tags:
+      - News
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+        description: The unique ID that corresponds to the batch file you would like to download
+        example: 755
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with bulk download file (binary tar.gz)
+        content:
+          application/gzip:
+            schema:
+              type: string
+              format: binary
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
