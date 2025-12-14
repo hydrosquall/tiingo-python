@@ -1,0 +1,49 @@
+# Reusable Parameter Definitions for Tiingo API
+# Reference these using: $ref: '../parameters/_index.yaml#/ParameterName'
+
+TokenParam: &TokenParam
+  name: token
+  in: query
+  required: true
+  schema:
+    type: string
+  description: API token for authentication
+
+TickerPathParam: &TickerPathParam
+  name: ticker
+  in: path
+  required: true
+  schema:
+    type: string
+    pattern: '^[A-Z0-9]{1,5}$'
+  description: Stock or cryptocurrency ticker symbol
+
+StartDateParam: &StartDateParam
+  name: startDate
+  in: query
+  required: false
+  schema:
+    type: string
+    format: date
+  description: Start date for historical data in YYYY-MM-DD format
+
+EndDateParam: &EndDateParam
+  name: endDate
+  in: query
+  required: false
+  schema:
+    type: string
+    format: date
+  description: End date for historical data in YYYY-MM-DD format
+
+FormatParam: &FormatParam
+  name: format
+  in: query
+  required: false
+  schema:
+    type: string
+    enum:
+      - json
+      - csv
+    default: json
+  description: Response format (json or csv)

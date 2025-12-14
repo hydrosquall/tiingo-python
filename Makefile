@@ -56,6 +56,9 @@ format: ## apply opinionated formatting
 format-check: ## check formatting for CI
 	black --check tiingo/
 
+validate-openapi: ## validate OpenAPI specification
+	openapi-spec-validator openapi/openapi.yaml
+
 test: ## run tests quickly with the default Python
 	py.test
 
