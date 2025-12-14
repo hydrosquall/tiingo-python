@@ -1,0 +1,34 @@
+BadRequest: &BadRequest
+  description: Bad Request - Invalid parameters
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/common.yaml#/ErrorResponse'
+
+Unauthorized: &Unauthorized
+  description: Unauthorized - Invalid or missing API token
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/common.yaml#/ErrorResponse'
+
+NotFound: &NotFound
+  description: Not Found - Ticker or resource not found
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/common.yaml#/ErrorResponse'
+
+TooManyRequests: &TooManyRequests
+  description: Too Many Requests - Rate limit exceeded
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/common.yaml#/ErrorResponse'
+
+InternalServerError: &InternalServerError
+  description: Internal Server Error
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/common.yaml#/ErrorResponse'

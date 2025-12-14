@@ -1,0 +1,39 @@
+Date: &Date
+  type: string
+  format: date
+  pattern: '^\d{4}-\d{2}-\d{2}$'
+  description: Date in ISO 8601 format
+  example: '2025-12-13'
+
+DateTime: &DateTime
+  type: string
+  format: date-time
+  description: Timestamp in ISO 8601 format
+  example: '2025-12-13T18:00:00.000Z'
+
+Ticker: &Ticker
+  type: string
+  pattern: '^[A-Z0-9]+$'
+  description: Stock, ETF, or crypto ticker symbol
+  example: 'AAPL'
+
+Currency: &Currency
+  type: string
+  pattern: '^[A-Z]{3}$'
+  description: ISO 4217 currency code
+  example: 'USD'
+
+ErrorResponse: &ErrorResponse
+  type: object
+  properties:
+    error:
+      type: string
+      description: Error message
+    detail:
+      type: string
+      description: Detailed error information
+  required:
+    - error
+  example:
+    error: "Invalid ticker symbol"
+    detail: "Ticker 'XYZ123' not found"

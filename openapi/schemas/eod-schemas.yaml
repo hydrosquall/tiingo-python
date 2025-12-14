@@ -1,0 +1,119 @@
+# End-of-Day Stock Price API Schemas
+# Reference: https://www.tiingo.com/documentation/end-of-day
+
+PriceData: &PriceData
+  type: array
+  description: Array of End-of-Day price data objects with OHLCV (Open, High, Low, Close, Volume) data
+  items:
+    type: object
+    properties:
+      date:
+        $ref: '../schemas/common.yaml#/Date'
+        description: The date this data pertains to
+      open:
+        type: number
+        format: float
+        description: The opening price for the asset on the given date
+        example: 150.25
+      high:
+        type: number
+        format: float
+        description: The high price for the asset on the given date
+        example: 152.50
+      low:
+        type: number
+        format: float
+        description: The low price for the asset on the given date
+        example: 149.75
+      close:
+        type: number
+        format: float
+        description: The closing price for the asset on the given date
+        example: 151.80
+      volume:
+        type: integer
+        format: int64
+        description: The number of shares traded for the asset
+        example: 50000000
+      adjOpen:
+        type: number
+        format: float
+        description: The adjusted opening price for the asset on the given date (includes splits and dividends)
+        example: 150.25
+      adjHigh:
+        type: number
+        format: float
+        description: The adjusted high price for the asset on the given date (includes splits and dividends)
+        example: 152.50
+      adjLow:
+        type: number
+        format: float
+        description: The adjusted low price for the asset on the given date (includes splits and dividends)
+        example: 149.75
+      adjClose:
+        type: number
+        format: float
+        description: The adjusted closing price for the asset on the given date (includes splits and dividends)
+        example: 151.80
+      adjVolume:
+        type: integer
+        format: int64
+        description: The number of shares traded for the asset (adjusted for splits)
+        example: 50000000
+      divCash:
+        type: number
+        format: float
+        description: The dividend paid out on the given date (note that date will be the exDate for the dividend)
+        example: 0.0
+      splitFactor:
+        type: number
+        format: float
+        description: The factor used to adjust prices when a company splits, reverse splits, or pays a distribution
+        example: 1.0
+    required:
+      - date
+      - close
+      - volume
+
+TickerMetadata: &TickerMetadata
+  type: object
+  description: Metadata information about a stock ticker
+  properties:
+    ticker:
+      $ref: '../schemas/common.yaml#/Ticker'
+      description: Ticker related to the asset
+    name:
+      type: string
+      description: Full-length name of the asset
+      example: "Apple Inc"
+    exchangeCode:
+      type: string
+      description: An identifier that maps which Exchange this asset is listed on
+      enum:
+        - NASDAQ
+        - NYSE
+        - AMEX
+        - OTC
+        - BATS
+        - IEX
+      example: "NASDAQ"
+    description:
+      type: string
+      description: Long-form description of the asset
+      example: "Apple Inc is an American multinational technology company that specializes in consumer electronics, software and online services."
+    startDate:
+      type: string
+      format: date
+      nullable: true
+      description: The earliest date we have price data available for the asset. When null, no price data is available
+      example: "1990-01-01"
+    endDate:
+      type: string
+      format: date
+      nullable: true
+      description: The latest date we have price data available for the asset. When null, no price data is available
+      example: "2024-01-01"
+  required:
+    - ticker
+    - name
+    - exchangeCode
