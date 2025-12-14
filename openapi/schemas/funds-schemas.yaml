@@ -1,0 +1,235 @@
+# Tiingo Mutual Fund and ETF Fees API Schemas
+# Reference: /docs/api_extracted/mutual-fund-etf-fees.md
+
+OtherShareClass: &OtherShareClass
+  type: object
+  description: Information about a related share class of the fund
+  properties:
+    ticker:
+      type: string
+      description: Ticker related to the fund
+      example: "VTSMX"
+    name:
+      type: string
+      description: Full-length name of the fund
+      example: "Vanguard Total Stock Market Index Fund"
+    shareClass:
+      type: string
+      description: Share class of the fund as described by the parent fund company
+      example: "Investor Shares"
+    netExpense:
+      type: number
+      format: float
+      description: The top-level net expense ratio for the fund (expressed as decimal, e.g., 0.0055 = 0.55%)
+      example: 0.0055
+  required:
+    - ticker
+    - name
+    - shareClass
+    - netExpense
+
+FundOverview: &FundOverview
+  type: object
+  description: Top-level fund data including description and share classes
+  properties:
+    ticker:
+      type: string
+      description: Ticker related to the fund
+      example: "VTSAX"
+    name:
+      type: string
+      description: Full-length name of the fund
+      example: "Vanguard Total Stock Market Index Fund"
+    description:
+      type: string
+      description: Long-form description of the fund
+      example: "Long description of the fund..."
+    shareClass:
+      type: string
+      description: Share class of the fund as described by the parent fund company
+      example: "Admiral Shares"
+    netExpense:
+      type: number
+      format: float
+      description: The top-level net expense ratio for the fund (expressed as decimal, e.g., 0.0035 = 0.35%)
+      example: 0.0035
+    otherShareClasses:
+      type: array
+      description: An array of objects representing related share classes of the given fund
+      items:
+        $ref: '#/OtherShareClass'
+  required:
+    - ticker
+    - name
+    - description
+    - shareClass
+    - netExpense
+    - otherShareClasses
+
+CustomFee: &CustomFee
+  type: object
+  description: Custom fee charged by the fund (e.g., check processing fee)
+  properties:
+    label:
+      type: string
+      description: Label related to the custom fee
+      example: "Check Processing Fee"
+    value:
+      type: number
+      format: float
+      description: Value of the custom fee field
+      example: 0.0000
+    units:
+      type: string
+      description: '"$" if the value is in dollars or "%" if the value is in percentage terms'
+      enum:
+        - "$"
+        - "%"
+      example: "$"
+    parentFee:
+      type: string
+      description: The parent fee the custom fee belongs under
+      example: "shareholderFee"
+  required:
+    - label
+    - value
+    - units
+    - parentFee
+
+FundMetrics: &FundMetrics
+  type: object
+  description: Detailed current and historical fee data for a mutual fund or ETF
+  properties:
+    prospectusDate:
+      allOf:
+        - $ref: './common.yaml#/Date'
+      description: The prospectus date when the corresponding fund expense data was published
+      example: "2024-01-15"
+    netExpense:
+      type: number
+      format: float
+      description: Fund's net expense ratio, or the net expenses related to the fund (expressed as decimal)
+      example: 0.0035
+    grossExpense:
+      type: number
+      format: float
+      description: Fund's gross expense ratio, or the expenses related to running the fund (expressed as decimal)
+      example: 0.0040
+    managementFee:
+      type: number
+      format: float
+      description: Fund's management fee, or the fees paid to the manager and/or advisors (expressed as decimal)
+      example: 0.0025
+    12b1:
+      type: number
+      format: float
+      description: Fund's fee related to marketing expenses (expressed as decimal)
+      example: 0.0000
+    non12b1:
+      type: number
+      format: float
+      description: Fund's fee related to distribution and similar non-12b-1 fees (expressed as decimal)
+      example: 0.0000
+    otherExpenses:
+      type: number
+      format: float
+      description: Fund's other expenses, or expenses related to legal, administrative, custodial, etc. (expressed as decimal)
+      example: 0.0015
+    acquiredFundFees:
+      type: number
+      format: float
+      description: Fund's acquired fund fees, or expenses related to underlying businesses or funds (expressed as decimal)
+      example: 0.0000
+    feeWaiver:
+      type: number
+      format: float
+      description: Fund's fee waiver, or discount on fees (expressed as decimal)
+      example: 0.0005
+    exchangeFeeUSD:
+      type: number
+      format: float
+      description: Fund's exchange fee if charged in USD, or expenses related to exchanging or transferring funds to another fund in the fund's family
+      example: 0.0000
+    exchangeFeePercent:
+      type: number
+      format: float
+      description: Fund's exchange fee if charged as a percentage, or expenses related to exchanging or transferring funds to another fund in the fund's family (expressed as decimal)
+      example: 0.0000
+    frontLoad:
+      type: number
+      format: float
+      description: Fund's front load fee, or the upfront fee charged when investing in the fund (expressed as decimal)
+      example: 0.0000
+    backLoad:
+      type: number
+      format: float
+      description: Fund's back load fee, or the back-end fee charged when redeeming from the fund (expressed as decimal)
+      example: 0.0000
+    dividendLoad:
+      type: number
+      format: float
+      description: Dividend load fee, or charges on reinvested dividends (expressed as decimal)
+      example: 0.0000
+    shareholderFee:
+      type: number
+      format: float
+      description: Fund's shareholder fees, or the potential fees when buying/selling a fund (expressed as decimal)
+      example: 0.0000
+    accountFeeUSD:
+      type: number
+      format: float
+      description: Fund's account fees if charged in USD, or the fee required to maintain your account in USD
+      example: 0.0000
+    accountFeePercent:
+      type: number
+      format: float
+      description: Fund's account fees if charged as a percentage, or the fee required to maintain your account in percentage terms (expressed as decimal)
+      example: 0.0000
+    redemptionFeeUSD:
+      type: number
+      format: float
+      description: Fund's redemption fees if charged in USD, or the fee charged if funds are redeemed early (as defined by the fund company)
+      example: 0.0000
+    redemptionFeePercent:
+      type: number
+      format: float
+      description: Fund's redemption fees as a percentage, or the fee charged if funds are redeemed early (as defined by the fund company) (expressed as decimal)
+      example: 0.0000
+    portfolioTurnover:
+      type: number
+      format: float
+      description: Portfolio turnover (expressed as decimal)
+      example: 0.05
+    miscFees:
+      type: number
+      format: float
+      description: Fund's miscellaneous fees (expressed as decimal)
+      example: 0.0000
+    customFees:
+      type: array
+      description: Fund's custom fees. Array of custom fee objects
+      items:
+        $ref: '#/CustomFee'
+  required:
+    - prospectusDate
+    - netExpense
+    - grossExpense
+    - managementFee
+    - 12b1
+    - non12b1
+    - otherExpenses
+    - acquiredFundFees
+    - feeWaiver
+    - exchangeFeeUSD
+    - exchangeFeePercent
+    - frontLoad
+    - backLoad
+    - dividendLoad
+    - shareholderFee
+    - accountFeeUSD
+    - accountFeePercent
+    - redemptionFeeUSD
+    - redemptionFeePercent
+    - portfolioTurnover
+    - miscFees
+    - customFees

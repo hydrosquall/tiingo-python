@@ -1,0 +1,255 @@
+# Tiingo Fundamentals API Schemas
+# Reference these using: $ref: '../schemas/fundamentals-schemas.yaml#/SchemaName'
+
+FundamentalDefinition: &FundamentalDefinition
+  type: object
+  description: Definition of a fundamental metric field
+  properties:
+    dataCode:
+      type: string
+      description: An identifier representing the fundamentals field the value belongs to (e.g., "peRatio")
+      example: "peRatio"
+    name:
+      type: string
+      description: A human-friendly readable name of the field
+      example: "Price/Earnings Ratio"
+    description:
+      type: string
+      description: A description of the field
+      example: "The price to earnings ratio of the company"
+    statementType:
+      type: string
+      description: Which statement this value belongs to
+      enum:
+        - balanceSheet
+        - incomeStatement
+        - cashFlow
+        - overview
+      example: "overview"
+    units:
+      type: string
+      description: The unit the field value is in. Value is either "$", "%" or blank. If blank, value may either be an integer (like shares outstanding) or a ratio
+      enum:
+        - "$"
+        - "%"
+        - ""
+      example: ""
+  required:
+    - dataCode
+    - name
+    - description
+    - statementType
+    - units
+
+DataPoint: &DataPoint
+  type: object
+  description: A single data point with a code and value
+  properties:
+    dataCode:
+      type: string
+      description: An identifier representing the fundamentals field the value belongs to (e.g., "peRatio")
+      example: "totalAssets"
+    value:
+      type: number
+      format: float
+      description: The value of the field corresponding to the dataCode
+      example: 352755000000
+  required:
+    - dataCode
+    - value
+
+StatementData: &StatementData
+  type: object
+  description: Statement data broken out by four different statement types
+  properties:
+    balanceSheet:
+      type: array
+      description: Balance sheet data (assets, liabilities, equity)
+      items:
+        $ref: '#/DataPoint'
+    incomeStatement:
+      type: array
+      description: Income statement data (revenue, expenses, income)
+      items:
+        $ref: '#/DataPoint'
+    cashFlow:
+      type: array
+      description: Cash flow statement data (operating, investing, financing activities)
+      items:
+        $ref: '#/DataPoint'
+    overview:
+      type: array
+      description: Metrics and ratios that may be a combination of fields from various statements
+      items:
+        $ref: '#/DataPoint'
+  required:
+    - balanceSheet
+    - incomeStatement
+    - cashFlow
+    - overview
+
+FinancialStatement: &FinancialStatement
+  type: object
+  description: Historical quarterly or annual financial statement
+  properties:
+    date:
+      type: string
+      format: date-time
+      description: The date the statement data was released to the public
+      example: "2023-12-29T00:00:00.000Z"
+    quarter:
+      type: integer
+      format: int32
+      description: An integer corresponding to the fiscal quarter reported. A value of "0" means this is an Annual Report. A value of "1" through "4" corresponds to the respective fiscal quarter
+      minimum: 0
+      maximum: 4
+      example: 1
+    year:
+      type: integer
+      format: int32
+      description: An integer corresponding to the fiscal year reported
+      example: 2024
+    statementData:
+      $ref: '#/StatementData'
+  required:
+    - date
+    - quarter
+    - year
+    - statementData
+
+DailyMetric: &DailyMetric
+  type: object
+  description: Daily fundamental metrics that rely on price data and update daily
+  properties:
+    date:
+      type: string
+      format: date-time
+      description: The date the daily data corresponds to
+      example: "2023-12-29T00:00:00.000Z"
+    marketCap:
+      type: number
+      format: float
+      description: The value of the field corresponding to the market capitalization
+      example: 3050000000000
+      nullable: true
+    enterpriseVal:
+      type: number
+      format: float
+      description: The value of the field corresponding to the enterprise value
+      example: 2950000000000
+      nullable: true
+    peRatio:
+      type: number
+      format: float
+      description: The value of the field corresponding to the price/earnings ratio
+      example: 29.45
+      nullable: true
+    pbRatio:
+      type: number
+      format: float
+      description: The value of the field corresponding to the price/book ratio
+      example: 48.32
+      nullable: true
+    trailingPEG1Y:
+      type: number
+      format: float
+      description: The value of the field corresponding to the trailing 1 year PEG Ratio
+      example: 2.15
+      nullable: true
+  required:
+    - date
+  additionalProperties: true
+  x-note: "New daily metrics are continuously added, so fields will change over time. Use the 'columns' parameter to ensure consistent output."
+
+FundamentalMeta: &FundamentalMeta
+  type: object
+  description: Company metadata and information about when data was last updated
+  properties:
+    permaTicker:
+      type: string
+      description: Permanent Tiingo Ticker mapping to the security. Can be used as a primary key
+      example: "AAPL"
+    ticker:
+      type: string
+      description: Ticker related to the asset
+      example: "AAPL"
+    name:
+      type: string
+      description: Full-length name of the asset
+      example: "Apple Inc."
+    isActive:
+      type: boolean
+      description: Boolean describing whether or not the ticker is still actively traded. If false, this ticker is delisted
+      example: true
+    isADR:
+      type: boolean
+      description: Boolean describing whether or not the ticker is an ADR. Value is true if listed ticker is an ADR
+      example: false
+    sector:
+      type: string
+      description: Sector information that is derived from sicSector and is meant to approximate GICS
+      example: "Technology"
+      nullable: true
+    industry:
+      type: string
+      description: Industry information that is derived from sicIndustry and is meant to approximate GICS
+      example: "Consumer Electronics"
+      nullable: true
+    sicCode:
+      type: integer
+      format: int32
+      description: SIC Code that represents company's business activities
+      example: 3571
+      nullable: true
+    sicSector:
+      type: string
+      description: Sector as determined by the SIC Code
+      example: "Industrial and Commercial Machinery and Computer Equipment"
+      nullable: true
+    sicIndustry:
+      type: string
+      description: Industry as determined by the SIC Code
+      example: "Electronic Computers"
+      nullable: true
+    reportingCurrency:
+      type: string
+      description: The currency the company reports their SEC statement filings in
+      example: "USD"
+      nullable: true
+    location:
+      type: string
+      description: Location/domicile of the company. States are included for U.S. companies, otherwise countries for non-US companies
+      example: "California"
+      nullable: true
+    companyWebsite:
+      type: string
+      format: uri
+      description: The website of the company when available
+      example: "https://www.apple.com"
+      nullable: true
+    secFilingWebsite:
+      type: string
+      format: uri
+      description: A URL to where you can find the company's SEC filings directly on the SEC website
+      example: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=&dateb=&owner=exclude&count=100"
+      nullable: true
+    statementLastUpdated:
+      type: string
+      format: date-time
+      description: The timestamp the statement data/endpoint was last updated for the ticker
+      example: "2024-01-15T10:30:00.000Z"
+      nullable: true
+    dailyLastUpdated:
+      type: string
+      format: date-time
+      description: The timestamp the daily data/endpoint was last updated for the ticker
+      example: "2024-01-15T08:00:00.000Z"
+      nullable: true
+  required:
+    - permaTicker
+    - ticker
+    - name
+    - isActive
+    - isADR
+  additionalProperties: true
+  x-note: "As new meta data about companies and their fundamentals is added, the endpoint output will change. Use the 'columns' parameter to ensure consistent output."
