@@ -1,0 +1,269 @@
+# IEX Exchange API Endpoints
+# Reference: https://api.tiingo.com/documentation/iex
+
+iex-all: &iex-all
+  get:
+    summary: Get current top-of-book and last price for all or multiple tickers
+    description: |
+      Retrieve current top-of-book (bid/ask) and last price data for all available tickers or a specified list of tickers.
+      Returns real-time reference prices or full TOPS feed data (requires IEX Exchange registration).
+
+      This endpoint provides:
+      - Top-of-Book (Bid/Ask) data
+      - Last Sale (trade) data
+      - Tiingo-enriched convenience fields (tngoLast, mid, open, high, low)
+      - Volume data (IEX only during trading, all exchanges after close)
+    operationId: getAllIEXQuotes
+    tags:
+      - IEX
+    parameters:
+      - name: tickers
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^[A-Z0-9]+(,[A-Z0-9]+)*$'
+        description: |
+          Comma-separated list of ticker symbols. If omitted, returns data for all available tickers.
+        example: 'AAPL,SPY,QQQ'
+      - $ref: '../parameters/_index.yaml#/FormatParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with top-of-book and last price data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/iex-schemas.yaml#/IEXTopOfBook'
+            examples:
+              multiple-tickers:
+                summary: Multiple tickers response
+                value:
+                  - ticker: 'AAPL'
+                    timestamp: '2019-01-30T10:33:38.186520297-05:00'
+                    quoteTimestamp: '2019-01-30T10:33:38.186520297-05:00'
+                    lastSaleTimeStamp: '2019-01-30T10:33:34.176037579-05:00'
+                    last: 162.37
+                    lastSize: 100
+                    tngoLast: 162.33
+                    prevClose: 154.68
+                    open: 161.83
+                    high: 163.25
+                    low: 160.38
+                    mid: 162.67
+                    volume: 0
+                    bidSize: 100
+                    bidPrice: 162.34
+                    askSize: 100
+                    askPrice: 163.0
+                  - ticker: 'SPY'
+                    timestamp: '2019-01-30T11:12:29.505261845-05:00'
+                    quoteTimestamp: '2019-01-30T11:12:29.505261845-05:00'
+                    lastSaleTimeStamp: '2019-01-30T11:12:16.643833612-05:00'
+                    last: 265.41
+                    lastSize: 617
+                    tngoLast: 265.405
+                    prevClose: 263.41
+                    open: 264.62
+                    high: 265.445
+                    low: 264.225
+                    mid: 265.405
+                    volume: 0
+                    bidSize: 500
+                    bidPrice: 265.39
+                    askSize: 100
+                    askPrice: 265.42
+          text/csv:
+            schema:
+              type: string
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+iex-single: &iex-single
+  get:
+    summary: Get current top-of-book and last price for a specific ticker
+    description: |
+      Retrieve current top-of-book (bid/ask) and last price data for a specific ticker symbol.
+      Returns real-time reference prices or full TOPS feed data (requires IEX Exchange registration).
+
+      This endpoint provides:
+      - Top-of-Book (Bid/Ask) data
+      - Last Sale (trade) data
+      - Tiingo-enriched convenience fields (tngoLast, mid, open, high, low)
+      - Volume data (IEX only during trading, all exchanges after close)
+      - Quotes updated to nanosecond precision
+    operationId: getIEXQuote
+    tags:
+      - IEX
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - $ref: '../parameters/_index.yaml#/FormatParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with top-of-book and last price data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/iex-schemas.yaml#/IEXTopOfBook'
+              minItems: 1
+              maxItems: 1
+            examples:
+              single-ticker:
+                summary: Single ticker response
+                value:
+                  - ticker: 'AAPL'
+                    timestamp: '2019-01-30T10:33:38.186520297-05:00'
+                    quoteTimestamp: '2019-01-30T10:33:38.186520297-05:00'
+                    lastSaleTimeStamp: '2019-01-30T10:33:34.176037579-05:00'
+                    last: 162.37
+                    lastSize: 100
+                    tngoLast: 162.33
+                    prevClose: 154.68
+                    open: 161.83
+                    high: 163.25
+                    low: 160.38
+                    mid: 162.67
+                    volume: 0
+                    bidSize: 100
+                    bidPrice: 162.34
+                    askSize: 100
+                    askPrice: 163.0
+          text/csv:
+            schema:
+              type: string
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+iex-prices: &iex-prices
+  get:
+    summary: Get historical intraday prices
+    description: |
+      Retrieve historical intraday prices for a stock in OHLC format. Supports various resampling frequencies
+      from 1-minute to daily bars.
+
+      Features:
+      - OHLC (Open, High, Low, Close) data
+      - Configurable time intervals (1min to daily)
+      - Optional after-hours data inclusion
+      - Force-fill option for gaps in data
+      - IEX-only volume data (available with explicit columns parameter)
+
+      Example use cases:
+      - Current day OHLC: `resampleFreq=1day`
+      - 5-minute bars: `startDate=2019-01-02&resampleFreq=5min`
+      - Hourly bars with gaps filled: `startDate=2025-12-01&resampleFreq=1hour&forceFill=true`
+    operationId: getIEXHistoricalPrices
+    tags:
+      - IEX
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - $ref: '../parameters/_index.yaml#/StartDateParam'
+      - $ref: '../parameters/_index.yaml#/EndDateParam'
+      - name: resampleFreq
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^\d+(min|hour|day)$'
+          default: '5min'
+        description: |
+          Frequency for resampling OHLC data. Format: number + unit (min/hour/day).
+          Minimum value is 1min.
+          Examples: '1min', '5min', '15min', '1hour', '4hour', '1day'
+        example: '5min'
+      - name: afterHours
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: If true, includes pre-market and post-market data if available
+      - name: forceFill
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: |
+          If true, fills gaps in data by using the previous OHLC values when no trade/quote update
+          occurred for a given time period
+      - name: columns
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^[a-z]+(,[a-z]+)*$'
+        description: |
+          Comma-separated list of columns to include in response.
+          Available columns: open, high, low, close, volume.
+          Note: Volume data is only exposed if explicitly requested.
+        example: 'open,high,low,close,volume'
+      - $ref: '../parameters/_index.yaml#/FormatParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with historical intraday price data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/iex-schemas.yaml#/IEXPrice'
+            examples:
+              five-minute-bars:
+                summary: 5-minute OHLC bars
+                value:
+                  - date: '2019-01-02T14:30:00.000Z'
+                    open: 154.74
+                    high: 155.52
+                    low: 154.58
+                    close: 154.76
+                    volume: 16102
+                  - date: '2019-01-02T14:35:00.000Z'
+                    open: 154.8
+                    high: 155.0
+                    low: 154.31
+                    close: 154.645
+                    volume: 19127
+              daily-bar:
+                summary: Daily OHLC bar
+                value:
+                  - date: '2019-01-02T00:00:00.000Z'
+                    open: 154.89
+                    high: 158.85
+                    low: 154.23
+                    close: 157.92
+          text/csv:
+            schema:
+              type: string
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
