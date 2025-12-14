@@ -1,0 +1,200 @@
+# Tiingo Forex API Paths
+# Reference these using: $ref: './forex.yaml#/forex-single'
+
+forex-single: &forex-single
+  get:
+    tags:
+      - Forex
+    summary: Get top-of-book data for a specific forex pair
+    description: |
+      Returns real-time top-of-book data including bid/ask prices and sizes for a specific forex pair.
+      This endpoint provides institutional-grade quality forex quotes from tier-1 banks and FX dark pools.
+      Market hours are Sunday 8pm EST through Friday 5pm EST.
+    operationId: getForexTopOfBook
+    parameters:
+      - name: ticker
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[a-z]{6}$'
+        description: Forex ticker pair (e.g., eurusd, gbpusd, audusd)
+        example: eurusd
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with forex top-of-book data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/forex-schemas.yaml#/ForexTopOfBook'
+            example:
+              - ticker: eurusd
+                quoteTimestamp: '2019-07-01T21:00:01.289000+00:00'
+                bidPrice: 1.1186
+                bidSize: 1000000.0
+                askPrice: 1.1187
+                askSize: 1000000.0
+                midPrice: 1.11865
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+forex-top: &forex-top
+  get:
+    tags:
+      - Forex
+    summary: Get top-of-book data for multiple forex pairs
+    description: |
+      Returns real-time top-of-book data including bid/ask prices and sizes for multiple forex pairs.
+      This endpoint allows you to query multiple forex tickers in a single request.
+      Supports 140+ forex ticker pairs with quotes updated to the latest microsecond during market hours.
+    operationId: getForexTopOfBookMultiple
+    parameters:
+      - name: tickers
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Comma-separated list of forex ticker pairs (e.g., eurusd,gbpusd,audusd)
+        example: eurusd,gbpusd
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with forex top-of-book data for multiple tickers
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/forex-schemas.yaml#/ForexTopOfBook'
+            example:
+              - ticker: audusd
+                quoteTimestamp: '2019-07-01T21:00:01.289000+00:00'
+                bidPrice: 0.6963
+                bidSize: 100000.0
+                askPrice: 0.6965
+                askSize: 100000.0
+                midPrice: 0.6964
+              - ticker: eurusd
+                quoteTimestamp: '2019-07-01T21:00:01.289000+00:00'
+                bidPrice: 1.1186
+                bidSize: 1000000.0
+                askPrice: 1.1187
+                askSize: 1000000.0
+                midPrice: 1.11865
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+forex-prices: &forex-prices
+  get:
+    tags:
+      - Forex
+    summary: Get historical intraday OHLC prices for a forex pair
+    description: |
+      Returns historical intraday OHLC (Open, High, Low, Close) prices for a forex pair.
+      Supports multiple resample frequencies from 1-minute to daily bars.
+      Default date range is current date minus 1 year to current date.
+    operationId: getForexPrices
+    parameters:
+      - name: ticker
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[a-z]{6}$'
+        description: Forex ticker pair (e.g., eurusd, gbpusd, audusd)
+        example: eurusd
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        description: Start date for historical data in YYYY-MM-DD format (default is current date minus 1 year)
+        example: '2019-06-30'
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        description: End date for historical data in YYYY-MM-DD format (default is current date)
+        example: '2019-07-01'
+      - name: resampleFreq
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - 1min
+            - 5min
+            - 15min
+            - 30min
+            - 1hour
+            - 1day
+          default: 1day
+        description: Frequency to resample data to
+        example: 5min
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with historical forex price data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticker:
+                  type: string
+                  description: Forex ticker pair
+                  example: eurusd
+                priceData:
+                  type: array
+                  items:
+                    $ref: '../schemas/forex-schemas.yaml#/ForexPrice'
+            example:
+              ticker: eurusd
+              priceData:
+                - date: '2019-06-28T20:00:00.000Z'
+                  open: 1.1232
+                  high: 1.1254
+                  low: 1.1220
+                  close: 1.1245
+                - date: '2019-06-28T20:05:00.000Z'
+                  open: 1.1245
+                  high: 1.1268
+                  low: 1.1242
+                  close: 1.1260
+                - date: '2019-06-28T20:10:00.000Z'
+                  open: 1.1260
+                  high: 1.1275
+                  low: 1.1258
+                  close: 1.1268
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
