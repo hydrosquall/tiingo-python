@@ -1,0 +1,214 @@
+# Tiingo Dividends API Endpoints
+# Corporate Actions - Distribution and Yield Endpoints
+
+distributions-batch: &distributions-batch
+  get:
+    summary: Get batch distribution data
+    description: |
+      Retrieve past, present, and future dividends and distributions for multiple tickers.
+      Returns detailed dividend and distribution data for stocks, ETFs, or mutual funds.
+      The response includes distribution frequency, which is the declared frequency of the
+      distribution that you can use to customize your calculations to determine yield.
+
+      Available for current and future dates. Requires End-of-Day endpoint entitlement.
+    operationId: getBatchDistributions
+    tags:
+      - Corporate Actions
+    parameters:
+      - name: exDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        description: |
+          Filter distributions by ex-date. Can be a future date or historical date.
+          If not specified, returns distributions with an ex-date of the current day.
+          Format: YYYY-MM-DD
+        example: '2023-08-25'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with array of distribution objects
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/dividends-schemas.yaml#/Distribution'
+            examples:
+              multipleDistributions:
+                summary: Multiple distributions for a specific ex-date
+                value:
+                  - permaTicker: AAPL
+                    ticker: AAPL
+                    exDate: '2023-08-25T00:00:00.000Z'
+                    paymentDate: '2023-09-07T00:00:00.000Z'
+                    recordDate: '2023-08-28T00:00:00.000Z'
+                    declarationDate: '2023-07-27T00:00:00.000Z'
+                    distribution: 0.24
+                    distributionFreqency: q
+                  - permaTicker: MSFT
+                    ticker: MSFT
+                    exDate: '2023-08-25T00:00:00.000Z'
+                    paymentDate: '2023-09-21T00:00:00.000Z'
+                    recordDate: '2023-08-31T00:00:00.000Z'
+                    declarationDate: '2023-07-25T00:00:00.000Z'
+                    distribution: 0.68
+                    distributionFreqency: q
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+distributions-ticker: &distributions-ticker
+  get:
+    summary: Get distribution data for a specific ticker
+    description: |
+      Retrieve historical distribution timeseries data for a specific ticker.
+      Similar to the batch endpoint, but allows you to specify a ticker to limit the query.
+      Supports stocks, ETFs, and mutual funds.
+
+      Returns full history by default, or can be limited to a date range using
+      startExDate and endExDate parameters.
+    operationId: getTickerDistributions
+    tags:
+      - Corporate Actions
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - name: startExDate
+        in: query
+        required: false
+        description: |
+          Start of the ex-date range to query. Format: YYYY-MM-DD
+        schema:
+          type: string
+          format: date
+        example: '2023-01-01'
+      - name: endExDate
+        in: query
+        required: false
+        description: |
+          End of the ex-date range to query. Format: YYYY-MM-DD
+        schema:
+          type: string
+          format: date
+        example: '2024-01-01'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with array of distribution objects for the specified ticker
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/dividends-schemas.yaml#/Distribution'
+            examples:
+              yearlyDistributions:
+                summary: AAPL quarterly distributions for 2023
+                value:
+                  - permaTicker: AAPL
+                    ticker: AAPL
+                    exDate: '2023-02-10T00:00:00.000Z'
+                    paymentDate: '2023-02-23T00:00:00.000Z'
+                    recordDate: '2023-02-13T00:00:00.000Z'
+                    declarationDate: '2023-01-26T00:00:00.000Z'
+                    distribution: 0.22
+                    distributionFreqency: q
+                  - permaTicker: AAPL
+                    ticker: AAPL
+                    exDate: '2023-05-12T00:00:00.000Z'
+                    paymentDate: '2023-05-25T00:00:00.000Z'
+                    recordDate: '2023-05-15T00:00:00.000Z'
+                    declarationDate: '2023-04-27T00:00:00.000Z'
+                    distribution: 0.22
+                    distributionFreqency: q
+                  - permaTicker: AAPL
+                    ticker: AAPL
+                    exDate: '2023-08-11T00:00:00.000Z'
+                    paymentDate: '2023-08-24T00:00:00.000Z'
+                    recordDate: '2023-08-14T00:00:00.000Z'
+                    declarationDate: '2023-07-27T00:00:00.000Z'
+                    distribution: 0.24
+                    distributionFreqency: q
+                  - permaTicker: AAPL
+                    ticker: AAPL
+                    exDate: '2023-11-10T00:00:00.000Z'
+                    paymentDate: '2023-11-23T00:00:00.000Z'
+                    recordDate: '2023-11-13T00:00:00.000Z'
+                    declarationDate: '2023-10-26T00:00:00.000Z'
+                    distribution: 0.24
+                    distributionFreqency: q
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+distribution-yield: &distribution-yield
+  get:
+    summary: Get historical yield data for a ticker
+    description: |
+      Retrieve current and historical information about yield data for stocks, ETFs,
+      or mutual funds. Yield data is available for tickers after their End-of-Day
+      price data has been processed.
+
+      Note: Tiingo will continue to add new daily metrics over time. Use the 'columns'
+      parameter to ensure constant output format, even if additional columns are added.
+    operationId: getDistributionYield
+    tags:
+      - Corporate Actions
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - name: columns
+        in: query
+        required: false
+        schema:
+          type: string
+        description: |
+          Comma-separated list of column names to return. This ensures only specified
+          fields are returned in exact order, providing consistent output format across
+          API updates. Example: 'trailingDiv1Y' will always return only that field.
+        example: trailingDiv1Y
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with array of yield objects
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/dividends-schemas.yaml#/DistributionYield'
+            examples:
+              historicalYield:
+                summary: Historical trailing 1-year dividend yield for AAPL
+                value:
+                  - date: '2024-01-01T00:00:00.000Z'
+                    trailingDiv1Y: '0.92'
+                  - date: '2024-01-02T00:00:00.000Z'
+                    trailingDiv1Y: '0.92'
+                  - date: '2024-01-03T00:00:00.000Z'
+                    trailingDiv1Y: '0.92'
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
