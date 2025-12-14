@@ -1,0 +1,168 @@
+# OpenAPI Schemas Index
+# This file provides a centralized index of all schema components across the Tiingo API
+# organized by endpoint category. Each schema is defined with a YAML anchor and references
+# the actual schema definition from its respective file.
+
+# ========================================================================
+# COMMON SCHEMAS - Shared across all endpoints
+# Reference: ./common.yaml
+# ========================================================================
+
+Date: &Date
+  $ref: './common.yaml#/Date'
+
+DateTime: &DateTime
+  $ref: './common.yaml#/DateTime'
+
+Ticker: &Ticker
+  $ref: './common.yaml#/Ticker'
+
+Currency: &Currency
+  $ref: './common.yaml#/Currency'
+
+ErrorResponse: &ErrorResponse
+  $ref: './common.yaml#/ErrorResponse'
+
+# ========================================================================
+# END-OF-DAY STOCK PRICE SCHEMAS
+# Reference: https://www.tiingo.com/documentation/end-of-day
+# File: ./eod-schemas.yaml
+# ========================================================================
+
+PriceData: &PriceData
+  $ref: './eod-schemas.yaml#/PriceData'
+
+TickerMetadata: &TickerMetadata
+  $ref: './eod-schemas.yaml#/TickerMetadata'
+
+# ========================================================================
+# NEWS API SCHEMAS
+# File: ./news-schemas.yaml
+# ========================================================================
+
+NewsArticle: &NewsArticle
+  $ref: './news-schemas.yaml#/NewsArticle'
+
+BulkDownloadFile: &BulkDownloadFile
+  $ref: './news-schemas.yaml#/BulkDownloadFile'
+
+# ========================================================================
+# CRYPTOCURRENCY API SCHEMAS
+# File: ./crypto-schemas.yaml
+# ========================================================================
+
+CryptoCurrency: &CryptoCurrency
+  $ref: './crypto-schemas.yaml#/CryptoCurrency'
+
+CryptoTicker: &CryptoTicker
+  $ref: './crypto-schemas.yaml#/CryptoTicker'
+
+ResampleFreq: &ResampleFreq
+  $ref: './crypto-schemas.yaml#/ResampleFreq'
+
+PriceDataItem: &PriceDataItem
+  $ref: './crypto-schemas.yaml#/PriceDataItem'
+
+ExchangeDataItem: &ExchangeDataItem
+  $ref: './crypto-schemas.yaml#/ExchangeDataItem'
+
+CryptoPrice: &CryptoPrice
+  $ref: './crypto-schemas.yaml#/CryptoPrice'
+
+CryptoMetadata: &CryptoMetadata
+  $ref: './crypto-schemas.yaml#/CryptoMetadata'
+
+TopOfBookData: &TopOfBookData
+  $ref: './crypto-schemas.yaml#/TopOfBookData'
+
+TopOfBookExchangeData: &TopOfBookExchangeData
+  $ref: './crypto-schemas.yaml#/TopOfBookExchangeData'
+
+CryptoTopOfBook: &CryptoTopOfBook
+  $ref: './crypto-schemas.yaml#/CryptoTopOfBook'
+
+# ========================================================================
+# FOREX API SCHEMAS
+# File: ./forex-schemas.yaml
+# ========================================================================
+
+ForexTopOfBook: &ForexTopOfBook
+  $ref: './forex-schemas.yaml#/ForexTopOfBook'
+
+ForexPrice: &ForexPrice
+  $ref: './forex-schemas.yaml#/ForexPrice'
+
+# ========================================================================
+# IEX EXCHANGE API SCHEMAS
+# Reference: https://api.tiingo.com/documentation/iex
+# File: ./iex-schemas.yaml
+# ========================================================================
+
+IEXTopOfBook: &IEXTopOfBook
+  $ref: './iex-schemas.yaml#/IEXTopOfBook'
+
+IEXPrice: &IEXPrice
+  $ref: './iex-schemas.yaml#/IEXPrice'
+
+# ========================================================================
+# FUNDAMENTALS API SCHEMAS
+# File: ./fundamentals-schemas.yaml
+# ========================================================================
+
+FundamentalDefinition: &FundamentalDefinition
+  $ref: './fundamentals-schemas.yaml#/FundamentalDefinition'
+
+DataPoint: &DataPoint
+  $ref: './fundamentals-schemas.yaml#/DataPoint'
+
+StatementData: &StatementData
+  $ref: './fundamentals-schemas.yaml#/StatementData'
+
+FinancialStatement: &FinancialStatement
+  $ref: './fundamentals-schemas.yaml#/FinancialStatement'
+
+DailyMetric: &DailyMetric
+  $ref: './fundamentals-schemas.yaml#/DailyMetric'
+
+FundamentalMeta: &FundamentalMeta
+  $ref: './fundamentals-schemas.yaml#/FundamentalMeta'
+
+# ========================================================================
+# MUTUAL FUNDS AND ETF SCHEMAS
+# Reference: /docs/api_extracted/mutual-fund-etf-fees.md
+# File: ./funds-schemas.yaml
+# ========================================================================
+
+OtherShareClass: &OtherShareClass
+  $ref: './funds-schemas.yaml#/OtherShareClass'
+
+FundOverview: &FundOverview
+  $ref: './funds-schemas.yaml#/FundOverview'
+
+CustomFee: &CustomFee
+  $ref: './funds-schemas.yaml#/CustomFee'
+
+FundMetrics: &FundMetrics
+  $ref: './funds-schemas.yaml#/FundMetrics'
+
+# ========================================================================
+# DIVIDENDS AND DISTRIBUTIONS SCHEMAS
+# File: ./dividends-schemas.yaml
+# ========================================================================
+
+Distribution: &Distribution
+  $ref: './dividends-schemas.yaml#/Distribution'
+
+DistributionYield: &DistributionYield
+  $ref: './dividends-schemas.yaml#/DistributionYield'
+
+# ========================================================================
+# STOCK SPLITS SCHEMAS
+# File: ./splits-schemas.yaml
+# ========================================================================
+
+Split: &Split
+  $ref: './splits-schemas.yaml#/Split'
+
+SplitArray: &SplitArray
+  $ref: './splits-schemas.yaml#/SplitArray'
