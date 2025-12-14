@@ -1,0 +1,179 @@
+openapi: 3.0.3
+
+info:
+  title: Tiingo REST API
+  version: 1.0.0
+  description: |
+    Tiingo is a financial data platform providing real-time and historical market data.
+
+    This API provides access to:
+    - End-of-Day stock prices and metadata
+    - Financial news articles and bulk downloads
+    - Cryptocurrency prices and metadata
+    - Foreign exchange (Forex) rates and prices
+    - IEX real-time stock data
+    - Fundamental financial statements and metrics
+    - Mutual fund and ETF data
+    - Corporate actions (dividends and stock splits)
+
+    Authentication is required via API token. Get your free API token at https://www.tiingo.com
+  contact:
+    name: Tiingo API Support
+    url: https://www.tiingo.com
+    email: api@tiingo.com
+  license:
+    name: Tiingo Terms of Service
+    url: https://www.tiingo.com/about/terms-of-service
+
+servers:
+  - url: https://api.tiingo.com
+    description: Production API Server
+  - url: https://apimedia.tiingo.com
+    description: Media/Static Assets Server
+
+# Global security requirement - all endpoints require API key
+security:
+  - ApiKeyAuth: []
+
+# ============================================================================
+# PATHS - API Endpoints
+# ============================================================================
+paths:
+  # --------------------------------------------------------------------------
+  # End-of-Day Endpoints (2 endpoints)
+  # --------------------------------------------------------------------------
+  /tiingo/daily/{ticker}/prices:
+    $ref: "./paths/end-of-day.yaml#/daily-prices"
+
+  /tiingo/daily/{ticker}:
+    $ref: "./paths/end-of-day.yaml#/daily-meta"
+
+  # --------------------------------------------------------------------------
+  # News Endpoints (3 endpoints)
+  # --------------------------------------------------------------------------
+  /tiingo/news:
+    $ref: "./paths/news.yaml#/news"
+
+  /tiingo/news/bulk_download:
+    $ref: "./paths/news.yaml#/bulk-list"
+
+  /tiingo/news/bulk_download/{id}:
+    $ref: "./paths/news.yaml#/bulk-download"
+
+  # --------------------------------------------------------------------------
+  # Crypto Endpoints (3 endpoints)
+  # --------------------------------------------------------------------------
+  /tiingo/crypto/prices:
+    $ref: "./paths/crypto.yaml#/crypto-prices"
+
+  /tiingo/crypto:
+    $ref: "./paths/crypto.yaml#/crypto-meta"
+
+  /tiingo/crypto/top:
+    $ref: "./paths/crypto.yaml#/crypto-top"
+
+  # --------------------------------------------------------------------------
+  # Forex Endpoints (3 endpoints)
+  # --------------------------------------------------------------------------
+  /tiingo/fx/{ticker}:
+    $ref: "./paths/forex.yaml#/forex-single"
+
+  /tiingo/fx/top:
+    $ref: "./paths/forex.yaml#/forex-top"
+
+  /tiingo/fx/{ticker}/prices:
+    $ref: "./paths/forex.yaml#/forex-prices"
+
+  # --------------------------------------------------------------------------
+  # IEX Endpoints (3 endpoints)
+  # --------------------------------------------------------------------------
+  /iex:
+    $ref: "./paths/iex.yaml#/iex-all"
+
+  /iex/{ticker}:
+    $ref: "./paths/iex.yaml#/iex-single"
+
+  /iex/{ticker}/prices:
+    $ref: "./paths/iex.yaml#/iex-prices"
+
+  # --------------------------------------------------------------------------
+  # Fundamentals Endpoints (4 endpoints)
+  # --------------------------------------------------------------------------
+  /tiingo/fundamentals/definitions:
+    $ref: "./paths/fundamentals.yaml#/definitions"
+
+  /tiingo/fundamentals/{ticker}/statements:
+    $ref: "./paths/fundamentals.yaml#/statements"
+
+  /tiingo/fundamentals/{ticker}/daily:
+    $ref: "./paths/fundamentals.yaml#/daily"
+
+  /tiingo/fundamentals/meta:
+    $ref: "./paths/fundamentals.yaml#/meta"
+
+  # --------------------------------------------------------------------------
+  # Funds Endpoints (2 endpoints)
+  # --------------------------------------------------------------------------
+  /tiingo/funds/{ticker}:
+    $ref: "./paths/funds.yaml#/fund-overview"
+
+  /tiingo/funds/{ticker}/metrics:
+    $ref: "./paths/funds.yaml#/fund-metrics"
+
+  # --------------------------------------------------------------------------
+  # Dividends/Distributions Endpoints (3 endpoints)
+  # --------------------------------------------------------------------------
+  /tiingo/corporate-actions/distributions:
+    $ref: "./paths/dividends.yaml#/distributions-batch"
+
+  /tiingo/corporate-actions/{ticker}/distributions:
+    $ref: "./paths/dividends.yaml#/distributions-ticker"
+
+  /tiingo/corporate-actions/{ticker}/distribution-yield:
+    $ref: "./paths/dividends.yaml#/distribution-yield"
+
+  # --------------------------------------------------------------------------
+  # Splits Endpoints (2 endpoints)
+  # --------------------------------------------------------------------------
+  /tiingo/corporate-actions/splits:
+    $ref: "./paths/splits.yaml#/splits-batch"
+
+  /tiingo/corporate-actions/{ticker}/splits:
+    $ref: "./paths/splits.yaml#/splits-ticker"
+
+# ============================================================================
+# COMPONENTS - Reusable definitions
+# ============================================================================
+components:
+  # --------------------------------------------------------------------------
+  # Security Schemes
+  # --------------------------------------------------------------------------
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: token
+      description: |
+        API key authentication. Obtain your API token from https://www.tiingo.com
+
+        Usage: Add `?token=YOUR_API_TOKEN` to all API requests.
+
+        Example: `https://api.tiingo.com/tiingo/daily/aapl/prices?token=YOUR_API_TOKEN`
+
+  # --------------------------------------------------------------------------
+  # Reusable Parameters
+  # --------------------------------------------------------------------------
+  parameters:
+    $ref: "./parameters/_index.yaml"
+
+  # --------------------------------------------------------------------------
+  # Reusable Schemas
+  # --------------------------------------------------------------------------
+  schemas:
+    $ref: "./schemas/_index.yaml"
+
+  # --------------------------------------------------------------------------
+  # Reusable Responses
+  # --------------------------------------------------------------------------
+  responses:
+    $ref: "./responses/_index.yaml"
