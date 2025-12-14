@@ -1,0 +1,191 @@
+# End-of-Day Stock Price API Paths
+# Reference: https://www.tiingo.com/documentation/end-of-day
+
+daily-prices: &daily-prices
+  get:
+    summary: Get End-of-Day Stock Prices
+    description: |
+      Returns End-of-Day price data for a given stock ticker.
+
+      Tiingo's End-of-Day prices use a proprietary error checking framework to help clean data feeds
+      and catch missing corporate actions (splits, dividends, and exchange listing changes).
+
+      **Pricing Availability:**
+      - Most US Equity prices are available at 5:30 PM EST
+      - Exchanges may send corrections until 8 PM EST
+      - Mutual Fund NAVs available after 12 AM EST
+
+      **Price Adjustments:**
+      - Both raw and adjusted prices are available
+      - Adjustment methodology follows CRSP (Center for Research in Security Prices) standard
+      - Incorporates both split and dividend adjustments
+    operationId: getEndOfDayPrices
+    tags:
+      - End-of-Day
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+      - $ref: '../parameters/_index.yaml#/StartDateParam'
+      - $ref: '../parameters/_index.yaml#/EndDateParam'
+      - $ref: '../parameters/_index.yaml#/FormatParam'
+      - name: resampleFreq
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - daily
+            - weekly
+            - monthly
+            - annually
+            - 1min
+            - 5min
+            - 15min
+            - 30min
+            - 1hour
+            - 4hour
+        description: Resample frequency for OHLC bars (e.g., daily, monthly, weekly, 5min, 1hour)
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - asc
+            - desc
+          default: asc
+        description: Sort order for results (ascending or descending by date)
+      - name: columns
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Comma-separated list of specific columns to return (e.g., "date,close,volume")
+        example: "date,close,volume"
+    responses:
+      '200':
+        description: Successful response with price data
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/eod-schemas.yaml#/PriceData'
+            examples:
+              singleDay:
+                summary: Single day price data
+                value:
+                  - date: "2024-01-01"
+                    open: 150.25
+                    high: 152.50
+                    low: 149.75
+                    close: 151.80
+                    volume: 50000000
+                    adjOpen: 150.25
+                    adjHigh: 152.50
+                    adjLow: 149.75
+                    adjClose: 151.80
+                    adjVolume: 50000000
+                    divCash: 0.0
+                    splitFactor: 1.0
+              historicalData:
+                summary: Multiple days historical data
+                value:
+                  - date: "2024-01-01"
+                    open: 150.25
+                    high: 152.50
+                    low: 149.75
+                    close: 151.80
+                    volume: 50000000
+                    adjOpen: 150.25
+                    adjHigh: 152.50
+                    adjLow: 149.75
+                    adjClose: 151.80
+                    adjVolume: 50000000
+                    divCash: 0.0
+                    splitFactor: 1.0
+                  - date: "2024-01-02"
+                    open: 151.90
+                    high: 153.20
+                    low: 151.50
+                    close: 152.40
+                    volume: 48000000
+                    adjOpen: 151.90
+                    adjHigh: 153.20
+                    adjLow: 151.50
+                    adjClose: 152.40
+                    adjVolume: 48000000
+                    divCash: 0.0
+                    splitFactor: 1.0
+          text/csv:
+            schema:
+              type: string
+              format: binary
+            example: |
+              date,open,high,low,close,volume,adjOpen,adjHigh,adjLow,adjClose,adjVolume,divCash,splitFactor
+              2024-01-01,150.25,152.50,149.75,151.80,50000000,150.25,152.50,149.75,151.80,50000000,0.0,1.0
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+daily-meta: &daily-meta
+  get:
+    summary: Get Stock Ticker Metadata
+    description: |
+      Returns metadata information about a specific stock ticker.
+
+      Meta information comes from a variety of sources and is used to help communicate
+      details about an asset in the Tiingo database to users.
+
+      **Response Fields:**
+      - Ticker symbol and full name
+      - Exchange where the asset is listed
+      - Description of the company/asset
+      - Date range for available price data
+    operationId: getTickerMetadata
+    tags:
+      - End-of-Day
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with ticker metadata
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/eod-schemas.yaml#/TickerMetadata'
+            examples:
+              appleMetadata:
+                summary: Apple Inc metadata
+                value:
+                  ticker: "AAPL"
+                  name: "Apple Inc"
+                  exchangeCode: "NASDAQ"
+                  description: "Apple Inc is an American multinational technology company that specializes in consumer electronics, software and online services."
+                  startDate: "1990-01-01"
+                  endDate: "2024-01-01"
+              noDataTicker:
+                summary: Ticker with no price data
+                value:
+                  ticker: "NEWCO"
+                  name: "New Company Inc"
+                  exchangeCode: "NYSE"
+                  description: "A newly listed company"
+                  startDate: null
+                  endDate: null
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
