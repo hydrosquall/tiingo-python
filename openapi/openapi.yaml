@@ -38,108 +38,119 @@ security:
 # ============================================================================
 # PATHS - API Endpoints
 # ============================================================================
-paths:
+# NOTE: Path references are commented out until their corresponding path files
+# are created. Each PR that adds a path file should uncomment its section.
+paths: {}
   # --------------------------------------------------------------------------
   # End-of-Day Endpoints (2 endpoints)
+  # TODO: Uncomment when ./paths/end-of-day.yaml is created
   # --------------------------------------------------------------------------
-  /tiingo/daily/{ticker}/prices:
-    $ref: "./paths/end-of-day.yaml#/daily-prices"
-
-  /tiingo/daily/{ticker}:
-    $ref: "./paths/end-of-day.yaml#/daily-meta"
+  # /tiingo/daily/{ticker}/prices:
+  #   $ref: "./paths/end-of-day.yaml#/daily-prices"
+  #
+  # /tiingo/daily/{ticker}:
+  #   $ref: "./paths/end-of-day.yaml#/daily-meta"
 
   # --------------------------------------------------------------------------
   # News Endpoints (3 endpoints)
+  # TODO: Uncomment when ./paths/news.yaml is created
   # --------------------------------------------------------------------------
-  /tiingo/news:
-    $ref: "./paths/news.yaml#/news"
-
-  /tiingo/news/bulk_download:
-    $ref: "./paths/news.yaml#/bulk-list"
-
-  /tiingo/news/bulk_download/{id}:
-    $ref: "./paths/news.yaml#/bulk-download"
+  # /tiingo/news:
+  #   $ref: "./paths/news.yaml#/news"
+  #
+  # /tiingo/news/bulk_download:
+  #   $ref: "./paths/news.yaml#/bulk-list"
+  #
+  # /tiingo/news/bulk_download/{id}:
+  #   $ref: "./paths/news.yaml#/bulk-download"
 
   # --------------------------------------------------------------------------
   # Crypto Endpoints (3 endpoints)
+  # TODO: Uncomment when ./paths/crypto.yaml is created
   # --------------------------------------------------------------------------
-  /tiingo/crypto/prices:
-    $ref: "./paths/crypto.yaml#/crypto-prices"
-
-  /tiingo/crypto:
-    $ref: "./paths/crypto.yaml#/crypto-meta"
-
-  /tiingo/crypto/top:
-    $ref: "./paths/crypto.yaml#/crypto-top"
+  # /tiingo/crypto/prices:
+  #   $ref: "./paths/crypto.yaml#/crypto-prices"
+  #
+  # /tiingo/crypto:
+  #   $ref: "./paths/crypto.yaml#/crypto-meta"
+  #
+  # /tiingo/crypto/top:
+  #   $ref: "./paths/crypto.yaml#/crypto-top"
 
   # --------------------------------------------------------------------------
   # Forex Endpoints (3 endpoints)
+  # TODO: Uncomment when ./paths/forex.yaml is created
   # --------------------------------------------------------------------------
-  /tiingo/fx/{ticker}:
-    $ref: "./paths/forex.yaml#/forex-single"
-
-  /tiingo/fx/top:
-    $ref: "./paths/forex.yaml#/forex-top"
-
-  /tiingo/fx/{ticker}/prices:
-    $ref: "./paths/forex.yaml#/forex-prices"
+  # /tiingo/fx/{ticker}:
+  #   $ref: "./paths/forex.yaml#/forex-single"
+  #
+  # /tiingo/fx/top:
+  #   $ref: "./paths/forex.yaml#/forex-top"
+  #
+  # /tiingo/fx/{ticker}/prices:
+  #   $ref: "./paths/forex.yaml#/forex-prices"
 
   # --------------------------------------------------------------------------
   # IEX Endpoints (3 endpoints)
+  # TODO: Uncomment when ./paths/iex.yaml is created
   # --------------------------------------------------------------------------
-  /iex:
-    $ref: "./paths/iex.yaml#/iex-all"
-
-  /iex/{ticker}:
-    $ref: "./paths/iex.yaml#/iex-single"
-
-  /iex/{ticker}/prices:
-    $ref: "./paths/iex.yaml#/iex-prices"
+  # /iex:
+  #   $ref: "./paths/iex.yaml#/iex-all"
+  #
+  # /iex/{ticker}:
+  #   $ref: "./paths/iex.yaml#/iex-single"
+  #
+  # /iex/{ticker}/prices:
+  #   $ref: "./paths/iex.yaml#/iex-prices"
 
   # --------------------------------------------------------------------------
   # Fundamentals Endpoints (4 endpoints)
+  # TODO: Uncomment when ./paths/fundamentals.yaml is created
   # --------------------------------------------------------------------------
-  /tiingo/fundamentals/definitions:
-    $ref: "./paths/fundamentals.yaml#/definitions"
-
-  /tiingo/fundamentals/{ticker}/statements:
-    $ref: "./paths/fundamentals.yaml#/statements"
-
-  /tiingo/fundamentals/{ticker}/daily:
-    $ref: "./paths/fundamentals.yaml#/daily"
-
-  /tiingo/fundamentals/meta:
-    $ref: "./paths/fundamentals.yaml#/meta"
+  # /tiingo/fundamentals/definitions:
+  #   $ref: "./paths/fundamentals.yaml#/definitions"
+  #
+  # /tiingo/fundamentals/{ticker}/statements:
+  #   $ref: "./paths/fundamentals.yaml#/statements"
+  #
+  # /tiingo/fundamentals/{ticker}/daily:
+  #   $ref: "./paths/fundamentals.yaml#/daily"
+  #
+  # /tiingo/fundamentals/meta:
+  #   $ref: "./paths/fundamentals.yaml#/meta"
 
   # --------------------------------------------------------------------------
   # Funds Endpoints (2 endpoints)
+  # TODO: Uncomment when ./paths/funds.yaml is created
   # --------------------------------------------------------------------------
-  /tiingo/funds/{ticker}:
-    $ref: "./paths/funds.yaml#/fund-overview"
-
-  /tiingo/funds/{ticker}/metrics:
-    $ref: "./paths/funds.yaml#/fund-metrics"
+  # /tiingo/funds/{ticker}:
+  #   $ref: "./paths/funds.yaml#/fund-overview"
+  #
+  # /tiingo/funds/{ticker}/metrics:
+  #   $ref: "./paths/funds.yaml#/fund-metrics"
 
   # --------------------------------------------------------------------------
   # Dividends/Distributions Endpoints (3 endpoints)
+  # TODO: Uncomment when ./paths/dividends.yaml is created
   # --------------------------------------------------------------------------
-  /tiingo/corporate-actions/distributions:
-    $ref: "./paths/dividends.yaml#/distributions-batch"
-
-  /tiingo/corporate-actions/{ticker}/distributions:
-    $ref: "./paths/dividends.yaml#/distributions-ticker"
-
-  /tiingo/corporate-actions/{ticker}/distribution-yield:
-    $ref: "./paths/dividends.yaml#/distribution-yield"
+  # /tiingo/corporate-actions/distributions:
+  #   $ref: "./paths/dividends.yaml#/distributions-batch"
+  #
+  # /tiingo/corporate-actions/{ticker}/distributions:
+  #   $ref: "./paths/dividends.yaml#/distributions-ticker"
+  #
+  # /tiingo/corporate-actions/{ticker}/distribution-yield:
+  #   $ref: "./paths/dividends.yaml#/distribution-yield"
 
   # --------------------------------------------------------------------------
   # Splits Endpoints (2 endpoints)
+  # TODO: Uncomment when ./paths/splits.yaml is created
   # --------------------------------------------------------------------------
-  /tiingo/corporate-actions/splits:
-    $ref: "./paths/splits.yaml#/splits-batch"
-
-  /tiingo/corporate-actions/{ticker}/splits:
-    $ref: "./paths/splits.yaml#/splits-ticker"
+  # /tiingo/corporate-actions/splits:
+  #   $ref: "./paths/splits.yaml#/splits-batch"
+  #
+  # /tiingo/corporate-actions/{ticker}/splits:
+  #   $ref: "./paths/splits.yaml#/splits-ticker"
 
 # ============================================================================
 # COMPONENTS - Reusable definitions
