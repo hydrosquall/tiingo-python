@@ -1,0 +1,132 @@
+# Tiingo Mutual Fund and ETF Fees API Endpoints
+# Reference: /docs/api_extracted/mutual-fund-etf-fees.md
+
+fund-overview: &fund-overview
+  get:
+    summary: Get Fund Overview
+    description: |
+      Obtain top-level fund data, including description and share classes.
+
+      This endpoint provides comprehensive information about a mutual fund or ETF,
+      including its full name, description, share class, net expense ratio, and
+      related share classes with their respective expense ratios.
+
+      **Note:** This endpoint is available for enterprise and institutional clients only.
+      Contact Sales@tiingo.com for licensing and pricing.
+    operationId: getFundOverview
+    tags:
+      - Funds
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with fund overview data
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/funds-schemas.yaml#/FundOverview'
+            examples:
+              vtsax:
+                summary: Vanguard Total Stock Market Index Fund
+                value:
+                  ticker: "VTSAX"
+                  name: "Vanguard Total Stock Market Index Fund"
+                  description: "Long description of the fund..."
+                  shareClass: "Admiral Shares"
+                  netExpense: 0.0035
+                  otherShareClasses:
+                    - ticker: "VTSMX"
+                      name: "Vanguard Total Stock Market Index Fund"
+                      shareClass: "Investor Shares"
+                      netExpense: 0.0055
+                    - ticker: "VTSIX"
+                      name: "Vanguard Total Stock Market Index Fund"
+                      shareClass: "Institutional Shares"
+                      netExpense: 0.0020
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+fund-metrics: &fund-metrics
+  get:
+    summary: Get Fund Fee Metrics
+    description: |
+      Obtain detailed current and historical fee data for a mutual fund or ETF.
+
+      This endpoint provides comprehensive fee information including net and gross expense ratios,
+      management fees, 12b-1 fees, load fees, redemption fees, and custom fees. The data includes
+      both current and historical fee information with prospectus dates.
+
+      Fee data covers:
+      - Expense ratios (net/gross)
+      - Management and distribution fees
+      - Load fees (front/back/dividend)
+      - Shareholder and account fees
+      - Redemption and exchange fees
+      - Custom fees (e.g., check processing fees)
+
+      All fee values are expressed as decimals (e.g., 0.0035 = 0.35%).
+
+      **Note:** This endpoint is available for enterprise and institutional clients only.
+      Contact Sales@tiingo.com for licensing and pricing.
+    operationId: getFundMetrics
+    tags:
+      - Funds
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with detailed fund fee metrics
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/funds-schemas.yaml#/FundMetrics'
+            examples:
+              vtsax:
+                summary: Vanguard Total Stock Market Index Fund Fees
+                value:
+                  prospectusDate: "2024-01-15"
+                  netExpense: 0.0035
+                  grossExpense: 0.0040
+                  managementFee: 0.0025
+                  12b1: 0.0000
+                  non12b1: 0.0000
+                  otherExpenses: 0.0015
+                  acquiredFundFees: 0.0000
+                  feeWaiver: 0.0005
+                  exchangeFeeUSD: 0.0000
+                  exchangeFeePercent: 0.0000
+                  frontLoad: 0.0000
+                  backLoad: 0.0000
+                  dividendLoad: 0.0000
+                  shareholderFee: 0.0000
+                  accountFeeUSD: 0.0000
+                  accountFeePercent: 0.0000
+                  redemptionFeeUSD: 0.0000
+                  redemptionFeePercent: 0.0000
+                  portfolioTurnover: 0.05
+                  miscFees: 0.0000
+                  customFees:
+                    - label: "Check Processing Fee"
+                      value: 0.0000
+                      units: "$"
+                      parentFee: "shareholderFee"
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'

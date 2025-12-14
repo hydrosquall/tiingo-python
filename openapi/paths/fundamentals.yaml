@@ -1,0 +1,360 @@
+# Tiingo Fundamentals API Endpoints
+# Reference these using: $ref: './fundamentals.yaml#/definitions'
+
+definitions: &definitions
+  get:
+    summary: Get Fundamental Definitions
+    description: |
+      Returns available fundamental metrics and their metadata. Use this endpoint to discover
+      which fields are available and what they represent.
+    operationId: getFundamentalDefinitions
+    tags:
+      - Fundamentals
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+      - name: tickers
+        in: query
+        required: false
+        schema:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        description: |
+          Specific tickers to return meta data for. If no string passed, will return meta data
+          for all available tickers. Can either be a single ticker, a comma-separated list of tickers,
+          or an array of strings (string[]).
+        examples:
+          single:
+            value: "AAPL"
+            summary: Single ticker
+          multiple:
+            value: "AAPL,GOOGL,MSFT"
+            summary: Multiple tickers (comma-separated)
+          array:
+            value: ["AAPL", "GOOGL", "MSFT"]
+            summary: Array of tickers
+      - $ref: '../parameters/_index.yaml#/FormatParam'
+    responses:
+      '200':
+        description: Successful response with fundamental definitions
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/fundamentals-schemas.yaml#/FundamentalDefinition'
+            examples:
+              definitions:
+                summary: Example fundamental definitions
+                value:
+                  - dataCode: "peRatio"
+                    name: "Price/Earnings Ratio"
+                    description: "The price to earnings ratio of the company"
+                    statementType: "overview"
+                    units: ""
+                  - dataCode: "netIncome"
+                    name: "Net Income"
+                    description: "The net income of the company"
+                    statementType: "incomeStatement"
+                    units: "$"
+          text/csv:
+            schema:
+              type: string
+              description: CSV formatted data
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+statements: &statements
+  get:
+    summary: Get Financial Statements
+    description: |
+      Returns historical statement data extracted from quarterly and annual statements
+      (Balance Sheet, Income Statement, Cash Flow, and Overview metrics). Data is updated
+      usually within 12-24 hours of being made available by the SEC.
+
+      The `asReported` parameter controls whether you get the most recent revised data
+      (false, default) or the data as it was originally reported (true).
+    operationId: getFinancialStatements
+    tags:
+      - Fundamentals
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+      - name: asReported
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: |
+          When false (default), returns the most recent data including any revisions for the reporting period.
+          The dates will correspond to the fiscal end of the quarter or year.
+          When true, returns the data as it was reported on the release date.
+          The date will correspond to the date the filings were posted on the SEC.
+      - $ref: '../parameters/_index.yaml#/StartDateParam'
+      - $ref: '../parameters/_index.yaml#/EndDateParam'
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - date
+            - -date
+          default: date
+        description: |
+          Sort direction and column to sort by. Prepend "-" for descending order,
+          otherwise ascending. For Fundamentals statements, only the "date" field may be sorted upon.
+        examples:
+          ascending:
+            value: "date"
+            summary: Sort by date ascending
+          descending:
+            value: "-date"
+            summary: Sort by date descending
+      - $ref: '../parameters/_index.yaml#/FormatParam'
+    responses:
+      '200':
+        description: Successful response with financial statements
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/fundamentals-schemas.yaml#/FinancialStatement'
+            examples:
+              statements:
+                summary: Example financial statement
+                value:
+                  - date: "2023-12-29T00:00:00.000Z"
+                    quarter: 1
+                    year: 2024
+                    statementData:
+                      balanceSheet:
+                        - dataCode: "totalAssets"
+                          value: 352755000000
+                      incomeStatement:
+                        - dataCode: "revenue"
+                          value: 383285000000
+                        - dataCode: "netIncome"
+                          value: 96995000000
+                      cashFlow:
+                        - dataCode: "operatingCashFlow"
+                          value: 110543000000
+                      overview:
+                        - dataCode: "peRatio"
+                          value: 29.45
+          text/csv:
+            schema:
+              type: string
+              description: CSV formatted data (flat/2-D structure for spreadsheet compatibility)
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+daily: &daily
+  get:
+    summary: Get Daily Fundamentals
+    description: |
+      Returns daily fundamental metrics that rely on price data and update daily
+      (Market Capitalization, P/E Ratios, P/B Ratios, etc.).
+
+      IMPORTANT: New daily metrics are continuously added, so fields will change over time.
+      Use the `columns` parameter if you require specific columns in a particular order.
+    operationId: getDailyFundamentals
+    tags:
+      - Fundamentals
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TickerPathParam'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+      - $ref: '../parameters/_index.yaml#/StartDateParam'
+      - $ref: '../parameters/_index.yaml#/EndDateParam'
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^-?[a-zA-Z]+$'
+        description: |
+          Sort direction and column to sort by. Prepend "-" for descending order,
+          otherwise ascending. E.g. sort=date (ascending) or sort=-date (descending).
+        examples:
+          ascending:
+            value: "date"
+            summary: Sort by date ascending
+          descending:
+            value: "-date"
+            summary: Sort by date descending
+      - name: columns
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^[a-zA-Z]+(,[a-zA-Z]+)*$'
+        description: |
+          Comma-separated list of columns to return. Ensures consistent output even as
+          new metrics are added. E.g. columns=date,marketCap,peRatio will always return
+          only those columns in that exact order.
+        examples:
+          basic:
+            value: "date,marketCap,peRatio"
+            summary: Basic metrics
+          extended:
+            value: "date,marketCap,enterpriseVal,peRatio,pbRatio,trailingPEG1Y"
+            summary: Extended metrics
+      - $ref: '../parameters/_index.yaml#/FormatParam'
+    responses:
+      '200':
+        description: Successful response with daily fundamental metrics
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/fundamentals-schemas.yaml#/DailyMetric'
+            examples:
+              daily:
+                summary: Example daily fundamentals
+                value:
+                  - date: "2023-12-29T00:00:00.000Z"
+                    marketCap: 3050000000000
+                    enterpriseVal: 2950000000000
+                    peRatio: 29.45
+                    pbRatio: 48.32
+                    trailingPEG1Y: 2.15
+                  - date: "2023-12-28T00:00:00.000Z"
+                    marketCap: 3040000000000
+                    enterpriseVal: 2940000000000
+                    peRatio: 29.38
+                    pbRatio: 48.20
+                    trailingPEG1Y: 2.14
+          text/csv:
+            schema:
+              type: string
+              description: CSV formatted data
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+meta: &meta
+  get:
+    summary: Get Fundamentals Metadata
+    description: |
+      Returns company metadata and information about when data was last updated.
+
+      IMPORTANT: As new meta data about companies and their fundamentals is added,
+      the endpoint output will change. Use the `columns` parameter if you require
+      specific columns in a particular order.
+    operationId: getFundamentalsMeta
+    tags:
+      - Fundamentals
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+      - name: tickers
+        in: query
+        required: false
+        schema:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        description: |
+          Specific tickers to return meta data for. If no string passed, will return meta data
+          for all available tickers. Can either be a single ticker, a comma-separated list of tickers,
+          or an array of strings (string[]).
+        examples:
+          single:
+            value: "AAPL"
+            summary: Single ticker
+          multiple:
+            value: "AAPL,GOOGL"
+            summary: Multiple tickers (comma-separated)
+          array:
+            value: ["AAPL", "GOOGL"]
+            summary: Array of tickers
+      - name: columns
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^[a-zA-Z]+(,[a-zA-Z]+)*$'
+        description: |
+          Comma-separated list of columns to return. Ensures consistent output even as
+          new metadata is added. E.g. columns=ticker,name will always return only those
+          columns in that exact order.
+        examples:
+          basic:
+            value: "ticker,name"
+            summary: Basic info
+          extended:
+            value: "ticker,name,sector,industry,isActive"
+            summary: Extended info
+      - $ref: '../parameters/_index.yaml#/FormatParam'
+    responses:
+      '200':
+        description: Successful response with company metadata
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/fundamentals-schemas.yaml#/FundamentalMeta'
+            examples:
+              meta:
+                summary: Example company metadata
+                value:
+                  - permaTicker: "AAPL"
+                    ticker: "AAPL"
+                    name: "Apple Inc."
+                    isActive: true
+                    isADR: false
+                    sector: "Technology"
+                    industry: "Consumer Electronics"
+                    sicCode: 3571
+                    sicSector: "Industrial and Commercial Machinery and Computer Equipment"
+                    sicIndustry: "Electronic Computers"
+                    reportingCurrency: "USD"
+                    location: "California"
+                    companyWebsite: "https://www.apple.com"
+                    secFilingWebsite: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=&dateb=&owner=exclude&count=100"
+                    statementLastUpdated: "2024-01-15T10:30:00.000Z"
+                    dailyLastUpdated: "2024-01-15T08:00:00.000Z"
+          text/csv:
+            schema:
+              type: string
+              description: CSV formatted data
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
