@@ -35,8 +35,12 @@ jobs:
           pip install setuptools
         fi
         python setup.py develop
-        python -m pip install flake8 pytest-cov coverage vcrpy black
+        python -m pip install flake8 pytest-cov coverage vcrpy black openapi-spec-validator
         tools/install_pandas.sh
+    - name: Validate OpenAPI spec
+      continue-on-error: true
+      run: |
+        openapi-spec-validator openapi/openapi.yaml
     - name: black
       run: |
         black --check tiingo
