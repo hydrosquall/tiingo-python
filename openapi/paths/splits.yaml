@@ -1,0 +1,144 @@
+# Splits API Endpoint Definitions
+# Corporate Actions - Splits endpoints for historical and future split data
+
+splits-batch: &splits-batch
+  get:
+    summary: Get batch split data
+    description: >
+      Get past, present, and future splits for all tickers. Returns detailed split data
+      for stocks, ETFs, and mutual funds. Split status can be either active ("a") or
+      cancelled ("c"). This endpoint is in beta and available to customers with the
+      End-of-Day endpoint entitlement.
+    operationId: getSplitsBatch
+    tags:
+      - Corporate Actions
+    parameters:
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+      - name: exDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        description: >
+          The ex-date to filter splits. Returns splits with the specified ex-date.
+          Defaults to current date if not provided
+        example: '2023-08-25'
+      - name: tickers
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Comma-separated list of tickers to filter results
+        example: 'AAPL,TSLA'
+    responses:
+      '200':
+        description: Successful response with array of splits
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/splits-schemas.yaml#/SplitArray'
+            examples:
+              multipleSplits:
+                summary: Multiple splits on a specific date
+                value:
+                  - permaTicker: 'AAPL'
+                    ticker: 'AAPL'
+                    exDate: '2023-08-25'
+                    splitFrom: 1.0
+                    splitTo: 1.04347826
+                    splitFactor: 1.04347826
+                    splitStatus: 'a'
+                  - permaTicker: 'TSLA'
+                    ticker: 'TSLA'
+                    exDate: '2023-08-28'
+                    splitFrom: 1.0
+                    splitTo: 3.0
+                    splitFactor: 3.0
+                    splitStatus: 'a'
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+splits-ticker: &splits-ticker
+  get:
+    summary: Get split data for specific ticker
+    description: >
+      Get historical and future split timeseries data for a specific ticker.
+      This endpoint allows you to query past and future split data for stocks, ETFs,
+      and mutual funds. Split status can be either active ("a") or cancelled ("c").
+      Use startExDate and endExDate parameters to filter the date range.
+    operationId: getSplitsByTicker
+    tags:
+      - Corporate Actions
+    parameters:
+      - name: ticker
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[A-Z0-9]+$'
+        description: The stock ticker symbol (e.g., AAPL, CVS, TSLA)
+        example: 'CVS'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+      - name: startExDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        description: >
+          The starting ex-date for historical split timeseries data.
+          Returns splits from this date onward. Defaults to current date if not provided
+        example: '2002-08-25'
+      - name: endExDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+        description: >
+          The ending ex-date for filtering splits. Returns splits up to this date
+        example: '2023-12-31'
+    responses:
+      '200':
+        description: Successful response with array of historical splits
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas/splits-schemas.yaml#/SplitArray'
+            examples:
+              historicalSplits:
+                summary: Historical splits for CVS
+                value:
+                  - permaTicker: 'CVS'
+                    ticker: 'CVS'
+                    exDate: '2002-08-25'
+                    splitFrom: 1.0
+                    splitTo: 2.0
+                    splitFactor: 2.0
+                    splitStatus: 'a'
+                  - permaTicker: 'CVS'
+                    ticker: 'CVS'
+                    exDate: '2015-06-01'
+                    splitFrom: 1.0
+                    splitTo: 1.0
+                    splitFactor: 1.0
+                    splitStatus: 'c'
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'

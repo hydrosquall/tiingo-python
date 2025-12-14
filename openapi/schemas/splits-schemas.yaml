@@ -1,0 +1,69 @@
+# Splits API Schema Definitions
+# Reference these using: $ref: '../schemas/splits-schemas.yaml#/SchemaName'
+
+Split: &Split
+  type: object
+  description: Split data for a stock, ETF, or mutual fund
+  properties:
+    permaTicker:
+      type: string
+      description: The Tiingo permaticker (persistent identifier)
+      example: 'AAPL'
+    ticker:
+      $ref: './common.yaml#/Ticker'
+    exDate:
+      type: string
+      format: date
+      description: >
+        The ex-date of the split. In the Tiingo EOD Endpoints, this is the date where
+        "splitFactor" will not be 1.0. This is also the date used for split adjustments
+      example: '2023-08-25'
+    splitFrom:
+      type: number
+      format: float
+      description: The prior split ratio
+      example: 1.0
+    splitTo:
+      type: number
+      format: float
+      description: >
+        The new split ratio, i.e. how many shares of "splitTo" are given for each
+        share of "splitFrom"
+      example: 2.0
+    splitFactor:
+      type: number
+      format: float
+      description: >
+        The ratio of splitTo from splitFrom. Formula: splitFactor = splitTo/splitFrom.
+        This ratio is helpful in calculating split price adjustments
+      example: 2.0
+    splitStatus:
+      type: string
+      enum:
+        - 'a'
+        - 'c'
+      description: >
+        A code representing the status of split: 'a' = Active, 'c' = Cancelled
+      example: 'a'
+  required:
+    - permaTicker
+    - ticker
+    - exDate
+    - splitFrom
+    - splitTo
+    - splitFactor
+    - splitStatus
+  example:
+    permaTicker: 'AAPL'
+    ticker: 'AAPL'
+    exDate: '2023-08-25'
+    splitFrom: 1.0
+    splitTo: 1.04347826
+    splitFactor: 1.04347826
+    splitStatus: 'a'
+
+SplitArray: &SplitArray
+  type: array
+  description: Array of split data objects
+  items:
+    $ref: '#/Split'

@@ -1,0 +1,92 @@
+# Dividend and Distribution Schemas for Tiingo Corporate Actions API
+# Reference these using: $ref: '../schemas/dividends-schemas.yaml#/SchemaName'
+
+Distribution: &Distribution
+  type: object
+  description: Detailed dividend and distribution data for a stock, ETF, or mutual fund
+  properties:
+    permaTicker:
+      type: string
+      description: The Tiingo permaticker
+      example: AAPL
+    ticker:
+      type: string
+      description: Ticker related to the asset
+      example: AAPL
+    exDate:
+      $ref: './common.yaml#/DateTime'
+      description: The ex-date of the distribution. In the Tiingo EOD Endpoints, this is the date where "divCash" will be non-zero. This is also the date used for dividend price adjustments.
+      example: '2023-08-25T00:00:00.000Z'
+    paymentDate:
+      type: string
+      format: date-time
+      nullable: true
+      description: The payment date of the distribution
+      example: '2023-09-07T00:00:00.000Z'
+    recordDate:
+      type: string
+      format: date-time
+      nullable: true
+      description: The record date of the distribution
+      example: '2023-08-28T00:00:00.000Z'
+    declarationDate:
+      type: string
+      format: date-time
+      nullable: true
+      description: The declaration date of the distribution
+      example: '2023-07-27T00:00:00.000Z'
+    distribution:
+      type: number
+      format: float
+      description: The total distribution for the given date
+      example: 0.24
+    distributionFreqency:
+      type: string
+      description: |
+        The frequency associated with this distribution. Frequency codes:
+        - w: Weekly
+        - bm: Bimonthly
+        - m: Monthly
+        - tm: Trimesterly
+        - q: Quarterly
+        - sa: Semiannually
+        - a: Annually
+        - ir: Irregular
+        - f: Final
+        - u: Unspecified
+        - c: Cancelled
+      enum:
+        - w
+        - bm
+        - m
+        - tm
+        - q
+        - sa
+        - a
+        - ir
+        - f
+        - u
+        - c
+      example: q
+  required:
+    - permaTicker
+    - ticker
+    - exDate
+    - distribution
+    - distributionFreqency
+
+DistributionYield: &DistributionYield
+  type: object
+  description: Historical yield metrics for a ticker's dividend distributions
+  properties:
+    date:
+      $ref: './common.yaml#/DateTime'
+      description: Date associated with the yield
+      example: '2024-01-01T00:00:00.000Z'
+    trailingDiv1Y:
+      type: string
+      description: The trailing distribution yield for the asset based on the previous 1 year of distributions
+      example: '0.92'
+  required:
+    - date
+    - trailingDiv1Y
