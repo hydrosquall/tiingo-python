@@ -1,0 +1,106 @@
+# Tiingo Forex API Schema Definitions
+# Reference these using: $ref: './forex-schemas.yaml#/ForexTopOfBook'
+
+ForexTopOfBook: &ForexTopOfBook
+  type: object
+  description: Real-time top-of-book data for a forex pair including bid/ask prices and sizes
+  properties:
+    ticker:
+      type: string
+      description: Forex ticker pair
+      pattern: '^[a-z]{6}$'
+      example: eurusd
+    quoteTimestamp:
+      type: string
+      format: date-time
+      description: The timestamp when the data was last refreshed (ISO 8601 format with timezone)
+      example: '2019-07-01T21:00:01.289000+00:00'
+    midPrice:
+      type: number
+      format: float
+      nullable: true
+      description: The mid price calculated as (bidPrice + askPrice) / 2.0 when both bid and ask prices are not null
+      example: 1.11865
+    bidSize:
+      type: number
+      format: float
+      description: The amount of units available at the bid price
+      example: 1000000.0
+    bidPrice:
+      type: number
+      format: float
+      nullable: true
+      description: The current bid price
+      example: 1.1186
+    askSize:
+      type: number
+      format: float
+      description: The amount of units available at the ask price
+      example: 1000000.0
+    askPrice:
+      type: number
+      format: float
+      nullable: true
+      description: The current ask price
+      example: 1.1187
+  required:
+    - ticker
+    - quoteTimestamp
+    - bidSize
+    - askSize
+  example:
+    ticker: eurusd
+    quoteTimestamp: '2019-07-01T21:00:01.289000+00:00'
+    bidPrice: 1.1186
+    bidSize: 1000000.0
+    askPrice: 1.1187
+    askSize: 1000000.0
+    midPrice: 1.11865
+
+ForexPrice: &ForexPrice
+  type: object
+  description: Historical OHLC (Open, High, Low, Close) price data for a forex pair
+  properties:
+    date:
+      type: string
+      format: date-time
+      description: The date/time this data pertains to (ISO 8601 format). Format depends on resampleFreq parameter
+      example: '2019-06-28T20:00:00.000Z'
+    open:
+      type: number
+      format: float
+      description: The opening price for the asset in the given period
+      example: 1.1232
+    high:
+      type: number
+      format: float
+      description: The high price for the asset in the given period
+      example: 1.1254
+    low:
+      type: number
+      format: float
+      description: The low price for the asset in the given period
+      example: 1.1220
+    close:
+      type: number
+      format: float
+      description: The closing price for the asset in the given period
+      example: 1.1245
+    volume:
+      type: number
+      format: float
+      nullable: true
+      description: Trading volume for the period (when available)
+      example: null
+  required:
+    - date
+    - open
+    - high
+    - low
+    - close
+  example:
+    date: '2019-06-28T20:00:00.000Z'
+    open: 1.1232
+    high: 1.1254
+    low: 1.1220
+    close: 1.1245

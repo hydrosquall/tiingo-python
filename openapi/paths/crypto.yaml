@@ -1,0 +1,271 @@
+# Crypto API Endpoints for Tiingo API
+# Reference: https://www.tiingo.com/documentation/crypto
+
+crypto-prices: &crypto-prices
+  get:
+    summary: Get cryptocurrency prices
+    description: |
+      Get real-time and historical cryptocurrency prices. Returns meta information about the crypto pair
+      along with OHLCV price data. Without startDate, returns latest data for the current or last business day.
+      With startDate, returns historical intraday data.
+
+      The response includes consolidated data from multiple exchanges, with optional raw exchange-level data
+      when includeRawExchangeData is enabled.
+    operationId: getCryptoPrices
+    tags:
+      - Crypto
+    parameters:
+      - name: tickers
+        in: query
+        required: true
+        schema:
+          type: string
+          pattern: '^[a-z0-9]+(,[a-z0-9]+)*$'
+        description: Comma-separated list of crypto tickers
+        example: 'btcusd,fldcbtc'
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+        description: Start date for historical data in YYYY-MM-DD format
+        example: '2019-01-02'
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+        description: End date for historical data in YYYY-MM-DD format
+        example: '2019-12-31'
+      - name: resampleFreq
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^[0-9]+(min|hour|day)$'
+          enum:
+            - '1min'
+            - '5min'
+            - '15min'
+            - '30min'
+            - '1hour'
+            - '2hour'
+            - '4hour'
+            - '1day'
+        description: Resampling frequency for historical data (e.g., 5min, 1hour, 1day)
+        example: '5min'
+      - name: includeRawExchangeData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Include raw exchange-level data in the response
+        example: true
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with cryptocurrency price data
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/crypto-schemas.yaml#/CryptoPrice'
+            examples:
+              latest-price:
+                summary: Latest price data
+                description: Get current/latest price for Bitcoin
+                value:
+                  - ticker: 'btcusd'
+                    baseCurrency: 'btc'
+                    quoteCurrency: 'usd'
+                    priceData:
+                      - date: '2019-01-02T00:00:00.000Z'
+                        close: 3610.32
+                        high: 3701.0
+                        low: 3600.65
+                        open: 3690.01
+                        volume: 1234.56
+                        volumeNotional: 4456789.12
+                        tradesDone: 5000
+              historical-prices:
+                summary: Historical price data with 5-minute resampling
+                description: Get historical intraday data for Bitcoin with 5-minute intervals
+                value:
+                  - ticker: 'btcusd'
+                    baseCurrency: 'btc'
+                    quoteCurrency: 'usd'
+                    priceData:
+                      - date: '2019-01-02T00:00:00.000Z'
+                        close: 3610.32
+                        high: 3701.0
+                        low: 3600.65
+                        open: 3690.01
+                        volume: 1234.56
+                        volumeNotional: 4456789.12
+                        tradesDone: 5000
+                      - date: '2019-01-02T00:05:00.000Z'
+                        close: 3615.50
+                        high: 3620.0
+                        low: 3610.0
+                        open: 3610.32
+                        volume: 567.89
+                        volumeNotional: 2052345.67
+                        tradesDone: 2345
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+crypto-meta: &crypto-meta
+  get:
+    summary: Get cryptocurrency metadata
+    description: |
+      Get metadata information for cryptocurrencies including ticker, base/quote currencies, name, and description.
+
+      Without the tickers parameter, returns metadata for all available cryptocurrencies.
+      With the tickers parameter, returns metadata only for the specified tickers.
+    operationId: getCryptoMetadata
+    tags:
+      - Crypto
+    parameters:
+      - name: tickers
+        in: query
+        required: false
+        schema:
+          type: string
+          pattern: '^[a-z0-9]+(,[a-z0-9]+)*$'
+        description: Comma-separated list of crypto tickers to filter by. If omitted, returns all tickers.
+        example: 'btcusd,ethusd'
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with cryptocurrency metadata
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/crypto-schemas.yaml#/CryptoMetadata'
+            examples:
+              bitcoin-metadata:
+                summary: Bitcoin metadata
+                description: Get metadata for Bitcoin
+                value:
+                  - ticker: 'btcusd'
+                    baseCurrency: 'btc'
+                    quoteCurrency: 'usd'
+                    name: 'Bitcoin'
+                    description: 'Bitcoin is a cryptocurrency and worldwide payment system.'
+              multiple-metadata:
+                summary: Multiple cryptocurrency metadata
+                description: Get metadata for Bitcoin and Ethereum
+                value:
+                  - ticker: 'btcusd'
+                    baseCurrency: 'btc'
+                    quoteCurrency: 'usd'
+                    name: 'Bitcoin'
+                    description: 'Bitcoin is a cryptocurrency and worldwide payment system.'
+                  - ticker: 'ethusd'
+                    baseCurrency: 'eth'
+                    quoteCurrency: 'usd'
+                    name: 'Ethereum'
+                    description: 'Ethereum is a decentralized platform for smart contracts.'
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'
+
+crypto-top: &crypto-top
+  get:
+    summary: Get cryptocurrency top-of-book data (DEPRECATED)
+    description: |
+      **DEPRECATED**: This endpoint has been deprecated and may be removed in a future version.
+
+      Tiingo has deprecated the top-of-book endpoint due to reliability issues with cryptocurrency exchange feeds.
+      The feeds have been found unreliable for constructing consistent best bid/ask data across 60+ exchanges.
+      Issues include inconsistent timestamps, improperly ordered messages, and varying exchange-specific quirks.
+
+      For last price information, use the `/tiingo/crypto/prices` endpoint instead.
+
+      This endpoint returns top-of-book data including bid/ask prices, last trade information, and optional
+      raw exchange-level data. While the endpoint remains available, it should not be used for production systems.
+    operationId: getCryptoTopOfBook
+    deprecated: true
+    tags:
+      - Crypto
+    parameters:
+      - name: tickers
+        in: query
+        required: true
+        schema:
+          type: string
+          pattern: '^[a-z0-9]+(,[a-z0-9]+)*$'
+        description: Comma-separated list of crypto tickers
+        example: 'btcusd,ethusd'
+      - name: includeRawExchangeData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Include raw exchange-level top-of-book data in the response
+        example: true
+      - $ref: '../parameters/_index.yaml#/TokenParam'
+    responses:
+      '200':
+        description: Successful response with top-of-book data (DEPRECATED)
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/crypto-schemas.yaml#/CryptoTopOfBook'
+            examples:
+              bitcoin-top-of-book:
+                summary: Bitcoin top-of-book data
+                description: Get top-of-book data for Bitcoin
+                value:
+                  - ticker: 'btcusd'
+                    baseCurrency: 'btc'
+                    quoteCurrency: 'usd'
+                    topOfBookData:
+                      quoteTimestamp: '2019-01-02T12:34:56.789Z'
+                      lastSaleTimestamp: '2019-01-02T12:34:56.789Z'
+                      lastPrice: 3610.32
+                      lastSize: 0.5
+                      lastSizeNotional: 1805.16
+                      lastExchange: 'Coinbase'
+                      bidSize: 1.2
+                      bidPrice: 3609.50
+                      bidExchange: 'Binance'
+                      askSize: 0.8
+                      askPrice: 3611.00
+                      askExchange: 'Kraken'
+      '400':
+        $ref: '../responses/_index.yaml#/BadRequest'
+      '401':
+        $ref: '../responses/_index.yaml#/Unauthorized'
+      '404':
+        $ref: '../responses/_index.yaml#/NotFound'
+      '429':
+        $ref: '../responses/_index.yaml#/TooManyRequests'
+      '500':
+        $ref: '../responses/_index.yaml#/InternalServerError'

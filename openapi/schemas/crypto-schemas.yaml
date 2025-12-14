@@ -1,0 +1,303 @@
+# Crypto Schema Definitions for Tiingo API
+# Reference these using: $ref: '../schemas/crypto-schemas.yaml#/SchemaName'
+
+CryptoCurrency: &CryptoCurrency
+  type: string
+  pattern: '^[a-z0-9]+$'
+  description: Cryptocurrency code (lowercase)
+  example: 'btc'
+
+CryptoTicker: &CryptoTicker
+  type: string
+  pattern: '^[a-z0-9]+$'
+  description: Cryptocurrency ticker (e.g., btcusd, ethusd)
+  example: 'btcusd'
+
+ResampleFreq: &ResampleFreq
+  type: string
+  pattern: '^[0-9]+(min|hour|day)$'
+  description: Resampling frequency for historical data
+  enum:
+    - '1min'
+    - '5min'
+    - '15min'
+    - '30min'
+    - '1hour'
+    - '2hour'
+    - '4hour'
+    - '1day'
+  example: '5min'
+
+# Price Data Schemas
+
+PriceDataItem: &PriceDataItem
+  type: object
+  description: OHLCV price data for a specific time period
+  properties:
+    date:
+      type: string
+      format: date-time
+      description: The datetime this data pertains to, dependent on resampleFreq parameter
+      example: '2019-01-02T00:00:00.000Z'
+    open:
+      type: number
+      format: float
+      description: The opening price for the asset
+      example: 3690.01
+    high:
+      type: number
+      format: float
+      description: The high price for the asset
+      example: 3701.0
+    low:
+      type: number
+      format: float
+      description: The low price for the asset
+      example: 3600.65
+    close:
+      type: number
+      format: float
+      description: The closing price for the asset
+      example: 3610.32
+    volume:
+      type: number
+      format: float
+      description: The volume in the base currency
+      example: 1234.56
+    volumeNotional:
+      type: number
+      format: float
+      description: The volume in the quote currency (volumeNotional = close * volume)
+      example: 4456789.12
+    tradesDone:
+      type: integer
+      format: int32
+      description: The number of trades executed
+      example: 5000
+  required:
+    - date
+    - open
+    - high
+    - low
+    - close
+    - volume
+    - volumeNotional
+    - tradesDone
+
+ExchangeDataItem: &ExchangeDataItem
+  type: object
+  description: Raw exchange-level price data
+  additionalProperties:
+    type: object
+    description: Exchange-specific data keyed by exchange name
+    properties:
+      date:
+        type: string
+        format: date-time
+      open:
+        type: number
+        format: float
+      high:
+        type: number
+        format: float
+      low:
+        type: number
+        format: float
+      close:
+        type: number
+        format: float
+      volume:
+        type: number
+        format: float
+      volumeNotional:
+        type: number
+        format: float
+      tradesDone:
+        type: integer
+
+CryptoPrice: &CryptoPrice
+  type: object
+  description: Cryptocurrency price response with metadata and price data
+  properties:
+    ticker:
+      type: string
+      description: Ticker related to the asset
+      example: 'btcusd'
+    baseCurrency:
+      type: string
+      description: The base pair of the cryptocurrency (e.g., "btc" for "btcusd")
+      example: 'btc'
+    quoteCurrency:
+      type: string
+      description: The quote pair of the cryptocurrency (e.g., "usd" for "btcusd")
+      example: 'usd'
+    priceData:
+      type: array
+      description: Array of price data points
+      items:
+        $ref: '#/PriceDataItem'
+    exchangeData:
+      $ref: '#/ExchangeDataItem'
+      description: Underlying data for each exchange (only included if includeRawExchangeData=true)
+  required:
+    - ticker
+    - baseCurrency
+    - quoteCurrency
+    - priceData
+
+# Metadata Schemas
+
+CryptoMetadata: &CryptoMetadata
+  type: object
+  description: Cryptocurrency metadata information
+  properties:
+    ticker:
+      type: string
+      description: Ticker related to the asset
+      example: 'btcusd'
+    baseCurrency:
+      type: string
+      description: The base pair of the cryptocurrency
+      example: 'btc'
+    quoteCurrency:
+      type: string
+      description: The quote pair of the cryptocurrency
+      example: 'usd'
+    name:
+      type: string
+      description: Full-length name of the asset
+      example: 'Bitcoin'
+    description:
+      type: string
+      description: Long-form description of the asset
+      example: 'Bitcoin is a cryptocurrency and worldwide payment system.'
+  required:
+    - ticker
+    - baseCurrency
+    - quoteCurrency
+    - name
+
+# Top-of-Book Schemas
+
+TopOfBookData: &TopOfBookData
+  type: object
+  description: Top-of-book data with bid/ask and last trade information
+  properties:
+    quoteTimestamp:
+      type: string
+      format: date-time
+      description: Timestamp when quote (bid/ask) data was last received
+      example: '2019-01-02T12:34:56.789Z'
+    lastSaleTimestamp:
+      type: string
+      format: date-time
+      description: Timestamp when last trade data was received
+      example: '2019-01-02T12:34:56.789Z'
+    lastPrice:
+      type: number
+      format: float
+      description: Last executed price on any exchange
+      example: 3610.32
+    lastSize:
+      type: number
+      format: float
+      description: Volume of the last trade in base currency
+      example: 0.5
+    lastSizeNotional:
+      type: number
+      format: float
+      description: Notional value of last trade (lastSizeNotional = lastPrice * lastSize)
+      example: 1805.16
+    lastExchange:
+      type: string
+      description: Full name of the exchange where last trade occurred
+      example: 'Coinbase'
+    bidSize:
+      type: number
+      format: float
+      description: Amount at the bid price
+      example: 1.2
+    bidPrice:
+      type: number
+      format: float
+      description: Current bid price
+      example: 3609.50
+    bidExchange:
+      type: string
+      description: Full name of the exchange with the best bid
+      example: 'Binance'
+    askSize:
+      type: number
+      format: float
+      description: Amount at the ask price
+      example: 0.8
+    askPrice:
+      type: number
+      format: float
+      description: Current ask price
+      example: 3611.00
+    askExchange:
+      type: string
+      description: Full name of the exchange with the best ask
+      example: 'Kraken'
+
+TopOfBookExchangeData: &TopOfBookExchangeData
+  type: object
+  description: Exchange-level top-of-book data
+  additionalProperties:
+    type: object
+    description: Exchange-specific top-of-book data keyed by exchange name
+    properties:
+      quoteTimestamp:
+        type: string
+        format: date-time
+      lastSaleTimestamp:
+        type: string
+        format: date-time
+      lastPrice:
+        type: number
+        format: float
+      lastSize:
+        type: number
+        format: float
+      bidSize:
+        type: number
+        format: float
+      bidPrice:
+        type: number
+        format: float
+      askSize:
+        type: number
+        format: float
+      askPrice:
+        type: number
+        format: float
+
+CryptoTopOfBook: &CryptoTopOfBook
+  type: object
+  description: Cryptocurrency top-of-book response with metadata and book data (DEPRECATED)
+  deprecated: true
+  properties:
+    ticker:
+      type: string
+      description: Ticker related to the asset
+      example: 'btcusd'
+    baseCurrency:
+      type: string
+      description: The base pair of the cryptocurrency
+      example: 'btc'
+    quoteCurrency:
+      type: string
+      description: The quote pair of the cryptocurrency
+      example: 'usd'
+    topOfBookData:
+      $ref: '#/TopOfBookData'
+      description: Top-of-book data
+    exchangeData:
+      $ref: '#/TopOfBookExchangeData'
+      description: Underlying data for each exchange (only included if includeRawExchangeData=true)
+  required:
+    - ticker
+    - baseCurrency
+    - quoteCurrency
+    - topOfBookData
